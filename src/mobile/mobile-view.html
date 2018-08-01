@@ -1,0 +1,90 @@
+<dom-module id="mobile-view">
+  <template>
+    <style>
+      :host {
+	    display: inline-block;
+	    width:100%;
+	  	height:100%;
+	  	position: relative;
+	  }
+	  .center{
+	  	top:50%;
+	  	left:50%;
+	  	position: relative;
+	  	display: inline-block;
+	  	transform:translateX(-50%) translateY(-50%);
+	  	text-align: center;
+	  }
+	  .or{
+	  	font-size:14px;
+	  	color:#dce3e9;
+	  	font-family: "Gotham";
+	  	padding:10px;
+	  }
+	  .instruction{
+	  	font-size:18px;
+	  	font-family: "Gotham";
+	  	font-weight: 900;
+		color:#262a2d;
+		margin-bottom: 10px;
+	  }
+	  .textbox{
+	  	border:4px solid #dce3e9;
+	  	outline:none;
+	  	font-family: "Gotham";
+	  	font-weight: 900;
+	  	font-size:18px;
+	  	color:#262a2d;
+	  	padding:20px;
+	  	width:200px;
+	  	border-radius: 100px;
+	  	text-align:center;
+	  	margin-bottom: 10px;
+	  }
+	  .textbox::placeholder{
+	  	color:#dce3e9;
+	  }
+	  .scan{
+	  	width:120px;
+	  }
+	  .submit{
+	  	border:4px solid #2190ed;
+	  	outline:none;
+	  	font-family: "Gotham";
+	  	font-weight: 900;
+	  	font-size:18px;
+	  	color:#fff;
+	  	background: #2190ed;
+	  	padding:20px 20px;
+	  	width:240px;
+	  	border-radius: 100px;
+	  	text-align:center;
+	  }
+    </style>
+	<div class="center">
+	    <img src="/src/img/qrcode_scan.png" class="scan" alt="">
+	    <div class="or">ou</div>
+	    <div class="instruction">Entrer le code :</div>
+	    <input type="text" class="textbox" placeholder="Code">
+	    <br>
+	    <input type="submit" class="submit" value="Jouer">
+    </div>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class MobileView extends Polymer.Element {
+      static get is() { return 'mobile-view'; }
+      static get properties() {
+        return {
+          
+        };
+      }
+    }
+
+    window.customElements.define(MobileView.is, MobileView);
+  </script>
+</dom-module>

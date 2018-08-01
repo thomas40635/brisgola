@@ -1,0 +1,15 @@
+@font-face{
+	src:url("/src/font/Gotham-Black.otf");
+	font-family:"Gotham";
+	font-weight:900;
+}
+
+html,body,*{
+	padding: 0px;
+	margin: 0px;
+	font-size:0px;	
+}
+
+html,body{
+	height:100%;
+}
