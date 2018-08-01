@@ -1,5 +1,5 @@
 <?php
 
-echo $_GET;
+echo $_GET['code'];
 
 ?>
