@@ -1,0 +1,101 @@
+<script src="../../vendor/qrcode/qrcode.js"></script>
+
+<dom-module id="desktop-view">
+  <template>
+    <style>
+	  :host {
+	    display: inline-block;
+	    width:100%;
+	  	height:100%;
+	  	position: relative;
+	  }
+	  .center{
+	  	top:50%;
+	  	left:50%;
+	  	position: relative;
+	  	display: inline-block;
+	  	transform:translateX(-50%) translateY(-50%);
+	  	text-align: center;
+	  }
+	  .qrcode{
+	  	display: inline-block;
+	  	position: relative;
+	  	width: 200px;
+		height: 200px;
+	  }
+	  .or{
+	  	font-size:14px;
+	  	color:#dce3e9;
+	  	font-family: "Gotham";
+	  	padding:20px;
+	  }
+	  .code{
+	  	font-size:32px;
+	  	color:#262a2d;
+	  	font-family: "Gotham";
+	  	font-weight:900;
+	  }
+	  .separe{
+	  	height:20px;
+	  }
+	  .arrow{
+	  	width:10px;
+	  	height:10px;
+	  	display: inline-block;
+	  	transform: rotate(45deg);
+	  	border-right:4px solid #262a2d;
+	  	border-bottom:4px solid #262a2d;
+	  	margin:20px 0px;
+	  }
+	  .player{
+	  	padding:20px;
+	  	border:4px solid #dce3e9;
+	  	border-radius: 100px;
+	  	font-size:18px;
+	  	font-family:"Gotham";
+	  	color:#262a2d;
+	  }
+    </style>
+    <div class="center">
+	    <div id="qrcode" class="qrcode"></div>
+	    <div class="or">ou</div>
+	    <div id="code" class="code"></div>
+	    <div class="arrow"></div>
+	    <div class="player" id="player1">Aucun joueur</div>
+	    <div class="separe"></div>
+	    <div class="player" id="player2">Aucun joueur</div>
+    </div>
+  </template>
+
+  <script>/**
+ * @customElement
+ * @polymer
+ */
+class DesktopView extends Polymer.Element {
+  static get is() {
+    return 'desktop-view';
+  }
+
+  static get properties() {
+    return {};
+  }
+
+  ready() {
+    super.ready();
+    var rand = Math.floor(Math.random() * 999999 + 1);
+    var code = "#" + rand.toString().padStart(6, "0");
+    this.$.code.innerHTML = code;
+    var qrcode = new QRCode(this.$.qrcode, {
+      text: "http://www.brisgola.com/" + code,
+      width: 200,
+      height: 200,
+      colorDark: "#262a2d",
+      colorLight: "#fff",
+      correctLevel: QRCode.CorrectLevel.H
+    });
+  }
+
+}
+
+window.customElements.define(DesktopView.is, DesktopView);</script>
+</dom-module>
