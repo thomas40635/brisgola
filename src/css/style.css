@@ -1,5 +1,5 @@
 @font-face{
-	src:url("/src/font/Gotham-Black.otf");
+	src:url("../src/font/Gotham-Black.otf");
 	font-family:"Gotham";
 	font-weight:900;
 }
