@@ -56,6 +56,7 @@
 	  	color:#262a2d;
 	  }
     </style>
+
     <div class="center">
 	    <div id="qrcode" class="qrcode"></div>
 	    <div class="or">ou</div>
@@ -86,7 +87,7 @@
       	var code = "#"+rand.toString().padStart(6, "0");
       	this.$.code.innerHTML = code
       	var qrcode = new QRCode(this.$.qrcode, {
-		    text: "http://www.brisgola.com/"+code,
+		    text: "http://thomas97bb.alwaysdata.net/src/webservices/connectPlayer.php?code="+code,
 		    width: 200,
 		    height: 200,
 		    colorDark : "#262a2d",
