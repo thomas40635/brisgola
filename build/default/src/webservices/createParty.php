@@ -1,6 +1,6 @@
 <?php
 
 require "config.php";
-echo JSON.stringify($PDO)
+echo JSON.stringify($PDO);
 
 ?>
