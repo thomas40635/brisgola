@@ -105,10 +105,9 @@ class MobileView extends Polymer.Element {
   connect() {
     var rand = Math.floor(Math.random() * 999999 + 1);
     var playerID = rand.toString().padStart(6, "0");
-    var code = this.$.code.value;
     this.$.createPlayer.body = {
-      code,
-      playerID
+      "code": this.$.code.value,
+      "player": playerID
     };
     this.$.createPlayer.generateRequest();
   }
