@@ -111,7 +111,7 @@
       }
 
       connect(){
-      	this.$.createPlayer.body = JSON.stringify(code);
+      	this.$.createPlayer.body = JSON.stringify(this.$.code.value);
   		this.$.createPlayer.generateRequest();
       }
 
