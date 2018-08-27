@@ -81,49 +81,54 @@
     </div>
   </template>
 
-  <script>
-    /**
-     * @customElement
-     * @polymer
-     */
-    class MobileView extends Polymer.Element {
-      static get is() { return 'mobile-view'; }
-      static get properties() {
-        return {
-          
-        };
-      }
-      ready(){
-      	super.ready();
-      	if(this.$_GET('code')){
-      		this.$.code.value = this.$_GET('code');
-      	}
-      }
+  <script>/**
+ * @customElement
+ * @polymer
+ */
+class MobileView extends Polymer.Element {
+  static get is() {
+    return 'mobile-view';
+  }
 
-      connect(){
-      	var rand = Math.floor((Math.random() * 999999) + 1)
-      	var playerID = rand.toString().padStart(6, "0");
+  static get properties() {
+    return {};
+  }
 
-      	this.$.createPlayer.body = {this.$.code.value,playerID};
-  		this.$.createPlayer.generateRequest();
-      }
+  ready() {
+    super.ready();
 
-	     $_GET(param) {
-			var vars = {};
-			window.location.href.replace( location.hash, '' ).replace( 
-				/[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
-				function( m, key, value ) { // callback
-					vars[key] = value !== undefined ? value : '';
-				}
-			);
+    if (this.$_GET('code')) {
+      this.$.code.value = this.$_GET('code');
+    }
+  }
 
-			if ( param ) {
-				return vars[param] ? vars[param] : null;	
-			}
-			return vars;
-		}
+  connect() {
+    var rand = Math.floor(Math.random() * 999999 + 1);
+    var playerID = rand.toString().padStart(6, "0");
+    var code = this.$.code.value;
+    this.$.createPlayer.body = {
+      code,
+      playerID
+    };
+    this.$.createPlayer.generateRequest();
+  }
+
+  $_GET(param) {
+    var vars = {};
+    window.location.href.replace(location.hash, '').replace(/[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
+    function (m, key, value) {
+      // callback
+      vars[key] = value !== undefined ? value : '';
+    });
+
+    if (param) {
+      return vars[param] ? vars[param] : null;
     }
 
-    window.customElements.define(MobileView.is, MobileView);
-  </script>
+    return vars;
+  }
+
+}
+
+window.customElements.define(MobileView.is, MobileView);</script>
 </dom-module>
