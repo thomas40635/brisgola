@@ -4,7 +4,7 @@ require "config.php";
 
 try{
 	$request_body = file_get_contents('php://input');
-    $json = json_decode($request_body);
+    $json = json_decode(".$request_body.");
     echo $request_body;echo $json;exit;
     $code = $json["code"];
     $playerID = $json["playerID"];
