@@ -4,17 +4,8 @@ require "config.php";
 
 try{
 	$request_body = file_get_contents('php://input');
-
-    echo "REQUEST -> " . $request_body;
-
-
     $json = json_decode($request_body, true);
 
-    print_r($json);
-
-    echo $json["playerID"];
-
-    exit();
     $code = $json["code"];
     $playerID = $json["playerID"];
 
