@@ -1,5 +1,6 @@
 <?php
 
-echo $_GET['code'];
+require "config.php";
+echo JSON.stringify($PDO)
 
 ?>
