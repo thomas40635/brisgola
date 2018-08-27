@@ -96,20 +96,22 @@
       }
       ready(){
       	super.ready();
-      	alert(this.findGetParameter())
+      	alert(this.$_GET('code'))
       }
 
-      findGetParameter(parameterName) {
-    	var result = null,
-        tmp = [];
-    	location.search
-        .substr(1)
-        .split("&")
-        .forEach(function (item) {
-          tmp = item.split("=");
-          if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
-        });
-    	return result;
+	     $_GET(param) {
+			var vars = {};
+			window.location.href.replace( location.hash, '' ).replace( 
+				/[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
+				function( m, key, value ) { // callback
+					vars[key] = value !== undefined ? value : '';
+				}
+			);
+
+			if ( param ) {
+				return vars[param] ? vars[param] : null;	
+			}
+			return vars;
 		}
     }
 
