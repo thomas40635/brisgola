@@ -93,7 +93,7 @@ class MobileView extends Polymer.Element {
     super.ready();
 
     if (this.$_GET('code')) {
-      this.$.code.innerHTML = this.$_GET('code');
+      this.$.code.value = this.$_GET('code');
     }
   }
 
