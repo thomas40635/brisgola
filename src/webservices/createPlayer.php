@@ -9,7 +9,7 @@ try{
     $code = $json["code"];
     $playerID = $json["playerID"];
 
-    $req = $PDO->prepare("SELECT player1, player2, player3 FROM party WHERE code = :code");
+    $req = $PDO->prepare("SELECT player1,player2,player3 FROM Party WHERE code = :code");
 
     $req->execute(array(
             "code" => $code
@@ -34,7 +34,7 @@ try{
             "playerID" => $playerID
             ));
     $data = $req->fetchAll();
-    // echo $req->queryString;
+    echo $player;
 }
 
 catch(PDOException $e){
