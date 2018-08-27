@@ -1,3 +1,5 @@
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
 <dom-module id="mobile-view">
   <template>
     <style>
@@ -64,6 +66,9 @@
 
     <app-location route="{{route}}"></app-location>
 
+    <iron-ajax id="createPlayer" method="POST" url="../../src/webservices/createPlayer.php" content-type="application/json" handle-as="json" on-response="handleResponse">
+    </iron-ajax>
+
     <app-route route="{{route}}" pattern="/:view" data="{{routeData}}" tail="{{subroute}}"></app-route>
 
 	<div class="center">
@@ -72,7 +77,7 @@
 	    <div class="instruction">Entrer le code :</div>
 	    <input type="text" class="textbox" id="code" placeholder="Code">
 	    <br>
-	    <input type="submit" class="submit" value="Jouer">
+	    <input type="submit" on-click="connect" class="submit" value="Jouer">
     </div>
   </template>
 
@@ -95,6 +100,11 @@ class MobileView extends Polymer.Element {
     if (this.$_GET('code')) {
       this.$.code.value = this.$_GET('code');
     }
+  }
+
+  connect() {
+    this.$.createPlayer.body = JSON.stringify(code);
+    this.$.createPlayer.generateRequest();
   }
 
   $_GET(param) {
