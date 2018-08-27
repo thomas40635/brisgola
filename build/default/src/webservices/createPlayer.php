@@ -36,7 +36,7 @@ try{
             "player" => $player,
             "playerID" => $playerID
             ));
-
+    echo $req;exit;
     $data = $req->fetchAll();
 
 }
