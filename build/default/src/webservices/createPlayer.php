@@ -9,8 +9,6 @@ try{
     $code = $json["code"];
     $playerID = $json["playerID"];
 
-    echo $playerID;exit;
-
     $req = $PDO->prepare("SELECT player1, player2, player3 FROM party WHERE code = :code");
 
     $req->execute(array(
@@ -37,7 +35,6 @@ try{
             "playerID" => $playerID
             ));
     $data = $req->fetchAll();
-    echo $req;exit;
 
 }
 
