@@ -10,7 +10,9 @@ try{
 
     $json = json_decode($request_body, true);
 
-    echo "JSON DECODE -> " . $json;
+    print_r($json);
+
+    echo $json["playerID"];
 
     exit();
     $code = $json["code"];
