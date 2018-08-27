@@ -15,7 +15,7 @@ try{
 
     $data = $req->fetchAll();
         if(count($data)>0){
-            $_SESSION'Auth'] = $data[0];
+            $_SESSION['Auth'] = $data[0];
             return true;
     }
 
