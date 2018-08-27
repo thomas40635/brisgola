@@ -114,10 +114,10 @@
       	var rand = Math.floor((Math.random() * 999999) + 1)
       	var playerID = rand.toString().padStart(6, "0");
 
-      	$request = JSON.stringify({"code": this.$.code.value,"playerID": playerID});
-      	console.log($request)
-      	
-      	this.$.createPlayer.body = $request;
+      	var request = JSON.stringify({"code": this.$.code.value,"playerID": playerID});
+      	console.log(request)
+
+      	this.$.createPlayer.body = request;
   		this.$.createPlayer.generateRequest();
       }
 
