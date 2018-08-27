@@ -5,10 +5,10 @@ require "config.php";
 try{
 	$request_body = file_get_contents('php://input');
     $json = json_decode($request_body);
-    $code = $json[0];
-	$playerID = $json[1];
+    $code = $json["code"];
+	$playerID = $json["playerID"];
 
-    echo $json;exit;
+    echo $playerID;exit;
 
     $req = $PDO->prepare("SELECT player1, player2, player3 FROM party WHERE code = :code");
 
