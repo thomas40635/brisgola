@@ -96,7 +96,9 @@
       }
       ready(){
       	super.ready();
-      	alert(this.$_GET('code'))
+      	if(this.$_GET('code')){
+      		this.$.code.innerHTML = this.$_GET('code');
+      	}
       }
 
 	     $_GET(param) {

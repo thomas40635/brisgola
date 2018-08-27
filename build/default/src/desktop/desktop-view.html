@@ -92,7 +92,7 @@ class DesktopView extends Polymer.Element {
     var code = rand.toString().padStart(6, "0");
     this.$.code.innerHTML = "#" + code;
     var qrcode = new QRCode(this.$.qrcode, {
-      text: "http://thomas97bb.alwaysdata.net/src/webservices/createPlayer.php?code=" + code,
+      text: "http://thomaspaul.fr/?code=" + code,
       width: 200,
       height: 200,
       colorDark: "#262a2d",
