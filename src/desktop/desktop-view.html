@@ -57,6 +57,14 @@
 	  }
     </style>
 
+    <iron-ajax
+    id="createParty"
+    method="POST"
+    content-type="application/json"
+    handle-as="json"
+    on-response="handleResponse">
+    </iron-ajax>
+
     <div class="center">
 	    <div id="qrcode" class="qrcode"></div>
 	    <div class="or">ou</div>
@@ -94,6 +102,8 @@
 		    colorLight : "#fff",
 		    correctLevel : QRCode.CorrectLevel.H
 		});
+		this.$.createParty.body = JSON.stringify(code);
+  		this.$.createParty.generateRequest();
       }
 
 
