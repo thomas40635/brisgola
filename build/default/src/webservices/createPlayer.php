@@ -16,14 +16,13 @@ try{
             ));
 
     $data = $req->fetchAll();
-    print_r($data);exit;
-    if(!$data['player1']){
+    if(!$data[0]['player1']){
         $player = "player1";
     }
-    else if(!$data['player2']){
+    else if(!$data[0]['player2']){
         $player = "player2";
     }
-    else if(!$data['player3']){
+    else if(!$data[0]['player3']){
         $player = "player3";
     }
 
