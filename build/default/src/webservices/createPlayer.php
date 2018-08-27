@@ -8,7 +8,7 @@ try{
     $code = $json["code"];
 	$playerID = $json["playerID"];
 
-    echo $playerID;exit;
+    echo $request_body;exit;
 
     $req = $PDO->prepare("SELECT player1, player2, player3 FROM party WHERE code = :code");
 
