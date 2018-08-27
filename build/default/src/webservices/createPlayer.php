@@ -35,7 +35,7 @@ try{
             "playerID" => $playerID
             ));
     $data = $req->fetchAll();
-    echo $req;exit;
+    print_r($req);exit;
 }
 
 catch(PDOException $e){
