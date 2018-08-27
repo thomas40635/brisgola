@@ -61,10 +61,21 @@
 	  	text-align:center;
 	  }
     </style>
+
+    <app-location route="{{route}}"></app-location>
+
+    <app-route
+    route="{{route}}"
+    pattern="/:view"
+    data="{{routeData}}"
+    tail="{{subroute}}"></app-route>
+
 	<div class="center">
 	    <img src="src/img/qrcode_scan.png" class="scan" alt="">
 	    <div class="or">ou</div>
 	    <div class="instruction">Entrer le code :</div>
+	    <div class="instruction">ROUTE : {{route}}</div>
+	    <div class="instruction">routeData : {{routeData}}</div>
 	    <input type="text" class="textbox" placeholder="Code">
 	    <br>
 	    <input type="submit" class="submit" value="Jouer">
