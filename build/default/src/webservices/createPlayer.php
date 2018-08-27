@@ -27,7 +27,6 @@ try{
         $player = "player3";
     }
 
-    //$req = $PDO->prepare("UPDATE party(:player) SET (:playerID) WHERE code = :code");
     $req = $PDO->prepare("UPDATE Party SET ".$player." = :playerID WHERE code = :code");
 
     $req->execute(array(
@@ -35,7 +34,7 @@ try{
             "playerID" => $playerID
             ));
     $data = $req->fetchAll();
-    echo $req->queryString;
+    // echo $req->queryString;
 }
 
 catch(PDOException $e){
