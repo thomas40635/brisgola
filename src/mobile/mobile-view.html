@@ -111,7 +111,10 @@
       }
 
       connect(){
-      	this.$.createPlayer.body = JSON.stringify(this.$.code.value);
+      	var rand = Math.floor((Math.random() * 999999) + 1)
+      	var playerID = rand.toString().padStart(6, "0");
+      	
+      	this.$.createPlayer.body = {"code": this.$.code,"player": playerID};
   		this.$.createPlayer.generateRequest();
       }
 
