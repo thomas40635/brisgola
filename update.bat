@@ -1,1 +1,1 @@
-"../node_modules/.bin/polymer" build --entrypoint index.html & git add . & git commit -m "Build" & git push origin master
+"../node_modules/.bin/polymer" build --entrypoint index.html & git add . & git commit -m "Build" & git push origin master & exit

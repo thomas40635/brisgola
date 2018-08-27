@@ -1,6 +1,6 @@
 <?php
 
 require "config.php";
-echo $PDO;
+echo json_encode($PDO);
 
 ?>
