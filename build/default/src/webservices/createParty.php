@@ -1,6 +1,7 @@
 <?php
 
 require "config.php";
-echo json_encode("test");
+$test = json_encode($PDO);
+echo $test;
 
 ?>
