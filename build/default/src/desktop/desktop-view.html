@@ -62,7 +62,7 @@
     <iron-ajax id="createParty" method="POST" url="../../src/webservices/createParty.php" content-type="application/json" handle-as="json">
     </iron-ajax>
 
-    <iron-ajax id="refreshPlayers" method="POST" url="../../src/webservices/refreshPlayers.php" content-type="application/json" handle-as="json" last-response="{{players}}">
+    <iron-ajax id="refreshPlayers" method="POST" url="../../src/webservices/refreshPlayers.php" content-type="application/json" handle-as="json" on-response="playersConnect" last-response="{{players}}">
     </iron-ajax>
 
     <div class="center">
@@ -88,11 +88,7 @@ class DesktopView extends Polymer.Element {
   }
 
   static get properties() {
-    return {
-      players: {
-        observer: 'playersConnect'
-      }
-    };
+    return {};
   }
 
   start() {
