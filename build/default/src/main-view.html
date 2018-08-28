@@ -23,8 +23,8 @@
     <app-route route="{{route}}" pattern="/:view" data="{{routeData}}"></app-route>
   
     <iron-pages selected="{{routeData.path}}" attr-for-selected="name" class="pages">
-      <mobile-view name="mobile" route="{{routeData}}"></mobile-view>
-      <desktop-view name="desktop" route="{{routeData}}"></desktop-view>
+      <mobile-view id="mobile" name="mobile" route="{{routeData}}"></mobile-view>
+      <desktop-view id="desktop" name="desktop" route="{{routeData}}"></desktop-view>
     </iron-pages>
     
   </template>
@@ -50,8 +50,10 @@ class MainView extends Polymer.Element {
 
     if (this.isMobile()) {
       this.set('routeData.path', 'mobile');
+      this.$.mobile.start();
     } else {
       this.set('routeData.path', 'desktop');
+      this.$.desktop.start();
     }
   }
 

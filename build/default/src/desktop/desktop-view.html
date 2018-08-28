@@ -96,6 +96,7 @@ class DesktopView extends Polymer.Element {
   }
 
   ready() {
+    super.ready();
     var rand = Math.floor(Math.random() * 999999 + 1);
     var code = rand.toString().padStart(6, "0");
     this.set('code', code);

@@ -94,7 +94,7 @@ class MobileView extends Polymer.Element {
     return {};
   }
 
-  ready() {
+  start() {
     if (this.$_GET('code')) {
       this.$.code.value = this.$_GET('code');
     }
