@@ -15,7 +15,7 @@ try{
             ));
 
     $data = $req->fetchAll();
-    $players = (string) $data;
+    $players = "'".$data."'";
     echo $players;
     return $players;
 }
