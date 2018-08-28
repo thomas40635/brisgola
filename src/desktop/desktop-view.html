@@ -39,11 +39,28 @@
 	  	text-align: center;
 	  }
 
-	  .qrcode{
-	  	display: inline-block;
+	  .qrcode-container{
 	  	position: relative;
 	  	width: 200px;
 		height: 200px;
+	  }
+
+	  .qrcode-container .qrcode{
+	  	display: inline-block;
+	  	position: absolute;
+	  	top:0px;
+	  	left:0px;
+	  	width: 100%;
+		height: 100%;
+	  }
+
+	  .qrcode-container img{
+	  	display: inline-block;
+	  	position: absolute;
+	  	top:0px;
+	  	left:0px;
+	  	width: 100%;
+		height: 100%;
 	  }
 
     </style>
@@ -67,7 +84,10 @@
     </iron-ajax>
 
     <div class="page center">
-		<div class="qrcode" id="qrcode"></div>
+    	<div class="qrcode-container">
+			<div class="qrcode" id="qrcode"></div>
+			<img src="../img/qrcodespace.png" alt="">
+		</div>
 		<div class="code" id="code"></div>
     </div>
   </template>
@@ -95,7 +115,7 @@
 		    width: 200,
 		    height: 200,
 		    colorDark : "rgba(0,0,0,0)",
-		    colorLight : "#eee",
+		    colorLight : "#fff",
 		    correctLevel : QRCode.CorrectLevel.H
 		});
 		this.$.createParty.body = JSON.stringify(this.code);
