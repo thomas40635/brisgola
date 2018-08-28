@@ -116,8 +116,7 @@ class DesktopView extends Polymer.Element {
       self.$.refreshPlayers.body = JSON.stringify(self.code);
       self.$.refreshPlayers.generateRequest();
       console.log("check players : " + self.code);
-      timeout();
-    }, 1000);
+    }, 2000);
   }
 
 }
