@@ -20,7 +20,7 @@ try{
     	'player1' : $data['player1'],
     	'player2' : $data['player2'],
     	'player3' : $data['player3']
-    }
+    };
     return $players;
 
 }
