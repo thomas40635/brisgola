@@ -120,7 +120,7 @@ class DesktopView extends Polymer.Element {
   refreshPlayers() {
     var self = this;
     setTimeout(function () {
-      self.$.refreshPlayers.body = '{"code": ' + this.code + '}';
+      self.$.refreshPlayers.body = '{"code": ' + self.code + '}';
       self.$.refreshPlayers.generateRequest();
       console.log("check players : " + self.code);
       self.refreshPlayers();
