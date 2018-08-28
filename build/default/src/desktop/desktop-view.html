@@ -102,8 +102,9 @@ class DesktopView extends Polymer.Element {
 
   start() {
     var rand = Math.floor(Math.random() * 99 + 1);
+    var pick = Math.floor(Math.random() * 4);
     var planets = ["Saturne", "Orion", "Mars", "Venus", "Lune"];
-    this.set('code', planets + rand);
+    this.set('code', planets[pick] + rand);
     this.$.code.innerHTML = "#" + this.code;
     var qrcode = new QRCode(this.$.qrcode, {
       text: "http://thomaspaul.fr/?code=" + this.code,
