@@ -95,6 +95,16 @@
 	  	display: inline-block;
 	  }
 
+	  .player span{
+	  	color:#d4cfde;
+	  	display:block;
+	  }
+
+	  .player span[hidden]{
+	  	color:#d4cfde;
+	  	display:none;
+	  }
+
 	  .bottom{
 	  	bottom:40px;
 	  	left:50%;
@@ -123,9 +133,9 @@
 		</div>
 		<div class="bottom">
 			<div class="players">
-				<div class="player">{{player1}}</div>
-				<div class="player">{{player2}}</div>
-				<div class="player">{{player3}}</div>
+				<div class="player">{{player1}}<span hidden="{{player1}}">Aucun joueur</span></div>
+				<div class="player">{{player2}}<span hidden="{{player2}}">Aucun joueur</span></div>
+				<div class="player">{{player3}}<span hidden="{{player3}}">Aucun joueur</span></div>
 			</div>
 		</div>
     </div>
