@@ -15,6 +15,7 @@ html,body,*{
 	margin: 0px;
 	font-size:0px;	
 	font-family:"Google";
+	outline:none;
 }
 
 html,body{
