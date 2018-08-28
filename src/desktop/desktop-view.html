@@ -104,8 +104,7 @@
         };
       }
 
-      ready(){
-      	super.ready();
+      start(){
       	var rand = Math.floor((Math.random() * 999999) + 1)
       	var code = rand.toString().padStart(6, "0");
       	this.set('code', code)
