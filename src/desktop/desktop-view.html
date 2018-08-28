@@ -46,43 +46,6 @@
 		height: 200px;
 	  }
 
-	  .or{
-	  	font-size:14px;
-	  	color:#dce3e9;
-	  	font-family: "Gotham";
-	  	padding:20px;
-	  }
-
-	  .code{
-	  	font-size:32px;
-	  	color:#262a2d;
-	  	font-family: "Gotham";
-	  	font-weight:900;
-	  }
-
-	  .separe{
-	  	height:20px;
-	  }
-
-	  .arrow{
-	  	width:10px;
-	  	height:10px;
-	  	display: inline-block;
-	  	transform: rotate(45deg);
-	  	border-right:4px solid #262a2d;
-	  	border-bottom:4px solid #262a2d;
-	  	margin:20px 0px;
-	  }
-
-	  .player{
-	  	padding:20px;
-	  	border:4px solid #dce3e9;
-	  	border-radius: 100px;
-	  	font-size:18px;
-	  	font-family:"Gotham";
-	  	color:#262a2d;
-	  }
-
     </style>
 
     <iron-ajax
@@ -104,7 +67,7 @@
     </iron-ajax>
 
     <div class="page center">
-	
+		<div class="qrcode" id="qrcode"></div>
     </div>
   </template>
 
@@ -130,8 +93,8 @@
 		    text: "http://thomaspaul.fr/?code="+code,
 		    width: 200,
 		    height: 200,
-		    colorDark : "#262a2d",
-		    colorLight : "#fff",
+		    colorDark : "#00262a2d",
+		    colorLight : "#eee",
 		    correctLevel : QRCode.CorrectLevel.H
 		});
 		this.$.createParty.body = JSON.stringify(this.code);
