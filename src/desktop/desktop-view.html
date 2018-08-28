@@ -73,7 +73,7 @@
     url="../../src/webservices/refreshPlayers.php"
     content-type="application/json"
     handle-as="json"
-    last-response="{{player}}">
+    last-response="{{players}}">
     </iron-ajax>
 
     <div class="center">
@@ -98,7 +98,9 @@
       static get is() { return 'desktop-view'; }
       static get properties() {
         return {
-          
+          players:{
+          	observer: 'playersConnect'
+          }
         };
       }
 
@@ -120,6 +122,10 @@
   		this.$.createParty.generateRequest();
   		this.refreshPlayers();
 
+      }
+
+      playersConnect(){
+      	console.log(this.players)
       }
 
       refreshPlayers() {
