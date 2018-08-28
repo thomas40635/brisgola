@@ -15,7 +15,7 @@ try{
             ));
 
     $data = $req->fetchAll();
-    $players = $data[0];
+    $players = $data[0][0];
     echo $players;
     return $players;
 }
