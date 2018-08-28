@@ -59,7 +59,10 @@
 	  }
     </style>
 
-    <iron-ajax id="createParty" method="POST" url="../../src/webservices/createParty.php" content-type="application/json" handle-as="json" on-response="handleResponse">
+    <iron-ajax id="createParty" method="POST" url="../../src/webservices/createParty.php" content-type="application/json" handle-as="json">
+    </iron-ajax>
+
+    <iron-ajax id="refreshPlayers" method="POST" url="../../src/webservices/refreshPlayers.php" content-type="application/json" handle-as="json" last-response="{{player}}">
     </iron-ajax>
 
     <div class="center">
@@ -67,9 +70,11 @@
 	    <div class="or">ou</div>
 	    <div id="code" class="code"></div>
 	    <div class="arrow"></div>
-	    <div class="player" id="player1">Aucun joueur</div>
+	    <div class="player" id="player1">{{player.1}}</div>
 	    <div class="separe"></div>
-	    <div class="player" id="player2">Aucun joueur</div>
+	    <div class="player" id="player2">{{player.2}}</div>
+	    <div class="separe"></div>
+	    <div class="player" id="player2">{{player.3}}</div>
     </div>
   </template>
 
@@ -90,6 +95,7 @@ class DesktopView extends Polymer.Element {
     super.ready();
     var rand = Math.floor(Math.random() * 999999 + 1);
     var code = rand.toString().padStart(6, "0");
+    this.set('code', code);
     this.$.code.innerHTML = "#" + code;
     var qrcode = new QRCode(this.$.qrcode, {
       text: "http://thomaspaul.fr/?code=" + code,
@@ -99,8 +105,17 @@ class DesktopView extends Polymer.Element {
       colorLight: "#fff",
       correctLevel: QRCode.CorrectLevel.H
     });
-    this.$.createParty.body = JSON.stringify(code);
+    this.$.createParty.body = JSON.stringify(this.code);
     this.$.createParty.generateRequest();
+
+    function timeout() {
+      setTimeout(function () {
+        this.$.refreshPlayers.body = JSON.stringify(this.code);
+        this.$.refreshPlayers.generateRequest();
+        console.log("check players : " + this.code);
+        timeout();
+      }, 1000);
+    }
   }
 
 }
