@@ -1,13 +1,20 @@
 @font-face{
-	src:url("../font/Gotham-Black.otf");
-	font-family:"Gotham";
+	src:url("../font/GoogleSans-Bold.ttf");
+	font-family:"Google";
 	font-weight:900;
+}
+
+@font-face{
+	src:url("../font/GoogleSans-Regular.ttf");
+	font-family:"Google";
+	font-weight:100;
 }
 
 html,body,*{
 	padding: 0px;
 	margin: 0px;
 	font-size:0px;	
+	font-family:"Google";
 }
 
 html,body{

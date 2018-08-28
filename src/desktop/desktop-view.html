@@ -66,6 +66,10 @@
 		z-index:1;
 	  }
 
+	  .code{
+	  	font-family:24px;
+	  }
+
     </style>
 
     <iron-ajax
@@ -109,12 +113,12 @@
       }
 
       start(){
-      	var rand = Math.floor((Math.random() * 999999) + 1)
-      	var code = rand.toString().padStart(6, "0");
-      	this.set('code', code)
-      	this.$.code.innerHTML = "#"+code
+      	var rand = Math.floor((Math.random() * 99) + 1)
+      	var planets = ["Saturne","Orion","Mars","Venus","Lune"];
+      	this.set('code', planets+rand)
+      	this.$.code.innerHTML = "#"+this.code
       	var qrcode = new QRCode(this.$.qrcode, {
-		    text: "http://thomaspaul.fr/?code="+code,
+		    text: "http://thomaspaul.fr/?code="+this.code,
 		    width: 200,
 		    height: 200,
 		    colorDark : "rgba(0,0,0,0)",
