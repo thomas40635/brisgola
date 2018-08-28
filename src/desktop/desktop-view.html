@@ -180,7 +180,7 @@
 		    colorLight : "#fff",
 		    correctLevel : QRCode.CorrectLevel.H
 		});
-		this.$.createParty.body = JSON.stringify(this.code);
+		this.$.createParty.body = '{"code": "'+self.code+'"}';
   		this.$.createParty.generateRequest();
   		this.refreshPlayers();
 
@@ -224,7 +224,7 @@
       refreshPlayers() {
       	var self = this
 		    setTimeout(function () {
-		        self.$.refreshPlayers.body = '{"code": '+self.code+'}';
+		        self.$.refreshPlayers.body = '{"code": "'+self.code+'"}';
   				self.$.refreshPlayers.generateRequest();
   				console.log("check players : "+self.code);
   				self.refreshPlayers();

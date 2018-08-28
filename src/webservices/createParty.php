@@ -4,7 +4,9 @@ require "config.php";
 
 try{
 	$request_body = file_get_contents('php://input');
-	$code = json_decode($request_body);
+    $json = json_decode($request_body, true);
+
+    $code = $json["code"];
 
     $req = $PDO->prepare("INSERT INTO Party (code) VALUES (:code)");
 
