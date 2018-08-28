@@ -180,7 +180,7 @@
 		    colorLight : "#fff",
 		    correctLevel : QRCode.CorrectLevel.H
 		});
-		this.$.createParty.body = '{"code": "'+self.code+'"}';
+		this.$.createParty.body = '{"code": "'+this.code+'"}';
   		this.$.createParty.generateRequest();
   		this.refreshPlayers();
 
