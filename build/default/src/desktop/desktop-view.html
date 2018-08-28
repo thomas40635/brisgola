@@ -5,12 +5,32 @@
 <dom-module id="desktop-view">
   <template>
     <style>
+
 	  :host {
 	    display: inline-block;
 	    width:100%;
 	  	height:100%;
 	  	position: relative;
+	  	background: url(../img/space.png) no-repeat center center fixed; 
+		-webkit-background-size: cover;
+		-moz-background-size: cover;
+		-o-background-size: cover;
+		background-size: cover;
 	  }
+
+	  .page{
+		padding:40px;
+		margin:40px;
+		background: #fff;
+		display: inline-block;
+		position: relative;
+		border-radius:10px;
+		box-shadow: 0px 20px 30px rgba(0,0,0,0.2),
+		0px -10px 0px 0px rgba(0,0,0,0.05);
+		height:calc(100% - 160px);
+		width:calc(100% - 160px);
+	  }
+
 	  .center{
 	  	top:50%;
 	  	left:50%;
@@ -19,27 +39,32 @@
 	  	transform:translateX(-50%) translateY(-50%);
 	  	text-align: center;
 	  }
+
 	  .qrcode{
 	  	display: inline-block;
 	  	position: relative;
 	  	width: 200px;
 		height: 200px;
 	  }
+
 	  .or{
 	  	font-size:14px;
 	  	color:#dce3e9;
 	  	font-family: "Gotham";
 	  	padding:20px;
 	  }
+
 	  .code{
 	  	font-size:32px;
 	  	color:#262a2d;
 	  	font-family: "Gotham";
 	  	font-weight:900;
 	  }
+
 	  .separe{
 	  	height:20px;
 	  }
+
 	  .arrow{
 	  	width:10px;
 	  	height:10px;
@@ -49,6 +74,7 @@
 	  	border-bottom:4px solid #262a2d;
 	  	margin:20px 0px;
 	  }
+
 	  .player{
 	  	padding:20px;
 	  	border:4px solid #dce3e9;
@@ -57,6 +83,7 @@
 	  	font-family:"Gotham";
 	  	color:#262a2d;
 	  }
+
     </style>
 
     <iron-ajax id="createParty" method="POST" url="../../src/webservices/createParty.php" content-type="application/json" handle-as="json">
@@ -65,16 +92,8 @@
     <iron-ajax id="refreshPlayers" method="POST" url="../../src/webservices/refreshPlayers.php" content-type="application/json" handle-as="json" on-response="playersConnect" last-response="{{players}}">
     </iron-ajax>
 
-    <div class="center">
-	    <div id="qrcode" class="qrcode"></div>
-	    <div class="or">ou</div>
-	    <div id="code" class="code"></div>
-	    <div class="arrow"></div>
-	    <div class="player" id="player1">{{player1}}</div>
-	    <div class="separe"></div>
-	    <div class="player" id="player2">{{player2}}</div>
-	    <div class="separe"></div>
-	    <div class="player" id="player2">{{player3}}</div>
+    <div class="page center">
+	
     </div>
   </template>
 
