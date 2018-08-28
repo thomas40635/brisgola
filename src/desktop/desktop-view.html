@@ -25,7 +25,7 @@
 		position: relative;
 		border-radius:10px;
 		box-shadow: 0px 20px 30px rgba(0,0,0,0.2),
-		0px -10px 0px 0px rgba(0,0,0,0.05) inset;
+		0px -10px 0px 0px #f1f0f3 inset;
 		height:calc(100% - 240px);
 		width:calc(100% - 240px);
 	  }
@@ -77,6 +77,31 @@
 		display: inline-block;
 	  }
 
+	  .players{
+
+	  }
+
+	  .player{
+	  	border-radius: 10px;
+	  	padding:20px;
+	  	width:100px;
+	  	color:#483c6c;
+	  	font-size:24px;
+	  	font-weight:900;
+	  	background: #f1f0f3;
+	  	margin:0px 10px;
+	  	display: inline-block;
+	  }
+
+	  .bottom{
+	  	bottom:0%;
+	  	left:50%;
+	  	position: absolute;
+	  	display: inline-block;
+	  	transform:translateX(-50%);
+	  	text-align: center;
+	  }
+
     </style>
 
     <iron-ajax
@@ -106,6 +131,13 @@
 			<div class="separe"></div>
 			<div class="code" id="code"></div>
 		</div>
+		<div class="bottom">
+			<div class="players">
+				<div class="player">{{player1}}</div>
+				<div class="player">{{player2}}</div>
+				<div class="player">{{player3}}</div>
+			</div>
+		</div>
     </div>
   </template>
 
@@ -127,7 +159,7 @@
       	var pick = Math.floor((Math.random() * 4))
       	var planets = ["TERRE","ORION","MARS","VENUS","LUNE"];
       	this.set('code', planets[pick]+rand)
-      	this.$.code.innerHTML = "#"+this.code
+      	this.$.code.innerHTML = this.code
       	var qrcode = new QRCode(this.$.qrcode, {
 		    text: "http://thomaspaul.fr/?code="+this.code,
 		    width: 200,
