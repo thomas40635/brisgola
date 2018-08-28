@@ -33,7 +33,7 @@
 	  .center{
 	  	top:50%;
 	  	left:50%;
-	  	position: relative;
+	  	position: absolute;
 	  	display: inline-block;
 	  	transform:translateX(-50%) translateY(-50%);
 	  	text-align: center;
@@ -99,12 +99,14 @@
     </iron-ajax>
 
     <div class="page center">
-    	<div class="qrcode-container">
-			<div class="qrcode" id="qrcode"></div>
-			<img src="../../src/img/qrcodespace.png" alt="">
+    	<div class="center">
+	    	<div class="qrcode-container">
+				<div class="qrcode" id="qrcode"></div>
+				<img src="../../src/img/qrcodespace.png" alt="">
+			</div>
+			<div class="separe"></div>
+			<div class="code" id="code"></div>
 		</div>
-		<div class="separe"></div>
-		<div class="code" id="code"></div>
     </div>
   </template>
 
