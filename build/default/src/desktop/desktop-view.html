@@ -56,13 +56,13 @@
 		z-index:2;
 	  }
 
-	  .qrcode-container img{
+	  .qrcode-container .qrimg{
 	  	display: inline-block;
 	  	position: absolute;
-	  	top:25px;
-	  	left:25px;
-	  	width: calc(100% - 50px);
-		height: calc(100% - 50px);
+	  	top:1px;
+	  	left:1px;
+	  	width: calc(100% - 2px);
+		height: calc(100% - 2px);
 		z-index:1;
 	  }
 
@@ -89,7 +89,7 @@
     	<div class="center">
 	    	<div class="qrcode-container">
 				<div class="qrcode" id="qrcode"></div>
-				<img src="../../src/img/qrcodespace.png" alt="">
+				<img src="../../src/img/qrcodespace.png" class="qrimg" alt="">
 			</div>
 			<div class="separe"></div>
 			<div class="code" id="code"></div>
