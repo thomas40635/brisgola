@@ -15,7 +15,8 @@ try{
             ));
 
     $data = $req->fetchAll();
-    $players = json_encode($data);
+    $players = (string) $data;
+    echo $players;
     return $players;
 }
 
