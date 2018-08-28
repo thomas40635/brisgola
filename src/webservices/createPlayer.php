@@ -27,7 +27,7 @@ try{
     }
 
     $req = $PDO->prepare("UPDATE Party SET ".$player." = :playerID WHERE code = :code");
-    echo $req;
+    print_r($req);
     $req->execute(array(
             "code" => $code,
             "playerID" => $playerID
