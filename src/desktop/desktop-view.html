@@ -66,8 +66,15 @@
 		z-index:1;
 	  }
 
+	  .separe{
+	  	height:20px;
+	  }
+
 	  .code{
 	  	font-size:24px;
+		font-weight:900;
+		letter-spacing: 6px;
+		display: inline-block;
 	  }
 
     </style>
@@ -115,7 +122,7 @@
       start(){
       	var rand = Math.floor((Math.random() * 99) + 1)
       	var pick = Math.floor((Math.random() * 4))
-      	var planets = ["Saturne","Orion","Mars","Venus","Lune"];
+      	var planets = ["TERRE","ORION","MARS","VENUS","LUNE"];
       	this.set('code', planets[pick]+rand)
       	this.$.code.innerHTML = "#"+this.code
       	var qrcode = new QRCode(this.$.qrcode, {
