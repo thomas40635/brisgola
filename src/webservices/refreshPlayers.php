@@ -15,8 +15,8 @@ try{
             ));
 
     $data = $req->fetchAll();
-
-    return $data;
+    $players = json_encode($data)
+    return $players;
 }
 
 catch(PDOException $e){
