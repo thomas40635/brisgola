@@ -107,15 +107,16 @@ class DesktopView extends Polymer.Element {
     });
     this.$.createParty.body = JSON.stringify(this.code);
     this.$.createParty.generateRequest();
+    this.refreshPlayers();
+  }
 
-    function timeout() {
-      setTimeout(function () {
-        this.$.refreshPlayers.body = JSON.stringify(this.code);
-        this.$.refreshPlayers.generateRequest();
-        console.log("check players : " + this.code);
-        timeout();
-      }, 1000);
-    }
+  refreshPlayers() {
+    setTimeout(function () {
+      this.$.refreshPlayers.body = JSON.stringify(this.code);
+      this.$.refreshPlayers.generateRequest();
+      console.log("check players : " + this.code);
+      timeout();
+    }, 1000);
   }
 
 }
