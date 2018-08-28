@@ -88,22 +88,20 @@
 	  	padding:10px;
 	  	width:180px;
 	  	color:#483c6c;
-	  	font-size:24px;
-	  	font-weight:900;
+	  	font-size:18px;
+	  	font-weight:100;
 	  	background: #f1f0f3;
 	  	margin:0px 10px;
 	  	display: inline-block;
 	  }
 
-	  .player span{
-	  	color:#d4cfde;
-	  	display:block;
+	  .player-active{
+	  	color:#483c6c;
+	  	font-weight:900;
+	  	background: #31ee93;
+	  	box-shadow:0px 20px 30px #a0f7cd;
 	  }
 
-	  .player span[hidden]{
-	  	color:#d4cfde;
-	  	display:none;
-	  }
 
 	  .bottom{
 	  	bottom:40px;
@@ -133,9 +131,9 @@
 		</div>
 		<div class="bottom">
 			<div class="players">
-				<div class="player">{{player1}}<span hidden$="{{player1}}">Aucun joueur</span></div>
-				<div class="player">{{player2}}<span hidden$="{{player2}}">Aucun joueur</span></div>
-				<div class="player">{{player3}}<span hidden$="{{player3}}">Aucun joueur</span></div>
+				<div class="player" id="player1"></div>
+				<div class="player" id="player2"></div>
+				<div class="player" id="player3"></div>
 			</div>
 		</div>
     </div>
@@ -175,9 +173,36 @@ class DesktopView extends Polymer.Element {
 
   playersConnect() {
     var players = this.$.refreshPlayers.lastResponse;
-    this.set('player1', this.$.refreshPlayers.lastResponse[0]);
-    this.set('player2', this.$.refreshPlayers.lastResponse[1]);
-    this.set('player3', this.$.refreshPlayers.lastResponse[2]);
+
+    if (this.$.refreshPlayers.lastResponse[0]) {
+      this.set('player1', this.$.refreshPlayers.lastResponse[0]);
+      this.$.player1.innerHTML = this.player1;
+      this.$.player1.classList.add("player-active");
+    } else {
+      this.set('player1', null);
+      this.$.player1.innerHTML = "Aucun joueur";
+      this.$.player1.classList.remove("player-active");
+    }
+
+    if (this.$.refreshPlayers.lastResponse[1]) {
+      this.set('player2', this.$.refreshPlayers.lastResponse[1]);
+      this.$.player2.innerHTML = this.player2;
+      this.$.player2.classList.add("player-active");
+    } else {
+      this.set('player2', null);
+      this.$.player2.innerHTML = "Aucun joueur";
+      this.$.player2.classList.remove("player-active");
+    }
+
+    if (this.$.refreshPlayers.lastResponse[2]) {
+      this.set('player3', this.$.refreshPlayers.lastResponse[2]);
+      this.$.player3.innerHTML = this.player3;
+      this.$.player3.classList.add("player-active");
+    } else {
+      this.set('player3', null);
+      this.$.player3.innerHTML = "Aucun joueur";
+      this.$.player3.classList.remove("player-active");
+    }
   }
 
   refreshPlayers() {
