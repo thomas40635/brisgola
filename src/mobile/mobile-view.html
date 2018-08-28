@@ -103,7 +103,7 @@
           
         };
       }
-      
+
       start(){
       	if(this.$_GET('code')){
       		this.$.code.value = this.$_GET('code');
@@ -114,7 +114,7 @@
       	var rand = Math.floor((Math.random() * 999999) + 1)
       	var playerID = rand.toString().padStart(6, "0");
 
-      	this.$.createPlayer.body = '{"code": '+this.$.code.value+',"playerID": '+playerID+'}';
+      	this.$.createPlayer.body = '{"code": "'+this.$.code.value+'","playerID": '+playerID+'}';
   		this.$.createPlayer.generateRequest();
       }
 
