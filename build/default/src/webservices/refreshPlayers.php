@@ -17,7 +17,7 @@ try{
     $data = $req->fetchAll();
     // $players = [$data['player1'],$data['player2'],$data['player3']];
     // echo $code;
-    echo "DATA : ".$data;
+    print_r($data);
     // return $players;
 }
 
