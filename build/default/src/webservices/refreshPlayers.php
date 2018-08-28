@@ -15,7 +15,8 @@ try{
             ));
 
     $data = $req->fetchAll();
-    $players = $data[0][0];
+    $players = [$data[0][0],$data[0][1],$data[0][2]];
+    $players = json_encode($players);
     echo $players;
     return $players;
 }
