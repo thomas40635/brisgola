@@ -9,6 +9,8 @@ try{
     $code = $json["code"];
     $playerID = $json["playerID"];
 
+    print_r($code);
+
     $req = $PDO->prepare("SELECT player1,player2,player3 FROM Party WHERE code = :code");
 
     $req->execute(array(
@@ -27,7 +29,6 @@ try{
     }
 
     $req = $PDO->prepare("UPDATE Party SET ".$player." = :playerID WHERE code = :code");
-    print_r($req);
     $req->execute(array(
             "code" => $code,
             "playerID" => $playerID
