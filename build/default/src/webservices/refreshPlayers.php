@@ -17,8 +17,8 @@ try{
 
     $data = $req->fetchAll();
     $players = [$data['player1'],$data['player2'],$data['player3']];
+    echo $data['player1'];
     return $players;
-
 }
 
 catch(PDOException $e){
