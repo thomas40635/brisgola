@@ -154,10 +154,10 @@
 
       start(){
       	this.set('step', "home")
-      	if(this.$_GET('code')){
-      		this.$.code.value = this.$_GET('code');
-      		this.set('step', "connect")
-      	}
+      	// if(this.$_GET('code')){
+      	// 	this.$.code.value = this.$_GET('code');
+      	// 	this.set('step', "connect")
+      	// }
       	var rand = Math.floor((Math.random() * 99) + 1)
       	var playerID = "player"+rand;
       	this.$.pseudo.value = playerID;
