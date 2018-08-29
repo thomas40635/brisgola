@@ -117,13 +117,14 @@ class MobileView extends Polymer.Element {
   static get properties() {
     return {
       step: {
-        value: "home",
         observer: 'stepChanged'
       }
     };
   }
 
   start() {
+    this.set('step', "home");
+
     if (this.$_GET('code')) {
       // this.$.code.value = this.$_GET('code');
       this.set('step', "connect");
