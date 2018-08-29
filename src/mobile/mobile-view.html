@@ -109,6 +109,14 @@
 		width:calc(100% - 40px);
 		margin:0px 20px;
 		text-align:center;
+		position: relative;
+		top:0px;
+	  }
+	  .big-button-disabled{
+		transform:scale(0.8);
+		opacity: 0.4;
+		top:-50px;
+		transition:0.5s;
 	  }
 	  .textbox{
 		border-radius: 100px;
@@ -204,7 +212,7 @@
 			</div>
 		</div>
 		<div class="bottom">
-			<div class="big-button" on-click="nextStep">
+			<div class="big-button" id="playButton" on-click="nextStep">
 				Toucher pour jouer
 			</div>
 		</div>
@@ -294,6 +302,7 @@
       nextStep(){
       	console.log(this.step)
       	if(this.step == "home"){
+      		this.$.playButton.classList.add("big-button-disabled")
       		this.set('step', "connect")
       	}
       	else if(this.step == "connect"){
