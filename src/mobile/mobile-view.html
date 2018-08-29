@@ -133,12 +133,12 @@
       start(){
       	this.set('step', "home")
       	if(this.$_GET('code')){
-      		// this.$.code.value = this.$_GET('code');
+      		this.$.code.value = this.$_GET('code');
       		this.set('step', "connect")
       	}
       	var rand = Math.floor((Math.random() * 99) + 1)
       	var playerID = "player"+rand;
-      	// this.$.pseudo.value = playerID;
+      	this.$.pseudo.value = playerID;
       }
 
       backStep(){
@@ -185,9 +185,9 @@
       }
 
       connect(){
-    //   	var playerID = this.$.pseudo.value
-    //   	this.$.createPlayer.body = '{"code": "'+this.$.code.value+'","playerID": "'+playerID+'"}';
-  		// this.$.createPlayer.generateRequest();
+    	var playerID = this.$.pseudo.value
+    	this.$.createPlayer.body = '{"code": "'+this.$.code.value+'","playerID": "'+playerID+'"}';
+  		this.$.createPlayer.generateRequest();
       }
 
 	     $_GET(param) {
