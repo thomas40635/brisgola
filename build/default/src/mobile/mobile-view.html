@@ -323,10 +323,10 @@ class MobileView extends Polymer.Element {
       self.$.refreshPlayers.generateRequest();
       console.log("check players : " + self.code);
 
-      if (this.$.refreshPlayers.lastResponse[0] && this.$.refreshPlayers.lastResponse[1] && this.$.refreshPlayers.lastResponse[2]) {
+      if (self.$.refreshPlayers.lastResponse[0] && self.$.refreshPlayers.lastResponse[1] && self.$.refreshPlayers.lastResponse[2]) {
         setTimeout(function () {
-          this.$.load.classList.remove("pop-active");
-          this.set('step', "game");
+          self.$.load.classList.remove("pop-active");
+          self.set('step', "game");
         }, 2000);
         return;
       }
