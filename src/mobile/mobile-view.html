@@ -36,7 +36,7 @@
 	  	top:0px;
 	  	left:0px;
 	  	z-index:1;
-	  	transition:all 0.2s;
+	  	transition:all 0.5s;
 	  }
 	  .part-previous{
 	  	top:-100%;
@@ -85,7 +85,7 @@
 	
 	<div class="page">
 
-	<div class="part" id="home">
+	<div class="part part-focus" id="home">
 		<div class="bottom">
 			<div class="big-button">
 				Home
@@ -93,7 +93,7 @@
 		</div>
     </div>
 	
-	<div class="part" id="connect">
+	<div class="part part-next" id="connect">
 		<div class="bottom">
 			<div class="big-button" on-click="nextStep">
 				Connect
@@ -101,7 +101,7 @@
 		</div>
     </div>
 	
-	<div class="part" id="game">
+	<div class="part part-next" id="game">
 		<div class="bottom">
 			<div class="big-button" on-click="nextStep">
 				PLay
