@@ -250,6 +250,11 @@
 				Planète <i>{{code}}</i>
 			</div>
 		</div>
+		<div class="center">
+			<div class="canvas">
+				<canvas id="sketchpad"></canvas>
+			</div>
+		</div>
 		<div class="bottom">
 			<div class="big-button" on-click="nextStep">
 				Valider
@@ -360,6 +365,7 @@
   					setTimeout(function () {
   						self.$.load.classList.remove("pop-active")
   						self.set('step', "game")
+  						self.init()
   					}, 2000);
   					return;
   				}
@@ -410,6 +416,99 @@
 		}
 		return vars;
 	}
+
+
+
+
+
+
+
+
+	//CANVAS
+
+	drawDot(size) {
+
+        this.ctx.beginPath();
+        this.ctx.fillStyle = "#2b3032";
+        this.ctx.arc(this.mouseX, this.mouseY, size, 0, Math.PI*2, true);
+        this.ctx.closePath();
+        this.ctx.fill();
+
+
+        if(this.lastPosX !== null){
+          this.ctx.beginPath();
+          this.ctx.strokeStyle="#2b3032";
+          this.ctx.lineWidth=3;
+          this.ctx.moveTo(this.lastPosX,this.lastPosY);
+          this.ctx.lineTo(this.mouseX,this.mouseY);
+          this.ctx.stroke();
+
+          this.ctx.closePath();
+          this.ctx.fill();
+
+        }
+
+        this.lastPosX = this.mouseX
+        this.lastPosY = this.mouseY
+
+    }
+
+    clearCanvas() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+
+    sketchpad_mouseDown(e) {
+        this.getMousePos(e);
+        this.mouseDown=1;
+        this.drawDot(1);
+    }
+
+    sketchpad_mouseUp() {
+
+      this.mouseDown=0;
+      this.lastPosX = null
+      this.lastPosY = null
+      var sign = this.canvas.toDataURL();
+
+    }
+
+    sketchpad_mouseMove(e) {
+        e.preventDefault();
+
+        this.getMousePos(e);
+
+        if (this.mouseDown==1) {
+            this.drawDot(1);
+        }
+    }
+
+    getMousePos(e) {
+
+    if (!e)
+      e = event;
+
+      this.rect = this.$.sketchpad.getBoundingClientRect();
+
+      this.mouseX = e.targetTouches[0].clientX - this.rect.left;
+      this.mouseY = e.targetTouches[0].clientY - this.rect.top;
+    }
+
+	init() {
+
+        this.$.sketchpad.width = window.innerWidth - 50
+        this.$.sketchpad.height = window.innerHeight - 290
+
+        this.canvas = this.$.sketchpad;
+
+        if (this.canvas.getContext)
+            this.ctx = this.canvas.getContext('2d');
+
+        if (this.ctx) {
+            this.canvas.addEventListener('touchstart', this.sketchpad_mouseDown.bind(this), false);
+            this.canvas.addEventListener('touchmove', this.sketchpad_mouseMove.bind(this), false);
+            window.addEventListener('touchend', this.sketchpad_mouseUp.bind(this), false);
+        }
+      }
     }
 
     window.customElements.define(MobileView.is, MobileView);
