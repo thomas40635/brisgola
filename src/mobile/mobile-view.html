@@ -189,6 +189,7 @@
 	  }
 	  .actions{
 	  	bottom:-20px;
+	  	left:-10px;
 	  	left:50%;
 	  	transform:translateX(-50%);
 	  	z-index:5;
@@ -297,13 +298,13 @@
 			<div class="canvas">
 				<canvas id="sketchpad"></canvas>
 				<div class="actions">
-					<div class="button-canvas">
-						<img src="../../src/img/delete.png" alt="">
+					<div class="button-canvas" on-click="setDrawPen">
+						<img src="../../src/img/draw.png" alt="">
 					</div>
-					<div class="button-canvas">
-						<img src="../../src/img/delete.png" alt="">
+					<div class="button-canvas" on-click="setDrawClear">
+						<img src="../../src/img/clear.png" alt="">
 					</div>
-					<div class="button-canvas">
+					<div class="button-canvas" on-click="clearCanvas">
 						<img src="../../src/img/delete.png" alt="">
 					</div>
 				</div>
@@ -335,6 +336,9 @@
         return {
           step:{
           	observer:'stepChanged'
+          },
+          color:{
+          	value:"#493d6b"
           }
         };
       }
@@ -484,7 +488,7 @@
 	drawDot(size) {
 
         this.ctx.beginPath();
-        this.ctx.fillStyle = "#493d6b";
+        this.ctx.fillStyle = this.color;
         this.ctx.arc(this.mouseX, this.mouseY, size, 0, Math.PI*2, true);
         this.ctx.closePath();
         this.ctx.fill();
@@ -492,7 +496,7 @@
 
         if(this.lastPosX !== null){
           this.ctx.beginPath();
-          this.ctx.strokeStyle="#493d6b";
+          this.ctx.strokeStyle= this.color;
           this.ctx.lineWidth=3;
           this.ctx.moveTo(this.lastPosX,this.lastPosY);
           this.ctx.lineTo(this.mouseX,this.mouseY);
@@ -510,6 +514,14 @@
 
     clearCanvas() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+
+    setDrawClear() {
+        this.set('color', "#fff")
+    }
+
+    setDrawPen() {
+        this.set('color', "#493d6b")
     }
 
     sketchpad_mouseDown(e) {
