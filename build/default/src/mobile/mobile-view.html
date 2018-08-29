@@ -325,7 +325,7 @@ class MobileView extends Polymer.Element {
       color: {
         value: "#493d6b"
       },
-      penSize: {
+      pensize: {
         value: "3"
       }
     };
@@ -470,7 +470,7 @@ class MobileView extends Polymer.Element {
   drawDot(size) {
     this.ctx.beginPath();
     this.ctx.fillStyle = this.color;
-    this.ctx.arc(this.mouseX, this.mouseY, size, 0, Math.PI * 2, true);
+    this.ctx.arc(this.mouseX, this.mouseY, this.pensize, 0, Math.PI * 2, true);
     this.ctx.closePath();
     this.ctx.fill();
 
@@ -495,18 +495,18 @@ class MobileView extends Polymer.Element {
 
   setDrawClear() {
     this.set('color', "#fff");
-    this.set('penSize', "10");
+    this.set('pensize', "10");
   }
 
   setDrawPen() {
     this.set('color', "#493d6b");
-    this.set('penSize', "3");
+    this.set('pensize', "3");
   }
 
   sketchpad_mouseDown(e) {
     this.getMousePos(e);
     this.mouseDown = 1;
-    this.drawDot(this.size);
+    this.drawDot(this.pensize);
   }
 
   sketchpad_mouseUp() {
