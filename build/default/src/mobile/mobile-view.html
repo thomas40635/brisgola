@@ -44,6 +44,26 @@
 	  .part-next{
 	  	top:100%;
 	  }
+	  .top{
+		position: absolute;
+		top:20px;
+		width:100%;
+		text-align:center;
+	  }
+	  .title{
+		font-size:48px;
+		font-weight: 900;
+		color:#fff;
+		text-align: center;
+		text-shadow:0px 10px 10px rgba(72,60,108,0.5);
+	  }
+	  .sub-title{
+		font-size:16px;
+		font-weight: 900;
+		color:#fff;
+		text-align: center;
+		text-shadow:0px 10px 10px rgba(72,60,108,0.5);
+	  }
 	  .bottom{
 		position: absolute;
 		bottom:20px;
@@ -80,7 +100,7 @@
 		text-align:center;
 		border:none;
 		font-family: "Google Sans";
-		margin-bottom:20px;
+		margin-bottom:10px;
 	  }
     </style>
 
@@ -94,27 +114,45 @@
 	<div class="page">
 
 	<div class="part part-focus" id="home">
+		<div class="top">
+			<div class="sub-title">
+				Bienvenu dans
+			</div>
+			<div class="title">
+				LE JEU
+			</div>
+		</div>
 		<div class="bottom">
 			<div class="big-button" on-click="nextStep">
-				Home
+				Toucher pour jouer
 			</div>
 		</div>
     </div>
 	
 	<div class="part part-next" id="connect">
+		<div class="top">
+			<div class="title">
+				Rejoindre une partie
+			</div>
+		</div>
 		<div class="bottom">
 			<input type="text" class="textbox" id="code" placeholder="PLANETE">
 			<input type="text" class="textbox" id="pseudo" placeholder="PSEUDO">
 			<div class="big-button" on-click="nextStep">
-				Connect
+				Se connecter
 			</div>
 		</div>
     </div>
 	
 	<div class="part part-next" id="game">
+		<div class="top">
+			<div class="title">
+				Vous êtes connecté
+			</div>
+		</div>
 		<div class="bottom">
 			<div class="big-button" on-click="nextStep">
-				PLay
+				Valider
 			</div>
 		</div>
     </div>
