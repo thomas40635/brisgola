@@ -492,7 +492,12 @@
 
         this.ctx.beginPath();
         this.ctx.fillStyle = this.color;
-        this.ctx.arc(this.mouseX, this.mouseY, size, 0, Math.PI*2, true);
+        if(this.pensize == 30){
+        this.ctx.arc(this.mouseX, this.mouseY, this.pensize, 0, Math.PI*2, true);
+        }
+        else{
+        	this.ctx.arc(this.mouseX, this.mouseY, size, 0, Math.PI*2, true);
+        }
         this.ctx.closePath();
         this.ctx.fill();
 
