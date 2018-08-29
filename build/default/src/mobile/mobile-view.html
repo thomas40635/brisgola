@@ -18,13 +18,31 @@
 	  	width:100%;
 	  	position: absolute;
 	  	left:0px;
-	  	top:0px;
 	  	z-index:0;
+	  }
+	  .background-1{
+	  	top:0px;
+	  }
+	  .background-2{
+	  	top:50px;
+	  }
+	  .background-3{
+	  	top:100px;
 	  }
 	  .part{
 	  	height:100%;
-	  	position: relative;
+	  	width:100%;
+	  	position: absolute;
+	  	top:0px;
+	  	left:0px;
 	  	z-index:1;
+	  	transition:all 0.2s;
+	  }
+	  .part-previous{
+	  	top:-100%;
+	  }
+	  .part-next{
+	  	top:100%;
 	  }
 	  .bottom{
 		position: absolute;
@@ -57,22 +75,32 @@
 	
 	<div class="page">
 
-	<div class="part">
+	<div class="part" id="home">
 		<div class="bottom">
 			<div class="big-button">
-				Toucher pour jouer
+				Home
 			</div>
 		</div>
     </div>
 	
-	<div class="part">
+	<div class="part" id="connect">
 		<div class="bottom">
-			<div class="big-button">
-				Toucher pour jouer
+			<div class="big-button" on-click="nextStep">
+				Connect
 			</div>
 		</div>
     </div>
-	<img src="../../src/img/mobile-background.png" class="background" alt="">
+	
+	<div class="part" id="game">
+		<div class="bottom">
+			<div class="big-button" on-click="nextStep">
+				PLay
+			</div>
+		</div>
+    </div>
+
+	<img src="../../src/img/mobile-background.png" id="background" class="background" alt="">
+
     </div>
 
   </template>
@@ -87,17 +115,59 @@ class MobileView extends Polymer.Element {
   }
 
   static get properties() {
-    return {};
+    return {
+      step: {
+        value: "home",
+        observer: 'stepChanged'
+      }
+    };
   }
 
   start() {
     if (this.$_GET('code')) {
       this.$.code.value = this.$_GET('code');
+      this.set('step', "connect");
     }
 
     var rand = Math.floor(Math.random() * 99 + 1);
     var playerID = "player" + rand;
     this.$.pseudo.value = playerID;
+  }
+
+  backStep() {
+    if (this.step == "connect") {
+      this.set('step', "home");
+    }
+
+    if (this.step == "game") {
+      this.set('step', "connect");
+    }
+  }
+
+  nextStep() {
+    if (this.step == "home") {
+      this.set('step', "connect");
+    }
+
+    if (this.step == "connect") {
+      this.set('step', "game");
+    }
+  }
+
+  stepChanged() {
+    if (this.step == "home") {
+      this.$.home.classList.add("part-focus");
+      this.$.connect.classList.add("part-next");
+      this.$.home.classList.add("part-next");
+    } else if (this.step == "connect") {
+      this.$.home.classList.add("part-previous");
+      this.$.connect.classList.add("part-focus");
+      this.$.home.classList.add("part-next");
+    } else if (this.step == "game") {
+      this.$.home.classList.add("part-previous");
+      this.$.connect.classList.add("part-previous");
+      this.$.home.classList.add("part-focus");
+    }
   }
 
   connect() {
