@@ -154,6 +154,10 @@ class MobileView extends Polymer.Element {
   }
 
   stepChanged() {
+    this.$.home.className = "part";
+    this.$.connect.className = "part";
+    this.$.home.className = "part";
+
     if (this.step == "home") {
       this.$.home.classList.add("part-focus");
       this.$.connect.classList.add("part-next");
