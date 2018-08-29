@@ -126,6 +126,21 @@
 		font-family: "Google Sans";
 		margin-bottom:10px;
 	  }
+	  .pop{
+	  	position: absolute;
+	  	top:0px;
+	  	left:0px;
+	  	height:100%;
+	  	width:100%;
+	  	background: rgba(72,60,108,0.75);
+	  	color:#fff;
+	  }
+	  .center{
+	  	top:50%;
+	  	left:50%;
+		position: absolute;
+		transform:translateX(-50%) translateY(-50%);
+	  }
     </style>
 
     <app-location route="{{route}}"></app-location>
@@ -169,10 +184,15 @@
 				Rejoindre une partie
 			</div>
 		</div>
+		<div class="pop">
+			<div class="center">
+				Chargement...
+			</div>
+		</div>
 		<div class="bottom">
 			<input type="text" class="textbox" id="code" placeholder="PLANETE">
 			<input type="text" class="textbox" id="pseudo" placeholder="PSEUDO">
-			<div class="big-button" on-click="nextStep">
+			<div class="big-button" on-click="connect">
 				Se connecter
 			</div>
 		</div>
