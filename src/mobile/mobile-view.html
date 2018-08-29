@@ -339,6 +339,9 @@
           },
           color:{
           	value:"#493d6b"
+          },
+          penSize:{
+          	value:"3"
           }
         };
       }
@@ -497,7 +500,7 @@
         if(this.lastPosX !== null){
           this.ctx.beginPath();
           this.ctx.strokeStyle= this.color;
-          this.ctx.lineWidth=3;
+          this.ctx.lineWidth= this.penSize;
           this.ctx.moveTo(this.lastPosX,this.lastPosY);
           this.ctx.lineTo(this.mouseX,this.mouseY);
           this.ctx.stroke();
@@ -518,16 +521,18 @@
 
     setDrawClear() {
         this.set('color', "#fff")
+        this.set('penSize', "10")
     }
 
     setDrawPen() {
         this.set('color', "#493d6b")
+        this.set('penSize', "3")
     }
 
     sketchpad_mouseDown(e) {
         this.getMousePos(e);
         this.mouseDown=1;
-        this.drawDot(1);
+        this.drawDot(this.size);
     }
 
     sketchpad_mouseUp() {
