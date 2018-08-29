@@ -8,6 +8,8 @@
 	    width:100%;
 	  	height:100%;
 	  	position: relative;
+	  }
+	  .page{
 	  	background: url(../img/mobile-background.png) no-repeat center top fixed; 
 		-webkit-background-size: cover;
 		-moz-background-size: cover;
@@ -47,6 +49,8 @@
 
     <app-route route="{{route}}" pattern="/:view" data="{{routeData}}" tail="{{subroute}}"></app-route>
 	
+	<div class="page">
+
 	<div class="part">
 		<div class="bottom">
 			<div class="big-button">
@@ -62,6 +66,9 @@
 			</div>
 		</div>
     </div>
+
+    </div>
+
   </template>
 
   <script>/**
