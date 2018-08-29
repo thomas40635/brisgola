@@ -187,6 +187,29 @@
 		height:100%;
 		width:100%;
 	  }
+	  .actions{
+	  	bottom:-10px;
+	  	left:50%;
+	  	position: absolute;
+	  	transform:translateX(-50%);
+	  	display: inline-block;
+	  }
+	  .button-canvas{
+	  	width:50px;
+	  	height:50px;
+	  	border-radius:100px;
+	  	background: #fff;
+	  	box-shadow:0px 10px 10px rgba(72,60,108,0.5),
+		0px -8px 0px 0px rgba(72,60,108,0.15) inset;
+		margin:0px 10px;
+		float:left;
+	  }
+	  .button-canvas img{
+	  	top:50%;
+	  	left:50%;
+	  	transform:translateX(-50%) translateY(-50%);
+	  	position: relative;
+	  }
     </style>
 
     <app-location route="{{route}}"></app-location>
@@ -269,6 +292,17 @@
 		<div class="center">
 			<div class="canvas">
 				<canvas id="sketchpad"></canvas>
+				<div class="actions">
+					<div class="button-canvas">
+						<img src="../../src/img/delete.png" alt="">
+					</div>
+					<div class="button-canvas">
+						<img src="../../src/img/delete.png" alt="">
+					</div>
+					<div class="button-canvas">
+						<img src="../../src/img/delete.png" alt="">
+					</div>
+				</div>
 				<div class="canvas-fond"></div>
 			</div>
 		</div>
