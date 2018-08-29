@@ -424,14 +424,14 @@ class MobileView extends Polymer.Element {
 
   drawDot(size) {
     this.ctx.beginPath();
-    this.ctx.fillStyle = "#2b3032";
+    this.ctx.fillStyle = "#493d6b";
     this.ctx.arc(this.mouseX, this.mouseY, size, 0, Math.PI * 2, true);
     this.ctx.closePath();
     this.ctx.fill();
 
     if (this.lastPosX !== null) {
       this.ctx.beginPath();
-      this.ctx.strokeStyle = "#2b3032";
+      this.ctx.strokeStyle = "#493d6b";
       this.ctx.lineWidth = 3;
       this.ctx.moveTo(this.lastPosX, this.lastPosY);
       this.ctx.lineTo(this.mouseX, this.mouseY);
