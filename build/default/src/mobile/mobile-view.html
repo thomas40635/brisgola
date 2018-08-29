@@ -220,19 +220,23 @@ class MobileView extends Polymer.Element {
     this.$.home.className = "part";
     this.$.connect.className = "part";
     this.$.game.className = "part";
+    this.$.background.className = "background";
 
     if (this.step == "home") {
       this.$.home.classList.add("part-focus");
       this.$.connect.classList.add("part-next");
       this.$.game.classList.add("part-next");
+      this.$.background.classList.add("background-1");
     } else if (this.step == "connect") {
       this.$.home.classList.add("part-previous");
       this.$.connect.classList.add("part-focus");
       this.$.game.classList.add("part-next");
+      this.$.background.classList.add("background-2");
     } else if (this.step == "game") {
       this.$.home.classList.add("part-previous");
       this.$.connect.classList.add("part-previous");
       this.$.game.classList.add("part-focus");
+      this.$.background.classList.add("background-3");
     }
   }
 
