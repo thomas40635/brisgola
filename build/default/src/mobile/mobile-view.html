@@ -155,6 +155,10 @@
 		transform:translateX(-50%) translateY(-50%);
 		text-align:center;
 	  }
+	  .info{
+	  	color:#fff;
+	  	font-size:12px;
+	  }
     </style>
 
     <app-location route="{{route}}"></app-location>
@@ -200,7 +204,9 @@
 			</div>
 		</div>
 		<div class="bottom">
-			<input type="text" class="textbox" id="code" placeholder="PLANETE">
+			<div class="info">Choisissez une planète</div>
+			<input type="text" class="textbox" id="code" placeholder="...">
+			<div class="info">Choisissez un pseudo</div>
 			<input type="text" class="textbox" id="pseudo" placeholder="PSEUDO">
 			<div class="big-button" on-click="connect">
 				Se connecter
