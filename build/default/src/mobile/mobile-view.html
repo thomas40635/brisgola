@@ -161,7 +161,7 @@
     <iron-ajax id="createPlayer" method="POST" url="../../src/webservices/createPlayer.php" content-type="application/json" handle-as="json" on-response="handleResponse">
     </iron-ajax>
 
-    <iron-ajax id="refreshPlayers" method="POST" url="../../src/webservices/refreshPlayers.php" content-type="application/json" handle-as="json" on-response="handleResponse" last-response="{{players}}">
+    <iron-ajax id="refreshPlayers" method="POST" url="../../src/webservices/refreshPlayers.php" content-type="application/json" handle-as="json" on-response="playersConnect" last-response="{{players}}">
     </iron-ajax>
 
     <app-route route="{{route}}" pattern="/:view" data="{{routeData}}" tail="{{subroute}}"></app-route>
