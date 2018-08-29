@@ -161,6 +161,9 @@
     <iron-ajax id="createPlayer" method="POST" url="../../src/webservices/createPlayer.php" content-type="application/json" handle-as="json" on-response="handleResponse">
     </iron-ajax>
 
+    <iron-ajax id="refreshPlayers" method="POST" url="../../src/webservices/refreshPlayers.php" content-type="application/json" handle-as="json" on-response="handleResponse" last-response="{{players}}">
+    </iron-ajax>
+
     <app-route route="{{route}}" pattern="/:view" data="{{routeData}}" tail="{{subroute}}"></app-route>
 	
 	<div class="page">
@@ -189,7 +192,10 @@
 		</div>
 		<div class="pop" id="load">
 			<div class="center">
-				Chargement...
+				En attente des joueurs<br>
+				<div id="player1"></div>
+				<div id="player2"></div>
+				<div id="player3"></div>
 			</div>
 		</div>
 		<div class="bottom">
@@ -302,9 +308,49 @@ class MobileView extends Polymer.Element {
 
   connect() {
     var playerID = this.$.pseudo.value;
-    this.$.createPlayer.body = '{"code": "' + this.$.code.value + '","playerID": "' + playerID + '"}';
+    this.set('code', this.$.code.value);
+    this.$.createPlayer.body = '{"code": "' + this.code + '","playerID": "' + playerID + '"}';
     this.$.createPlayer.generateRequest();
     this.$.load.classList.add("pop-active");
+    this.refreshPlayers();
+  }
+
+  refreshPlayers() {
+    var self = this;
+    setTimeout(function () {
+      self.$.refreshPlayers.body = '{"code": "' + self.code + '"}';
+      self.$.refreshPlayers.generateRequest();
+      console.log("check players : " + self.code);
+      self.refreshPlayers();
+    }, 1000);
+  }
+
+  playersConnect() {
+    var players = this.$.refreshPlayers.lastResponse;
+
+    if (this.$.refreshPlayers.lastResponse[0]) {
+      this.set('player1', this.$.refreshPlayers.lastResponse[0]);
+      this.$.player1.innerHTML = this.player1;
+    } else {
+      this.set('player1', null);
+      this.$.player1.innerHTML = "...";
+    }
+
+    if (this.$.refreshPlayers.lastResponse[1]) {
+      this.set('player2', this.$.refreshPlayers.lastResponse[1]);
+      this.$.player2.innerHTML = this.player2;
+    } else {
+      this.set('player2', null);
+      this.$.player2.innerHTML = "...";
+    }
+
+    if (this.$.refreshPlayers.lastResponse[2]) {
+      this.set('player3', this.$.refreshPlayers.lastResponse[2]);
+      this.$.player3.innerHTML = this.player3;
+    } else {
+      this.set('player3', null);
+      this.$.player3.innerHTML = "...";
+    }
   }
 
   $_GET(param) {
