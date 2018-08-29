@@ -69,6 +69,7 @@
 		top:20px;
 		width:100%;
 		text-align:center;
+		z-index: 3;
 	  }
 	  .title{
 		font-size:72px;
@@ -92,6 +93,7 @@
 		position: absolute;
 		bottom:20px;
 		width:100%;
+		z-index: 3;
 	  }
 	  .big-button{
 		border-radius: 100px;
@@ -134,6 +136,16 @@
 	  	width:100%;
 	  	background: rgba(72,60,108,0.75);
 	  	color:#fff;
+	  	z-index: 4;
+	  	opacity:0;
+	  	user-select: none;
+	  	pointer-events: none;
+	  	transition:all 0.2s;
+	  }
+	  .pop-active{
+	  	opacity:1;
+	  	user-select: auto;
+	  	pointer-events: auto;
 	  }
 	  .center{
 	  	top:50%;
@@ -184,7 +196,7 @@
 				Rejoindre une partie
 			</div>
 		</div>
-		<div class="pop">
+		<div class="pop" id="load">
 			<div class="center">
 				Chargement...
 			</div>
@@ -235,10 +247,10 @@
 
       start(){
       	this.set('step', "home")
-      	// if(this.$_GET('code')){
-      	// 	this.$.code.value = this.$_GET('code');
-      	// 	this.set('step', "connect")
-      	// }
+      	if(this.$_GET('code')){
+      		this.$.code.value = this.$_GET('code');
+      		this.set('step', "connect")
+      	}
       	var rand = Math.floor((Math.random() * 99) + 1)
       	var playerID = "player"+rand;
       	this.$.pseudo.value = playerID;
@@ -298,6 +310,7 @@
     	var playerID = this.$.pseudo.value
     	this.$.createPlayer.body = '{"code": "'+this.$.code.value+'","playerID": "'+playerID+'"}';
   		this.$.createPlayer.generateRequest();
+  		this.$.load.classList.add("pop-active")
       }
 
      $_GET(param) {
