@@ -144,6 +144,8 @@ class MobileView extends Polymer.Element {
   }
 
   nextStep() {
+    console.log(this.step);
+
     if (this.step == "home") {
       this.set('step', "connect");
     }
