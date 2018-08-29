@@ -21,6 +21,21 @@
 	  	z-index:0;
 	  	transition:all 0.5s;
 	  }
+	  .background-blur{
+	  	width:100%;
+	  	position: absolute;
+	  	left:0px;
+	  	z-index:0;
+	  	transition:all 0.5s;
+	  	animation-name: "blur";
+	  	animation-iteration-count: infinite;
+	  	animation-duration: 1s;
+	  	animation-fill-mode: backwards;
+	  }
+	  @key-frames blur{
+		0%   { opacity: 0; }
+  		100% { opacity: 1; }
+	  }
 	  .background-1{
 	  	top:0px;
 	  }
@@ -172,6 +187,7 @@
 		</div>
     </div>
 
+	<img src="../../src/img/mobile-background-blur.png" id="backgroundBlur" class="background-blur" alt="">
 	<img src="../../src/img/mobile-background.png" id="background" class="background" alt="">
 
     </div>
