@@ -18,7 +18,7 @@
 	  	width:100%;
 	  	position: absolute;
 	  	left:0px;
-	  	z-index:0;
+	  	z-index:-1;
 	  	transition:all 0.5s;
 	  }
 	  .background-blur{
@@ -32,7 +32,7 @@
 	  	animation-duration: 1s;
 	  	animation-fill-mode: backwards;
 	  }
-	  @key-frames blur{
+	  @keyframes blur{
 		0%   { opacity: 0; }
   		100% { opacity: 1; }
 	  }
@@ -245,24 +245,28 @@
       	this.$.connect.className = "part"
       	this.$.game.className = "part"
       	this.$.background.className = "background"
+      	this.$.backgroundBlur.className = "background-blur"
 
       	if(this.step == "home"){
       		this.$.home.classList.add("part-focus")
       		this.$.connect.classList.add("part-next")
       		this.$.game.classList.add("part-next")
       		this.$.background.classList.add("background-1")
+      		this.$.backgroundBlur.classList.add("background-1")
       	}
       	else if(this.step == "connect"){
       		this.$.home.classList.add("part-previous")
       		this.$.connect.classList.add("part-focus")
       		this.$.game.classList.add("part-next")
       		this.$.background.classList.add("background-2")
+      		this.$.backgroundBlur.classList.add("background-2")
       	}
       	else if(this.step == "game"){
       		this.$.home.classList.add("part-previous")
       		this.$.connect.classList.add("part-previous")
       		this.$.game.classList.add("part-focus")
       		this.$.background.classList.add("background-3")
+      		this.$.backgroundBlur.classList.add("background-3")
       	}
       }
 
@@ -272,20 +276,20 @@
   		this.$.createPlayer.generateRequest();
       }
 
-	     $_GET(param) {
-			var vars = {};
-			window.location.href.replace( location.hash, '' ).replace( 
-				/[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
-				function( m, key, value ) { // callback
-					vars[key] = value !== undefined ? value : '';
-				}
-			);
-
-			if ( param ) {
-				return vars[param] ? vars[param] : null;	
+     $_GET(param) {
+		var vars = {};
+		window.location.href.replace( location.hash, '' ).replace( 
+			/[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
+			function( m, key, value ) { // callback
+				vars[key] = value !== undefined ? value : '';
 			}
-			return vars;
+		);
+
+		if ( param ) {
+			return vars[param] ? vars[param] : null;	
 		}
+		return vars;
+	}
     }
 
     window.customElements.define(MobileView.is, MobileView);
