@@ -228,153 +228,157 @@
 
   </template>
 
-  <script>
-    /**
-     * @customElement
-     * @polymer
-     */
-    class MobileView extends Polymer.Element {
-      static get is() { return 'mobile-view'; }
-      static get properties() {
-        return {
-          step:{
-          	observer:'stepChanged'
-          }
-        };
+  <script>/**
+ * @customElement
+ * @polymer
+ */
+class MobileView extends Polymer.Element {
+  static get is() {
+    return 'mobile-view';
+  }
+
+  static get properties() {
+    return {
+      step: {
+        observer: 'stepChanged'
       }
+    };
+  }
 
-      start(){
-      	this.set('step', "home")
-      	if(this.$_GET('code')){
-      		this.$.code.value = this.$_GET('code');
-      		this.set('step', "connect")
-      	}
-      	var rand = Math.floor((Math.random() * 99) + 1)
-      	var playerID = "player"+rand;
-      	this.$.pseudo.value = playerID;
-      }
+  start() {
+    this.set('step', "home");
 
-      backStep(){
-      	if(this.step == "connect"){
-      		this.set('step', "home")
-      	}
-      	if(this.step == "game"){
-      		this.set('step', "connect")
-      	}
-      }
-
-      nextStep(){
-      	console.log(this.step)
-      	if(this.step == "home"){
-      		this.set('step', "connect")
-      	}
-      	else if(this.step == "connect"){
-      		this.set('step', "game")
-      	}
-      }
-
-      stepChanged(){
-      	console.log(this.step)
-      	this.$.home.className = "part"
-      	this.$.connect.className = "part"
-      	this.$.game.className = "part"
-      	this.$.background.className = "background"
-      	this.$.backgroundBlur.className = "background-blur"
-
-      	if(this.step == "home"){
-      		this.$.home.classList.add("part-focus")
-      		this.$.connect.classList.add("part-next")
-      		this.$.game.classList.add("part-next")
-      		this.$.background.classList.add("background-1")
-      		this.$.backgroundBlur.classList.add("background-1")
-      	}
-      	else if(this.step == "connect"){
-      		this.$.home.classList.add("part-previous")
-      		this.$.connect.classList.add("part-focus")
-      		this.$.game.classList.add("part-next")
-      		this.$.background.classList.add("background-2")
-      		this.$.backgroundBlur.classList.add("background-2")
-      	}
-      	else if(this.step == "game"){
-      		this.$.home.classList.add("part-previous")
-      		this.$.connect.classList.add("part-previous")
-      		this.$.game.classList.add("part-focus")
-      		this.$.background.classList.add("background-3")
-      		this.$.backgroundBlur.classList.add("background-3")
-      	}
-      }
-
-      connect(){
-    	var playerID = this.$.pseudo.value
-    	this.set('code',this.$.code.value)
-    	this.$.createPlayer.body = '{"code": "'+this.code+'","playerID": "'+playerID+'"}';
-  		this.$.createPlayer.generateRequest();
-  		this.$.load.classList.add("pop-active")
-  		this.refreshPlayers()
-      }
-
-      refreshPlayers() {
-      	var self = this
-		    setTimeout(function () {
-		        self.$.refreshPlayers.body = '{"code": "'+self.code+'"}';
-  				self.$.refreshPlayers.generateRequest();
-  				console.log("check players : "+self.code);
-  				if(this.$.refreshPlayers.lastResponse[0] && this.$.refreshPlayers.lastResponse[1] && this.$.refreshPlayers.lastResponse[2]){
-  					setTimeout(function () {
-  						this.$.load.classList.remove("pop-active")
-  						this.set('step', "game")
-  					}, 2000);
-  					break;
-  				}
-  				self.refreshPlayers();
-		    }, 1000);
-		}
-
-		playersConnect(){
-      	var players = this.$.refreshPlayers.lastResponse
-
-      	if(this.$.refreshPlayers.lastResponse[0]){
-      		this.set('player1',this.$.refreshPlayers.lastResponse[0])
-      		this.$.player1.innerHTML = this.player1
-      	}
-      	else{
-      		this.set('player1',null)
-      		this.$.player1.innerHTML = "..."
-      	}
-      	if(this.$.refreshPlayers.lastResponse[1]){
-      		this.set('player2',this.$.refreshPlayers.lastResponse[1])
-      		this.$.player2.innerHTML = this.player2
-      	}
-      	else{
-      		this.set('player2',null)
-      		this.$.player2.innerHTML = "..."
-      	}
-      	if(this.$.refreshPlayers.lastResponse[2]){
-      		this.set('player3',this.$.refreshPlayers.lastResponse[2])
-      		this.$.player3.innerHTML = this.player3
-      	}
-      	else{
-      		this.set('player3',null)
-      		this.$.player3.innerHTML = "..."
-      	}
-      }
-
-     $_GET(param) {
-		var vars = {};
-		window.location.href.replace( location.hash, '' ).replace( 
-			/[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
-			function( m, key, value ) { // callback
-				vars[key] = value !== undefined ? value : '';
-			}
-		);
-
-		if ( param ) {
-			return vars[param] ? vars[param] : null;	
-		}
-		return vars;
-	}
+    if (this.$_GET('code')) {
+      this.$.code.value = this.$_GET('code');
+      this.set('step', "connect");
     }
 
-    window.customElements.define(MobileView.is, MobileView);
-  </script>
+    var rand = Math.floor(Math.random() * 99 + 1);
+    var playerID = "player" + rand;
+    this.$.pseudo.value = playerID;
+  }
+
+  backStep() {
+    if (this.step == "connect") {
+      this.set('step', "home");
+    }
+
+    if (this.step == "game") {
+      this.set('step', "connect");
+    }
+  }
+
+  nextStep() {
+    console.log(this.step);
+
+    if (this.step == "home") {
+      this.set('step', "connect");
+    } else if (this.step == "connect") {
+      this.set('step', "game");
+    }
+  }
+
+  stepChanged() {
+    console.log(this.step);
+    this.$.home.className = "part";
+    this.$.connect.className = "part";
+    this.$.game.className = "part";
+    this.$.background.className = "background";
+    this.$.backgroundBlur.className = "background-blur";
+
+    if (this.step == "home") {
+      this.$.home.classList.add("part-focus");
+      this.$.connect.classList.add("part-next");
+      this.$.game.classList.add("part-next");
+      this.$.background.classList.add("background-1");
+      this.$.backgroundBlur.classList.add("background-1");
+    } else if (this.step == "connect") {
+      this.$.home.classList.add("part-previous");
+      this.$.connect.classList.add("part-focus");
+      this.$.game.classList.add("part-next");
+      this.$.background.classList.add("background-2");
+      this.$.backgroundBlur.classList.add("background-2");
+    } else if (this.step == "game") {
+      this.$.home.classList.add("part-previous");
+      this.$.connect.classList.add("part-previous");
+      this.$.game.classList.add("part-focus");
+      this.$.background.classList.add("background-3");
+      this.$.backgroundBlur.classList.add("background-3");
+    }
+  }
+
+  connect() {
+    var playerID = this.$.pseudo.value;
+    this.set('code', this.$.code.value);
+    this.$.createPlayer.body = '{"code": "' + this.code + '","playerID": "' + playerID + '"}';
+    this.$.createPlayer.generateRequest();
+    this.$.load.classList.add("pop-active");
+    this.refreshPlayers();
+  }
+
+  refreshPlayers() {
+    var self = this;
+    setTimeout(function () {
+      self.$.refreshPlayers.body = '{"code": "' + self.code + '"}';
+      self.$.refreshPlayers.generateRequest();
+      console.log("check players : " + self.code);
+
+      if (this.$.refreshPlayers.lastResponse[0] && this.$.refreshPlayers.lastResponse[1] && this.$.refreshPlayers.lastResponse[2]) {
+        setTimeout(function () {
+          this.$.load.classList.remove("pop-active");
+          this.set('step', "game");
+        }, 2000);
+        return;
+      }
+
+      self.refreshPlayers();
+    }, 1000);
+  }
+
+  playersConnect() {
+    var players = this.$.refreshPlayers.lastResponse;
+
+    if (this.$.refreshPlayers.lastResponse[0]) {
+      this.set('player1', this.$.refreshPlayers.lastResponse[0]);
+      this.$.player1.innerHTML = this.player1;
+    } else {
+      this.set('player1', null);
+      this.$.player1.innerHTML = "...";
+    }
+
+    if (this.$.refreshPlayers.lastResponse[1]) {
+      this.set('player2', this.$.refreshPlayers.lastResponse[1]);
+      this.$.player2.innerHTML = this.player2;
+    } else {
+      this.set('player2', null);
+      this.$.player2.innerHTML = "...";
+    }
+
+    if (this.$.refreshPlayers.lastResponse[2]) {
+      this.set('player3', this.$.refreshPlayers.lastResponse[2]);
+      this.$.player3.innerHTML = this.player3;
+    } else {
+      this.set('player3', null);
+      this.$.player3.innerHTML = "...";
+    }
+  }
+
+  $_GET(param) {
+    var vars = {};
+    window.location.href.replace(location.hash, '').replace(/[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
+    function (m, key, value) {
+      // callback
+      vars[key] = value !== undefined ? value : '';
+    });
+
+    if (param) {
+      return vars[param] ? vars[param] : null;
+    }
+
+    return vars;
+  }
+
+}
+
+window.customElements.define(MobileView.is, MobileView);</script>
 </dom-module>
