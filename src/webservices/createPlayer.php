@@ -17,23 +17,23 @@ try{
 
     $data = $req->fetchAll();
     if(count($data) == 0){
-        $order = 1;
+        $place = 1;
     }
     else if(count($data) == 1){
-        $order = 2;
+        $place = 2;
     }
     else if(count($data) == 2){
-        $order = 3;
+        $place = 3;
     }
     else{
-        $order = null;
+        $place = null;
     }
 
-    $req = $PDO->prepare("INSERT INTO Player (code, pseudo, order) VALUES (:code, :pseudo, :order)");
+    $req = $PDO->prepare("INSERT INTO Player (code, pseudo, place) VALUES (:code, :pseudo, :place)");
     $req->execute(array(
             "code" => $code,
             "pseudo" => $pseudo,
-            "order" => $order
+            "place" => $place
             ));
     $data = $req->fetchAll();
     print_r($req);
