@@ -28,7 +28,7 @@ try{
     else{
         $order = null;
     }
-    echo $order;
+
     $req = $PDO->prepare("INSERT INTO Player (code,pseudo,order,score) VALUES (:code,:pseudo,:order,:score)");
     $req->execute(array(
             "code" => $code,
@@ -37,7 +37,7 @@ try{
             "score" => 0
             ));
     $data = $req->fetchAll();
-
+    print_r($data);
 }
 
 catch(PDOException $e){
