@@ -289,9 +289,9 @@
 		<div class="pop" id="load">
 			<div class="center">
 				En attente des joueurs<br><br>
-				<div id="player1"></div>
-				<div id="player2"></div>
-				<div id="player3"></div>
+				<div id="player1">...</div>
+				<div id="player2">...</div>
+				<div id="player3">...</div>
 			</div>
 		</div>
 		<div class="bottom">
@@ -458,32 +458,9 @@
 
 		playersConnect(){
       	var players = this.$.refreshPlayers.lastResponse
-
-      	console.log(this.$.refreshPlayers.lastResponse[0][2]);
-
-      	if(this.$.refreshPlayers.lastResponse[0]){
-      		this.set('player1',this.$.refreshPlayers.lastResponse[0])
-      		this.$.player1.innerHTML = this.player1
-      	}
-      	else{
-      		this.set('player1',null)
-      		this.$.player1.innerHTML = "..."
-      	}
-      	if(this.$.refreshPlayers.lastResponse[1]){
-      		this.set('player2',this.$.refreshPlayers.lastResponse[1])
-      		this.$.player2.innerHTML = this.player2
-      	}
-      	else{
-      		this.set('player2',null)
-      		this.$.player2.innerHTML = "..."
-      	}
-      	if(this.$.refreshPlayers.lastResponse[2]){
-      		this.set('player3',this.$.refreshPlayers.lastResponse[2])
-      		this.$.player3.innerHTML = this.player3
-      	}
-      	else{
-      		this.set('player3',null)
-      		this.$.player3.innerHTML = "..."
+      	for (var i = 0; i < players.length; i++) {
+      		this.set('player'+i,players["pseudo"])
+      		this.shadowRoot.querySelector("player"+i).innerHTML = players[i]["pseudo"]
       	}
       }
 
