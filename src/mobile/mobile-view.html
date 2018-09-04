@@ -459,7 +459,7 @@
 		playersConnect(){
       	var players = this.$.refreshPlayers.lastResponse
 
-      	console.log(this.$.refreshPlayers.lastResponse);
+      	console.log(this.$.refreshPlayers.lastResponse[0][2]);
 
       	if(this.$.refreshPlayers.lastResponse[0]){
       		this.set('player1',this.$.refreshPlayers.lastResponse[0])
