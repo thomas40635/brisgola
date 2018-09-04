@@ -29,12 +29,11 @@ try{
         $order = null;
     }
 
-    $req = $PDO->prepare("INSERT INTO Player (code,pseudo,order,score) VALUES (:code,:pseudo,:order,:score)");
+    $req = $PDO->prepare("INSERT INTO Player (code, pseudo, order) VALUES (:code, :pseudo, :order)");
     $req->execute(array(
             "code" => $code,
             "pseudo" => $pseudo,
-            "order" => $order,
-            "score" => 0
+            "order" => $order
             ));
     $data = $req->fetchAll();
     print_r($data);
