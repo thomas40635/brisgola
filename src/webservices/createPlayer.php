@@ -9,7 +9,7 @@ try{
     $code = $json["code"];
     $pseudo = $json["playerID"];
 
-    $req = $PDO->prepare("SELECT * FROM Player WHERE code = :code");
+    $req = $PDO->prepare("SELECT Player.pseudo FROM Player WHERE Player.code = :code");
 
     $req->execute(array(
             "code" => $code
