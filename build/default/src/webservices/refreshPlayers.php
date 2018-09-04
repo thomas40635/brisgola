@@ -8,14 +8,16 @@ try{
 
     $code = $json["code"];
 
-    $req = $PDO->prepare("SELECT player1,player2,player3 FROM Party WHERE code = :code");
+    $req = $PDO->prepare("SELECT * FROM Player WHERE code = :code ORDER BY place");
 
     $req->execute(array(
             "code" => $code
             ));
 
     $data = $req->fetchAll();
-    $players = [$data[0][0],$data[0][1],$data[0][2]];
+    foreach ($data as $player) {
+    	$players[] = $player;
+    }
     $players = json_encode($players);
     echo $players;
     return $players;
