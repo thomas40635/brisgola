@@ -18,7 +18,7 @@ try{
     foreach ($data as $player) {
     	$players[] = $player;
     }
-    $players = json_encode($players);
+    $players = json_encode($players, true);
     echo $players;
     return $players;
 }
