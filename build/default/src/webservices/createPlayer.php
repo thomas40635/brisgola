@@ -25,7 +25,10 @@ try{
     else if(count($data) == 2){
         $order = 3;
     }
-
+    else{
+        $order = null;
+    }
+    echo $order
     $req = $PDO->prepare("INSERT INTO Player (code,pseudo,order,score) VALUES (:code,:pseudo,:order,:score)");
     $req->execute(array(
             "code" => $code,
