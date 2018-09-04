@@ -444,7 +444,7 @@
 		        self.$.refreshPlayers.body = '{"code": "'+self.code+'"}';
   				self.$.refreshPlayers.generateRequest();
   				console.log("check players : "+self.code);
-  				if(self.players.length == 3){
+  				if(self.player1 && self.player2 && self.player3){
   					setTimeout(function () {
   						self.$.load.classList.remove("pop-active")
   						self.set('step', "game")
@@ -460,10 +460,10 @@
       	var players = this.$.refreshPlayers.lastResponse
       	for (var i = 0; i < players.length; i++) {
       		var num = i + 1;
-      		this.set('player1',players[i]["pseudo"])
+      		this.set('player'+num,players["pseudo"])
       		this.shadowRoot.querySelector("#player"+num).innerHTML = players[i]["pseudo"]
       	}
-      	this.set('players',players)
+      	console.log(this.player1)
       }
 
      $_GET(param) {
