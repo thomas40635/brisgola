@@ -28,7 +28,7 @@ try{
     else{
         $order = null;
     }
-    echo $order
+    echo $order;
     $req = $PDO->prepare("INSERT INTO Player (code,pseudo,order,score) VALUES (:code,:pseudo,:order,:score)");
     $req->execute(array(
             "code" => $code,
