@@ -446,6 +446,7 @@ class MobileView extends Polymer.Element {
 
   playersConnect() {
     var players = this.$.refreshPlayers.lastResponse;
+    console.log(this.$.refreshPlayers.lastResponse);
 
     if (this.$.refreshPlayers.lastResponse[0]) {
       this.set('player1', this.$.refreshPlayers.lastResponse[0]);
