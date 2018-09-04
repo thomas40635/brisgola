@@ -497,10 +497,20 @@
         this.ctx.fillStyle = this.color;
         if(this.pensize == 30){
         this.ctx.arc(this.mouseX, this.mouseY, this.pensize, 0, Math.PI*2, true);
-        this.ctx.arc(this.mouseX + 10, this.mouseY + 10, this.pensize, 0, Math.PI*2, true);
         }
         else{
         	this.ctx.arc(this.mouseX, this.mouseY, size, 0, Math.PI*2, true);
+        }
+        this.ctx.closePath();
+        this.ctx.fill();
+
+        this.ctx.beginPath();
+        this.ctx.fillStyle = "#00ffff";
+        if(this.pensize == 30){
+        this.ctx.arc((this.mouseX+5), (this.mouseY+5), this.pensize, 0, Math.PI*2, true);
+        }
+        else{
+        	this.ctx.arc((this.mouseX+5), (this.mouseY+5), size, 0, Math.PI*2, true);
         }
         this.ctx.closePath();
         this.ctx.fill();
