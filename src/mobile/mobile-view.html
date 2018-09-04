@@ -459,8 +459,9 @@
 		playersConnect(){
       	var players = this.$.refreshPlayers.lastResponse
       	for (var i = 0; i < players.length; i++) {
-      		this.set('player'+i,players["pseudo"])
-      		this.shadowRoot.querySelector("player"+i).innerHTML = players[i]["pseudo"]
+      		var num = i + 1;
+      		this.set('player'+num,players["pseudo"])
+      		this.shadowRoot.querySelector("player"+num).innerHTML = players[i]["pseudo"]
       	}
       }
 
