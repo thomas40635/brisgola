@@ -449,7 +449,7 @@ class MobileView extends Polymer.Element {
 
     for (var i = 0; i < players.length; i++) {
       var num = i + 1;
-      this.set('player' + num, players["pseudo"]);
+      this.set('player1', players[i]["pseudo"]);
       this.shadowRoot.querySelector("#player" + num).innerHTML = players[i]["pseudo"];
     }
   }
