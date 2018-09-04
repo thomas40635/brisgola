@@ -7,29 +7,31 @@ try{
     $json = json_decode($request_body, true);
 
     $code = $json["code"];
-    $playerID = $json["playerID"];
+    $pseudo = $json["playerID"];
 
-    $req = $PDO->prepare("SELECT player1,player2,player3 FROM Party WHERE code = :code");
+    $req = $PDO->prepare("SELECT * FROM Player WHERE code = :code");
 
     $req->execute(array(
             "code" => $code
             ));
 
     $data = $req->fetchAll();
-    if(!$data[0]['player1']){
-        $player = "player1";
+    if(count($data) == 0){
+        $order = 1;
     }
-    else if(!$data[0]['player2']){
-        $player = "player2";
+    else if(count($data) == 1){
+        $order = 2;
     }
-    else if(!$data[0]['player3']){
-        $player = "player3";
+    else if(count($data) == 2){
+        $order = 3;
     }
 
-    $req = $PDO->prepare("UPDATE Party SET ".$player." = :playerID WHERE code = :code");
+    $req = $PDO->prepare("INSERT INTO Player (code,pseudo,order) VALUES (:code,:pseudo,:order,:score)");
     $req->execute(array(
             "code" => $code,
-            "playerID" => $playerID
+            "pseudo" => $pseudo,
+            "order" => $order,
+            "score" => 0
             ));
     $data = $req->fetchAll();
 
