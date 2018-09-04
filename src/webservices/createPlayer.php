@@ -36,7 +36,7 @@ try{
             "order" => $order
             ));
     $data = $req->fetchAll();
-    print_r($data);
+    print_r($req);
 }
 
 catch(PDOException $e){
