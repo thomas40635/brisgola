@@ -479,6 +479,7 @@ class MobileView extends Polymer.Element {
 
     if (this.pensize == 30) {
       this.ctx.arc(this.mouseX, this.mouseY, this.pensize, 0, Math.PI * 2, true);
+      this.ctx.arc(this.mouseX + 10, this.mouseY + 10, this.pensize, 0, Math.PI * 2, true);
     } else {
       this.ctx.arc(this.mouseX, this.mouseY, size, 0, Math.PI * 2, true);
     }
