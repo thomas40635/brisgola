@@ -122,6 +122,21 @@
       font-size: 26px;
       text-transform: uppercase;
     }
+
+    .draw-part{
+      position: relative;
+      z-index:1;
+    }
+
+    .pop-vote{
+      position: absolute;
+      z-index:2;
+      top:0px;
+      left:0px;
+      width: 100%;
+      height: 100%;
+      background:rgba(73, 61, 107, 0.8);
+    }
     </style>
 
     <iron-ajax
@@ -156,6 +171,24 @@
     handle-as="json"
     on-response="isTurnEnd">
     </iron-ajax>
+
+    <iron-ajax
+    id="getDraws"
+    method="POST"
+    url="./src/webservices/getDraws.php"
+    content-type="application/json"
+    handle-as="json"
+    on-response="setDraws">
+    </iron-ajax>
+
+    <div id="popvote" class="pop-vote">
+      <div class="player">
+        <div class="pseudo" id="votepseudo1"></div>
+        <div class="draw">
+          <img src="" id="votedraw1" alt="">
+        </div>
+      </div>
+    </div>
 
     <div class="draw-part">
       <header>
@@ -238,7 +271,21 @@
             return;
           }
           self.getEtatTurn()
+          self.getCanvas()
         }, 500);
+      }
+
+      getDraws(){
+        this.$.getDraws.body = '{"game": "'+this.game+'"}'
+        this.$.getDraws.generateRequest()
+      }
+
+      setDraws(){
+        console.log(this.$.getDraws.lastResponse)
+      }
+
+      openVote(){
+
       }
 
       getCanvas() {
@@ -248,7 +295,6 @@
           console.log(self.game,self.pseudo,self.draw)
           self.$.setDraw.body = '{"game": "'+self.game+'","draw": "'+self.draw+'","pseudo": "'+self.pseudo+'"}'
           self.$.setDraw.generateRequest()
-          self.getCanvas()
         }, 500);
       }
 
