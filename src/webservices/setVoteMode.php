@@ -7,8 +7,6 @@ try{
  	$json = json_decode($request_body, true);
 
     $game = $json["game"];
-    $draw = $json["draw"];
-    $pseudo = $json["pseudo"];
 
     $req = $PDO->prepare("UPDATE turn SET etat = 1 WHERE game = :game ORDER BY nbr LIMIT 1");
 
