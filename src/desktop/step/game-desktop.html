@@ -242,6 +242,14 @@
     content-type="application/json"
     handle-as="json">
     </iron-ajax>
+    
+    <iron-ajax
+    id="deleteVoteMode"
+    method="POST"
+    url="./src/webservices/deleteVoteMode.php"
+    content-type="application/json"
+    handle-as="json">
+    </iron-ajax>
 
     <div class="pop-vote" id="popvote">
       <div class="center">
@@ -363,6 +371,9 @@
         var self = this
         if(this.$.getVoteStatut.lastResponse && this.$.getVoteStatut.lastResponse == 3){
           this.$.popvote.classList.remove("pop-vote-active")
+          this.$.resetVoteMode.body = '{"game": "'+this.game+'"}'
+          this.$.resetVoteMode.generateRequest()
+          this.newTurn()
         }
         else{
           setTimeout(function () {

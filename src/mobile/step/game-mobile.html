@@ -227,6 +227,22 @@
     handle-as="json">
     </iron-ajax>
 
+    <iron-ajax
+    id="playerVote"
+    method="POST"
+    url="./src/webservices/playerVote.php"
+    content-type="application/json"
+    handle-as="json">
+    </iron-ajax>
+
+    <iron-ajax
+    id="playerResetVote"
+    method="POST"
+    url="./src/webservices/playerResetVote.php"
+    content-type="application/json"
+    handle-as="json">
+    </iron-ajax>
+
     <div id="popvote" class="pop-vote">
       <div class="player">
         <div class="draw">
@@ -339,6 +355,8 @@
       }
 
       clickVote(e){
+        this.$.playerVote.body = '{"game": "'+this.game+'","pseudo": "'+this.pseudo+'"}'
+        this.$.playerVote.generateRequest()
         var pseudo = e.composedPath()[0].getAttribute("data-pseudo")
         this.$.doVote.body = '{"game": "'+this.game+'","pseudo": "'+pseudo+'"}'
         this.$.doVote.generateRequest()
@@ -355,6 +373,8 @@
       closeVote(){
         this.$.popvote.classList.remove("pop-vote-active")
         this.$.drawpart.classList.remove("draw-part-disabled")
+        this.$.playerResetVote.body = '{"game": "'+this.game+'","pseudo": "'+this.pseudo+'"}'
+        this.$.playerResetVote.generateRequest()
       }
 
       getCanvas() {
