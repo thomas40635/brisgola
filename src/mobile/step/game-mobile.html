@@ -391,16 +391,9 @@
       }
 
       etatTurn(){
-        var self = this
-        setTimeout(function () {
-          if(self.$.turnEnd.lastResponse && self.$.turnEnd.lastResponse == 0){
-            self.$.playerResetVote.body = '{"game": "'+self.game+'","pseudo": "'+self.pseudo+'"}'
-            self.$.playerResetVote.generateRequest()
-            self.newTurn()
-            return;
-          }
-          self.checkTurn();
-        }, 500);
+        this.$.playerResetVote.body = '{"game": "'+this.game+'","pseudo": "'+this.pseudo+'"}'
+        this.$.playerResetVote.generateRequest()
+        this.newTurn();
       }
 
       getCanvas() {
