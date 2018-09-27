@@ -234,6 +234,14 @@
     handle-as="json"
     on-response="getVote">
     </iron-ajax>
+    
+    <iron-ajax
+    id="setVoteMode"
+    method="POST"
+    url="./src/webservices/setVoteMode.php"
+    content-type="application/json"
+    handle-as="json">
+    </iron-ajax>
 
     <div class="pop-vote" id="popvote">
       <div class="center">
