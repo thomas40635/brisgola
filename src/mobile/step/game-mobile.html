@@ -326,8 +326,8 @@
         this.$.votedraw1.src = this.$.getOther.lastResponse[0]["draw"]
         this.$.votedraw2.src = this.$.getOther.lastResponse[1]["draw"]
 
-        this.$.votedraw1.addEventListener('click', this.clickVote(e))
-        this.$.votedraw2.addEventListener('click', this.clickVote(e))
+        this.$.votedraw1.addEventListener('click', this.clickVote(), false)
+        this.$.votedraw2.addEventListener('click', this.clickVote(), false)
       }
 
       clickVote(e){
