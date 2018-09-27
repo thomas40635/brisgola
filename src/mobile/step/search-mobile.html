@@ -269,18 +269,11 @@
       }
 
       $_GET(url,param) {
-        var vars = {};
-        url.replace( location.hash, '' ).replace( 
-          /[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
-          function( m, key, value ) { // callback
-            vars[key] = value !== undefined ? value : '';
-          }
-        );
-
-        if ( param ) {
-          return vars[param] ? vars[param] : null;  
-        }
-        return vars;
+        if(!url){var url = window.location.href}
+        var link = url; //window.location.href
+        var link = new URL(url_string);
+        var value = url.searchParams.get(param);
+        return value
       }
 
       next(){
