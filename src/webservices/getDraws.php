@@ -17,11 +17,14 @@ try{
     ));
 
     $other = $req->fetchAll(PDO::FETCH_ASSOC);
-
-    $req = $PDO->prepare("SELECT draw".$other[0]['position'].",draw".$other[1]['position']." FROM turn WHERE game = :game ORDER BY nbr DESC LIMIT 1");
+    $other1 = "draw".$other[0]['position'];
+    $other2 = "draw".$other[1]['position'];
+    $req = $PDO->prepare('SELECT :other1,:other2 FROM turn WHERE game = :game ORDER BY nbr DESC LIMIT 1');
 
     $req->execute(array(
-        "game" => $game
+        "game" => $game,
+        "other1" => $other1,
+        "other2" => $other2
     ));
 
     $draws = $req->fetchAll(PDO::FETCH_ASSOC);
