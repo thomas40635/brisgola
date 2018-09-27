@@ -248,7 +248,8 @@
     method="POST"
     url="./src/webservices/resetVoteMode.php"
     content-type="application/json"
-    handle-as="json">
+    handle-as="json"
+    on-response="resetMode">
     </iron-ajax>
 
     <div class="pop-vote" id="popvote">
@@ -373,13 +374,16 @@
           this.$.popvote.classList.remove("pop-vote-active")
           this.$.resetVoteMode.body = '{"game": "'+this.game+'"}'
           this.$.resetVoteMode.generateRequest()
-          this.newTurn()
         }
         else{
           setTimeout(function () {
             self.isVote()
           }, 1000);
         }
+      }
+
+      resetMode(){
+        this.newTurn()
       }
 
       getDraws(stop){
