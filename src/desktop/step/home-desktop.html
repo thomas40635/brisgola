@@ -317,11 +317,11 @@
 
       generateCode(){
         var text = "";
-        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        var possible = "ABCDEFGHIJKLMNPQRSTUVWXYZabcdefghijklmnpqrstuvwxyz";
         for (var i = 0; i < 1; i++)
           text += possible.charAt(Math.floor(Math.random() * possible.length));
 
-        var possible = "0123456789";
+        var possible = "123456789";
         for (var i = 0; i < 3; i++)
           text += possible.charAt(Math.floor(Math.random() * possible.length));
 
@@ -332,7 +332,7 @@
       createQrCode(){
         var self = this
         var qrcode = new QRCode(self.$.qrcode, {
-          text: "thomaspaul.fr/index.html?"+self.game,
+          text: "thomaspaul.fr/index.html?code="+self.game,
           width: 290,
           height: 290,
           colorDark : "#fff",
