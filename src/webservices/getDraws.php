@@ -16,7 +16,7 @@ try{
         "pseudo" => $pseudo
     ));
 
-    $other = $req->fetchAll(PDO::FETCH_ASSOC);
+    $other = $req->fetchAll();
     print_r($other);exit;
     $req = $PDO->prepare("SELECT draw1,draw2 FROM turn WHERE game = :game");
 
