@@ -370,7 +370,6 @@
         this.$.doVote.body = '{"game": "'+this.game+'","pseudo": "'+pseudo+'"}'
         this.$.doVote.generateRequest()
         this.closeVote()
-        this.newTurn()
       }
 
       openVote(){
@@ -397,6 +396,7 @@
           if(self.$.turnEnd.lastResponse && self.$.turnEnd.lastResponse == 0){
             self.$.playerResetVote.body = '{"game": "'+self.game+'","pseudo": "'+self.pseudo+'"}'
             self.$.playerResetVote.generateRequest()
+            self.newTurn()
             return;
           }
           self.checkTurn();
