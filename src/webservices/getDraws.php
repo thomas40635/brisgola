@@ -7,8 +7,18 @@ try{
     $json = json_decode($request_body, true);
 
     $game = $json["game"];
+    $pseudo = $json["pseudo"];
 
-    $req = $PDO->prepare("SELECT draw1,draw2,draw3 FROM turn WHERE game = :game");
+    $req = $PDO->prepare("SELECT position,pseudo FROM player WHERE game = :game AND pseudo != :pseudo");
+
+    $req->execute(array(
+        "game" => $game,
+        "pseudo" => $pseudo
+    ));
+
+    $other = $req->fetchAll(PDO::FETCH_ASSOC);
+    print_r($other);exit;
+    $req = $PDO->prepare("SELECT draw1,draw2 FROM turn WHERE game = :game");
 
     $req->execute(array(
         "game" => $game
