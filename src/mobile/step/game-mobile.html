@@ -191,9 +191,9 @@
     </iron-ajax>
 
     <iron-ajax
-    id="getDraws"
+    id="getOther"
     method="POST"
-    url="./src/webservices/getDraws.php"
+    url="./src/webservices/getOther.php"
     content-type="application/json"
     handle-as="json"
     on-response="setDraws">
@@ -294,12 +294,12 @@
       }
 
       getDraws(){
-        this.$.getDraws.body = '{"game": "'+this.game+'","pseudo": "'+this.pseudo+'"}'
-        this.$.getDraws.generateRequest()
+        this.$.getOther.body = '{"game": "'+this.game+'","pseudo": "'+this.pseudo+'"}'
+        this.$.getOther.generateRequest()
       }
 
       setDraws(){
-        console.log(this.$.getDraws.lastResponse)
+        console.log(this.$.getOther.lastResponse)
         console.log(this.pseudo)
       }
 
