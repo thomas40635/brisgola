@@ -181,8 +181,8 @@
     on-response="getPlayers">
     </iron-ajax>
 
-    <div class="scan-pop" id="scan">
-      <video id="preview"></video>
+    <div class="scan-pop" on-click="closepop" id="scan">
+      <video id="preview" on-click="closepop"></video>
     </div>
 
     <div class="page">
@@ -330,6 +330,10 @@
             self.isPlayersReady();
           }, 1000);
         }
+      }
+
+      closepop(){
+        this.$.scan.classList.remove("scan-pop-active")
       }
 
     }
