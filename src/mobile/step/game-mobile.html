@@ -381,7 +381,7 @@
       closeVote(){
         this.$.popvote.classList.remove("pop-vote-active")
         this.$.drawpart.classList.remove("draw-part-disabled")
-        
+        this.canvasDelete()
         this.checkTurn()
       }
 
