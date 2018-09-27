@@ -243,7 +243,7 @@
         var self = this
         let scanner = new Instascan.Scanner({ video: self.$.preview });
         scanner.addListener('scan', function (content) {
-          var code = self.url_param(content)
+          var code = self._GET(content,"code")
           self.game = code["code"]
           self.$.scan.classList.remove("scan-pop-active")
           console.log(self.$.game)
@@ -263,18 +263,19 @@
         });
       }
 
-      url_param(url) {
-        var _url = url || window.location.href;
-        var array = _url.match(/\w+=\w+/g);
-        var result = {};
-        var tmp = [];
-        
-        for (var i = 0; i < array.length; i++) {
-          tmp = array[i].split("=");
-          result[tmp[0]] = tmp[1];
+      $_GET(url,param) {
+        var vars = {};
+        url.replace( location.hash, '' ).replace( 
+          /[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
+          function( m, key, value ) { // callback
+            vars[key] = value !== undefined ? value : '';
+          }
+        );
+
+        if ( param ) {
+          return vars[param] ? vars[param] : null;  
         }
-        
-        return result;
+        return vars;
       }
 
       next(){
