@@ -153,7 +153,8 @@
     method="POST"
     url="./src/webservices/getEtatTurn.php"
     content-type="application/json"
-    handle-as="json">
+    handle-as="json"
+    on-response="isTurnEnd">
     </iron-ajax>
 
     <div class="draw-part">
@@ -221,6 +222,23 @@
       newTurn(){
         this.getTurn()
         this.getCanvas()
+        this.getEtatTurn()
+      }
+
+      getEtatTurn(){
+        self.$.getEtatTurn.body = '{"game": "'+self.game+'"}'
+        self.$.getEtatTurn.generateRequest()
+      }
+
+      isTurnEnd(){
+        var self = this
+        setTimeout(function () {
+          if(self.$.getEtatTurn.lastResponse == 1){
+            self.openVote();
+            return;
+          }
+          self.getEtatTurn()
+        }, 500);
       }
 
       getCanvas() {

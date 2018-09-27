@@ -332,6 +332,7 @@
       }
 
       setVoteMode(){
+        this.$.setVoteMode.body = '{"game": "'+this.game+'"}'
         this.$.setVoteMode.generateRequest()
       }
 
