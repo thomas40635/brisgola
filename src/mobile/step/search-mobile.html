@@ -267,9 +267,9 @@
       $_GET(address,param) {
         var url = address
         var link = url; //window.location.href
+        window.alert(link)
         var link = new URL(url_string);
         var value = url.searchParams.get(param);
-        window.alert(value)
         return value
       }
 
