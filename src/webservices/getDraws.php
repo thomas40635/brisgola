@@ -16,17 +16,8 @@ try{
         "pseudo" => $pseudo
     ));
 
-    $other = $req->fetchAll();
-    print_r($other);exit;
-    $req = $PDO->prepare("SELECT draw1,draw2 FROM turn WHERE game = :game");
-
-    $req->execute(array(
-        "game" => $game
-    ));
-
-    $draws = $req->fetchAll(PDO::FETCH_ASSOC);
-
-    echo json_encode($draws);
+    $other = $req->fetchAll(PDO::FETCH_ASSOC);
+    print_r(json_encode($other));
 }
 
 catch(PDOException $e){
