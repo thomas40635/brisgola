@@ -244,10 +244,9 @@
         let scanner = new Instascan.Scanner({ video: self.$.preview });
         scanner.addListener('scan', function (content) {
 
-          var code = self.$_GET(content)
-          self.game = code["code"]
+          var code = self.$_GET(content,"code")
+          self.game = code
           self.$.scan.classList.remove("scan-pop-active")
-          console.log(self.$.game)
         });
         Instascan.Camera.getCameras().then(function (cameras) {
           if (cameras.length > 0) {
@@ -264,10 +263,8 @@
         });
       }
 
-      $_GET(address) {
-        var link = address; //window.location.href
-        window.alert(link)
-        link.replace( location.hash, '' ).replace( 
+      $_GET(address,param) {
+        address.replace( location.hash, '' ).replace( 
           /[?&]+([^=&]+)=?([^&]*)?/gi,
           function( m, key, value ) {
             vars[key] = value !== undefined ? value : '';
