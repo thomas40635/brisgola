@@ -326,12 +326,12 @@
         this.$.votedraw1.src = this.$.getOther.lastResponse[0]["draw"]
         this.$.votedraw2.src = this.$.getOther.lastResponse[1]["draw"]
 
-        this.$.votedraw1.dataPseudo = this.$.getOther.lastResponse[0]["pseudo"]
-        this.$.votedraw2.dataPseudo = this.$.getOther.lastResponse[1]["pseudo"]
+        this.$.votedraw1.setAttribute("data-pseudo", this.$.getOther.lastResponse[0]["pseudo"])
+        this.$.votedraw2.setAttribute("data-pseudo", this.$.getOther.lastResponse[1]["pseudo"])
       }
 
       clickVote(e){
-        console.log(e.composedPath()[0])
+        console.log(e.composedPath()[0].dataPseudo)
       }
 
       openVote(){
