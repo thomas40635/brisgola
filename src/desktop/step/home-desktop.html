@@ -150,22 +150,25 @@
       .qrcode{
         width:100%;
         animation-name: rotate;
-        animation-duration: 2s;
+        animation-duration: 5s;
         animation-iteration-count: infinite;
       }
 
       @keyframes rotate{
         0%{
-          transform:rotateY(-180deg);
-        }
-        10%{
           transform:rotateY(0deg);
         }
-        90%{
+        45%{
           transform:rotateY(0deg);
+        }
+        50%{
+          transform:rotateY(180deg);
+        }
+        95%{
+          transform:rotateY(180deg);
         }
         100%{
-          transform:rotateY(-180deg);
+          transform:rotateY(0deg);
         }
       }
 
