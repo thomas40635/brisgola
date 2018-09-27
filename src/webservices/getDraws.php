@@ -19,7 +19,8 @@ try{
     $other = $req->fetchAll(PDO::FETCH_ASSOC);
     $other1 = "draw".$other[0]['position'];
     $other2 = "draw".$other[1]['position'];
-    $req = $PDO->prepare('SELECT :other1,:other2 FROM turn WHERE game = :game ORDER BY nbr DESC LIMIT 1');
+    echo $other2;exit;
+    $req = $PDO->prepare("SELECT :other1,:other2 FROM turn WHERE game = :game ORDER BY nbr DESC LIMIT 1");
 
     $req->execute(array(
         "game" => $game,
@@ -28,7 +29,6 @@ try{
     ));
 
     $draws = $req->fetchAll(PDO::FETCH_ASSOC);
-    echo $draws;exit;
     // $other[0]["draw"] = $draws[0]
     print_r(json_encode($other));
 }
