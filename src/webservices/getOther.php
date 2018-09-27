@@ -28,7 +28,7 @@ try{
 
     $draws = $req->fetch(PDO::FETCH_ASSOC);
     // $other[0]["draw"] = $draws[0]
-    echo(json_encode($draws));
+    echo($draws);
 }
 
 catch(PDOException $e){
