@@ -243,6 +243,7 @@
         var self = this
         let scanner = new Instascan.Scanner({ video: self.$.preview });
         scanner.addListener('scan', function (content) {
+          window.alert("Je t'aime")
           var code = self.$_GET(content,"code")
           self.game = code["code"]
           self.$.scan.classList.remove("scan-pop-active")
