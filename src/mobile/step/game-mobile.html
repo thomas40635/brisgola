@@ -222,12 +222,12 @@
     <div id="popvote" class="pop-vote">
       <div class="player">
         <div class="draw">
-          <img src="" id="votedraw1" data-pseudo="" alt="">
+          <img src="" id="votedraw1" on-click="clickVote" data-pseudo="" alt="">
         </div>
       </div>
       <div class="player">
         <div class="draw">
-          <img src="" id="votedraw2" data-pseudo="" alt="">
+          <img src="" id="votedraw2" on-click="clickVote" data-pseudo="" alt="">
         </div>
       </div>
     </div>
@@ -326,8 +326,8 @@
         this.$.votedraw1.src = this.$.getOther.lastResponse[0]["draw"]
         this.$.votedraw2.src = this.$.getOther.lastResponse[1]["draw"]
 
-        this.$.votedraw1.addEventListener('click', this.clickVote(), false)
-        this.$.votedraw2.addEventListener('click', this.clickVote(), false)
+        this.$.votedraw1.dataPseudo = this.$.getOther.lastResponse[0]["pseudo"]
+        this.$.votedraw2.dataPseudo = this.$.getOther.lastResponse[1]["pseudo"]
       }
 
       clickVote(e){
