@@ -226,8 +226,8 @@
       }
 
       getEtatTurn(){
-        self.$.getEtatTurn.body = '{"game": "'+self.game+'"}'
-        self.$.getEtatTurn.generateRequest()
+        this.$.getEtatTurn.body = '{"game": "'+self.game+'"}'
+        this.$.getEtatTurn.generateRequest()
       }
 
       isTurnEnd(){
