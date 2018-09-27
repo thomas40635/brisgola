@@ -116,6 +116,10 @@
         position: relative;
       }
 
+      .box-qrcode{
+        background: rgba(255,255,255,1);
+      }
+
       .or{
         position: absolute;
         width:80px;
@@ -259,7 +263,7 @@
         <div class="container">
           <div class="zone zone-left">
             <h2>Scannez le QRcode</h2>
-            <div class="box">
+            <div class="box box-qrcode">
               <div class="content">
                 <div id="qrcode" class="qrcode"></div>
               </div>
@@ -359,7 +363,7 @@
           text: "https://thomaspaul.fr/index.html?code="+self.game,
           width: 290,
           height: 290,
-          colorDark : "#fff",
+          colorDark : "#4e29b4",
           colorLight : "rgba(0,0,0,0)",
           correctLevel : QRCode.CorrectLevel.H
         });
