@@ -244,12 +244,7 @@
         let scanner = new Instascan.Scanner({ video: self.$.preview });
         scanner.addListener('scan', function (content) {
           var code = self.$_GET(content,"code")
-          if(code){
-            self.game = code["code"]
-          }
-          else{
-            console.log("Pas de code")
-          }
+          self.game = code["code"]
           self.$.scan.classList.remove("scan-pop-active")
           console.log(self.$.game)
         });
@@ -268,8 +263,8 @@
         });
       }
 
-      $_GET(url,param) {
-        if(!url){var url = window.location.href}
+      $_GET(address,param) {
+        var url = address
         var link = url; //window.location.href
         var link = new URL(url_string);
         var value = url.searchParams.get(param);
