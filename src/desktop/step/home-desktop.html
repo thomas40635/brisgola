@@ -316,16 +316,19 @@
       }
 
       generateCode(){
-        var text = "";
+        var ref = "";
         var possible = "ABCDEFGHIJKLMNPQRSTUVWXYZabcdefghijklmnpqrstuvwxyz";
         for (var i = 0; i < 1; i++)
-          text += possible.charAt(Math.floor(Math.random() * possible.length));
+          ref += possible.charAt(Math.floor(Math.random() * possible.length));
 
         var possible = "123456789";
         for (var i = 0; i < 3; i++)
-          text += possible.charAt(Math.floor(Math.random() * possible.length));
+          ref += possible.charAt(Math.floor(Math.random() * possible.length));
 
-        var code = "ship#"+text
+        var possible = ["fusee","navette","vaisseau"];
+          var first = possible[Math.floor(Math.random() * possible.length)]
+
+        var code = first+ref
         return code;
       }
 
