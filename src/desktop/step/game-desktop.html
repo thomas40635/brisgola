@@ -326,6 +326,15 @@
         this.getDraws()
       }
 
+      endTurn(){
+        this.isVote()
+        this.setVoteMode()
+      }
+
+      setVoteMode(){
+        this.$.setVoteMode.generateRequest()
+      }
+
       timer(){
         var self = this
         var timeleft = 10;
@@ -337,7 +346,7 @@
           if(timeleft < 0){
             self.$.timer.innerHTML = 0+" s";
             clearInterval(downloadTimer);
-            self.isVote()
+            self.endTurn()
           }
         },1000);
       }
