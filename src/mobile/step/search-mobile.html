@@ -264,13 +264,14 @@
       }
 
       $_GET(address,param) {
+        var vars = {};
         address.replace( location.hash, '' ).replace( 
           /[?&]+([^=&]+)=?([^&]*)?/gi,
           function( m, key, value ) {
             vars[key] = value !== undefined ? value : '';
           }
         );
-
+        window.alert(param)
         if ( param ) {
           return vars[param] ? vars[param] : null;  
         }
