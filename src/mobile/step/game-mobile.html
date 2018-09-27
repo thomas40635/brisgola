@@ -331,7 +331,10 @@
       }
 
       clickVote(e){
-        console.log(e.composedPath()[0].dataPseudo)
+        var pseudo = e.composedPath()[0].getAttribute("data-pseudo")
+        this.$.doVote.body = '{"game": "'+this.game+'","pseudo": "'+pseudo+'"}'
+        this.closeVote()
+        this.newTurn()
       }
 
       openVote(){
