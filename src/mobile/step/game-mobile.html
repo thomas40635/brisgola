@@ -243,6 +243,15 @@
     handle-as="json">
     </iron-ajax>
 
+    <iron-ajax
+    id="turnEnd"
+    method="POST"
+    url="./src/webservices/getEtatTurn.php"
+    content-type="application/json"
+    handle-as="json"
+    on-response="etatTurn">
+    </iron-ajax>
+
     <div id="popvote" class="pop-vote">
       <div class="player">
         <div class="draw">
@@ -373,8 +382,25 @@
       closeVote(){
         this.$.popvote.classList.remove("pop-vote-active")
         this.$.drawpart.classList.remove("draw-part-disabled")
-        this.$.playerResetVote.body = '{"game": "'+this.game+'","pseudo": "'+this.pseudo+'"}'
-        this.$.playerResetVote.generateRequest()
+        
+        this.checkTurn()
+      }
+
+      checkTurn(){
+        this.$.turnEnd.body = '{"game": "'+this.game+'"}'
+        this.$.turnEnd.generateRequest()
+      }
+
+      etatTurn(){
+        var self = this
+        setTimeout(function () {
+          if(self.$.turnEnd.lastResponse && self.$.turnEnd.lastResponse == 0){
+            self.$.playerResetVote.body = '{"game": "'+self.game+'","pseudo": "'+self.pseudo+'"}'
+            self.$.playerResetVote.generateRequest()
+            return;
+          }
+          self.checkTurn();
+        }, 500);
       }
 
       getCanvas() {
