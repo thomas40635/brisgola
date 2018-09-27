@@ -219,6 +219,14 @@
     on-response="setDraws">
     </iron-ajax>
 
+    <iron-ajax
+    id="doVote"
+    method="POST"
+    url="./src/webservices/doVote.php"
+    content-type="application/json"
+    handle-as="json">
+    </iron-ajax>
+
     <div id="popvote" class="pop-vote">
       <div class="player">
         <div class="draw">
@@ -333,6 +341,7 @@
       clickVote(e){
         var pseudo = e.composedPath()[0].getAttribute("data-pseudo")
         this.$.doVote.body = '{"game": "'+this.game+'","pseudo": "'+pseudo+'"}'
+        this.$.doVote.generateRequest()
         this.closeVote()
         this.newTurn()
       }
