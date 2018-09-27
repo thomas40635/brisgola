@@ -222,12 +222,12 @@
     <div id="popvote" class="pop-vote">
       <div class="player">
         <div class="draw">
-          <img src="" id="votedraw1" alt="">
+          <img src="" id="votedraw1" data-pseudo="" alt="">
         </div>
       </div>
       <div class="player">
         <div class="draw">
-          <img src="" id="votedraw2" alt="">
+          <img src="" id="votedraw2" data-pseudo="" alt="">
         </div>
       </div>
     </div>
@@ -325,6 +325,13 @@
       setDraws(){
         this.$.votedraw1.src = this.$.getOther.lastResponse[0]["draw"]
         this.$.votedraw2.src = this.$.getOther.lastResponse[1]["draw"]
+
+        this.$.votedraw1.addEventListener('click', this.clickVote(e))
+        this.$.votedraw2.addEventListener('click', this.clickVote(e))
+      }
+
+      clickVote(e){
+        console.log(e.composedPath()[0])
       }
 
       openVote(){
