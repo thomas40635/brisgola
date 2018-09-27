@@ -1,0 +1,331 @@
+<script src="../../../vendor/scan/instascan.min.js"></script>
+<dom-module id="search-mobile">
+  <template>
+    <style>
+
+      :host{
+        width:100%;
+        height:100%;
+        position: relative;
+        overflow:hidden;
+        display: inline-block;
+      }
+
+      .page{
+        width:100%;
+        height:100%;
+        position: relative;
+      }
+
+      .header{
+        text-align:center;
+        padding:20px 0px;
+      }
+
+      h1{
+        font-size: 32px;
+        font-family: "Antonio";
+        font-weight: 900;
+        color: #fff;
+        padding: 0px;
+        margin: 0px;
+        text-shadow: 0px 10px 20px rgba(0,0,0,0.2);
+        text-transform: uppercase;
+      }
+
+      .content{
+        position: absolute;
+        bottom:0%;
+        width:100%;
+        padding:20px;
+        text-align: center;
+        box-sizing: border-box;
+      }
+
+      .textbox{
+        background:rgba(255,255,255,0.05);
+        padding:25px;
+        border:none;
+        outline:none;
+        border-radius:100px;
+        width:calc(100% - 50px);
+        font-family: "Google";
+        font-size:18px;
+        font-weight: 900;
+        color:#fff;
+        text-align: center;
+      }
+
+      .textbox::placeholder{
+        color:rgba(255,255,255,0.4);
+      }
+
+      .submit{
+        background:#fff;
+        padding:25px;
+        border:none;
+        outline:none;
+        border-radius:100px;
+        width:100%;
+        margin-top:18px;
+        font-family: "Google";
+        font-size:18px;
+        font-weight: 900;
+        color:#212121;
+        text-align: center;
+        text-transform: uppercase;
+        transition:all 0.2s;
+      }
+
+      .loader{
+        width:36px;
+        position: absolute;
+        right:16px;
+        opacity:0;
+        top:35px;
+      }
+
+      .loader-active{
+        opacity:1;
+      }
+
+      .label{
+        font-size: 18px;
+        text-transform: uppercase;
+        font-family: "Antonio";
+        font-weight: 900;
+        color: #fff;
+        top:14px;
+        text-align: center;
+        position: relative;
+      }
+
+      .textbox-container{
+        position: relative;
+      }
+
+      .random-button{
+        position: absolute;
+        display: inline-block;
+        width:28px;
+        top:calc(50% - 0px);
+        right:24px;
+      }
+
+      .scan-pop{
+        position: absolute;
+        z-index:999;
+        width:100%;
+        height:100%;
+        display:none;
+        background: rgba(0,0,0,0.8);
+        transition: all 0.2s;
+        opacity:0;
+      }
+
+      .scan-pop-active{
+        display:block;
+        opacity:1;
+      }
+
+      .bubble{
+        position: absolute;
+        top:-10px;
+        right:25px;
+        padding:5px 15px;
+        border-radius: 5px;
+        background: #fff;
+      }
+
+      .bubble .text{
+        font-size:18px;
+        font-family: "Antonio";
+        font-weight: 900;
+        text-transform: uppercase;
+        color:#000;
+      }
+
+      .bubble .pic{
+        width:20px;
+        height:20px;
+        display: inline-block;
+        position: absolute;
+        bottom:-7px;
+        right:3px;
+        transform:rotate(45deg);
+        border-radius: 5px;
+        border-bottom-right-radius: 0px;
+        background: rgba(255,255,255,0.25);
+      }
+
+    </style>
+
+    <iron-ajax
+    id="setPlayer"
+    method="POST"
+    url="./src/webservices/setPlayer.php"
+    content-type="application/json"
+    handle-as="json">
+    </iron-ajax>
+
+    <iron-ajax
+    id="getPlayers"
+    method="POST"
+    url="./src/webservices/getPlayers.php"
+    content-type="application/json"
+    handle-as="json"
+    on-response="getPlayers">
+    </iron-ajax>
+
+    <div class="scan-pop" id="scan">
+      <video id="preview"></video>
+    </div>
+
+    <div class="page">
+      <div class="header">
+        <h1>CHERCHER UNE PARTIE</h1>
+      </div>
+      <div class="content">
+        <div class="textbox-container">
+          <div class="bubble">
+            <div class="text">Scanner !</div>
+            <div class="pic"></div>
+          </div>
+          <div class="label">Code</div>
+          <img src="./src/img/scan.png" class="random-button" on-click="scan" alt="">
+          <input type="text" class="textbox" placeholder="..." id="game" value="{{game}}" on-input="gameChanged"><br>
+        </div>
+        <div class="textbox-container">
+          <img src="./src/img/random.png" class="random-button" on-click="randomPseudo" alt="">
+          <div class="label">Pseudo</div>
+          <input type="text" class="textbox" placeholder="..." id="pseudo" value="{{pseudo}}" on-input="pseudoChanged"><br>
+        </div>
+        <div class="textbox-container">
+          <img src="./src/img/loader.gif" alt="" id="loader" class="loader">
+          <input type="submit" class="submit" id="connect" value="Se connecter" on-click="connectGame">
+        </div>
+      </div>
+    </div>
+
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class SearchMobile extends Polymer.Element {
+      static get is() { return 'search-mobile'; }
+      static get properties() {
+        return {
+          step:{
+            notify:true
+          },
+          game:{
+            notify:true
+          },
+          pseudo:{
+            notify:true
+          }
+        };
+      }
+
+      start(){
+
+      }
+
+      scan(){
+        this.$.scan.classList.add("scan-pop-active")
+        var self = this
+        let scanner = new Instascan.Scanner({ video: self.$.preview });
+        scanner.addListener('scan', function (content) {
+          var code = self.url_param(content)
+          self.game = code["code"]
+          self.$.scan.classList.remove("scan-pop-active")
+          console.log(self.$.game)
+        });
+        Instascan.Camera.getCameras().then(function (cameras) {
+          if (cameras.length > 0) {
+            scanner.start(cameras[0]);
+          } else {
+            console.error('No cameras found.');
+          }
+        }).catch(function (e) {
+          console.error(e);
+        });
+      }
+
+      url_param(url) {
+        var _url = url || window.location.href;
+        var array = _url.match(/\w+=\w+/g);
+        var result = {};
+        var tmp = [];
+        
+        for (var i = 0; i < array.length; i++) {
+          tmp = array[i].split("=");
+          result[tmp[0]] = tmp[1];
+        }
+        
+        return result;
+      }
+
+      next(){
+        this.set('step', "game")
+      }
+
+      gameChanged(){
+        this.set('game',this.$.game.value)
+      }
+
+      pseudoChanged(){
+        this.set('pseudo',this.$.pseudo.value)
+        console.log(this.pseudo)
+      }
+
+      randomPseudo(){
+        var first = ["monsieur","madame","robot","docteur","commandant","soldat","ingenieur","pilote"]
+        var second = ["Patate","Chapeau","Bleu","Rouge","Carotte","Gentil","Salade","Vert","Banane"]
+
+        first = first[Math.floor(Math.random() * first.length)]
+        second = second[Math.floor(Math.random() * second.length)]
+        this.$.pseudo.value = first+second
+        this.pseudoChanged()
+      }
+
+      connectGame(){
+        if(this.$.game.value && this.$.pseudo.value){
+          this.$.connect.value = "Chargement"
+          this.$.loader.classList.add("loader-active")
+          this.$.setPlayer.body = '{"game": "'+this.$.game.value+'","pseudo": "'+this.$.pseudo.value+'"}'
+          this.$.setPlayer.generateRequest()
+          this.isPlayersReady()
+        }
+      }
+
+      isPlayersReady(){
+        this.$.getPlayers.body = '{"game": "'+this.game+'"}';
+        this.$.getPlayers.generateRequest();
+      }
+
+      getPlayers(){
+        var players = this.$.getPlayers.lastResponse
+        if(players.length == 3){
+          this.set('players', players)
+          var self = this
+          setTimeout(function () {
+            self.next();
+          }, 1000);
+        }
+        else{
+          var self = this
+          setTimeout(function () {
+            self.isPlayersReady();
+          }, 1000);
+        }
+      }
+
+    }
+
+    window.customElements.define(SearchMobile.is, SearchMobile);
+  </script>
+</dom-module>

@@ -1,0 +1,390 @@
+<script src="../../../vendor/qrcode/qrcode.js"></script>
+<dom-module id="home-desktop">
+  <template>
+    <style>
+    
+      :host{
+        width:100%;
+        height:100%;
+        position: relative;
+        overflow:hidden;
+        display: inline-block;
+      }
+
+      .page{
+        width:100%;
+        height:100%;
+        position: relative;
+        padding:40px;
+        box-sizing: border-box;
+        display: inline-block;
+      }
+
+      header{
+        text-align:center;
+        padding:40px;
+        padding-top:0px;
+        box-sizing: border-box;
+        position: relative;
+      }
+
+      h1{
+        font-size:72px;
+        color:#fff;
+        font-family: "Antonio";
+        font-weight: 900;
+        text-transform: uppercase;
+        padding: 0px;
+        margin: 0px;
+        text-shadow: 0px 20px 40px rgba(0,0,0,0.25)
+      }
+
+      h2{
+        font-size:24px;
+        color:#fff;
+        font-family: "Antonio";
+        font-weight: 900;
+        padding: 0px;
+        margin: 0px;
+      }
+
+      span.sub-title{
+        font-size:24px;
+        color:rgba(255,255,255,0.25);
+        font-family: "Antonio";
+        font-weight: 900;
+      }
+
+      span.autor{
+        font-size:20px;
+        color:rgba(255,255,255,0.25);
+        font-family: "Antonio";
+
+        position: absolute;
+        right:40px;
+        top:50%;
+        transform:translateY(-50%);
+      }
+
+      section{
+        height:calc(100% - 370px);
+        text-align:center;
+        position: relative;
+      }
+
+      .clear{
+        clear:both;
+        margin-bottom:20px;
+      }
+
+      .container{
+        position: relative;
+        display: inline-block;
+        top:50%;
+        transform:translateY(-50%);
+      }
+
+      .zone{
+        float:left;
+        position: relative;
+        display: inline-block;
+      }
+
+      .zone-left{
+        text-align:left;
+      }
+
+      .zone-right{
+        text-align:right;
+      }
+
+      .zone-space{
+        float:left;
+        width:20px;
+        height:20px;
+        position: relative;
+        display: inline-block;
+        background: transparent;
+      }
+
+      .box{
+        border-radius:20px;
+        width: 350px;
+        height: 350px;
+        background: rgba(255,255,255,0.05);
+        margin-top:20px;
+        position: relative;
+      }
+
+      .or{
+        position: absolute;
+        width:80px;
+        height:80px;
+        border-radius:100px;
+        background: #fff;
+        display: inline-block;
+        top:15px;
+        left:50%;
+        transform:translateX(-50%);
+      }
+
+      .or span.text{
+        position: absolute;
+        top:50%;
+        left:50%;
+        transform:translateX(-50%) translateY(-50%);
+
+        font-size:24px;
+        color:#4e29b4;
+        font-family: "Antonio";
+        font-weight: 900;
+      }
+
+      .box .content{
+        top:50%;
+        left:50%;
+        transform:translateX(-50%) translateY(-50%);
+        position: absolute;
+      }
+
+      .qrcode{
+        width:100%;
+      }
+
+      .code{
+        font-size:40px;
+        color:#fff;
+        font-family: "Antonio";
+        font-weight: 900;
+      }
+
+      h2.loading-text{
+        color:rgba(255,255,255,0.25);
+      }
+
+      footer{
+        box-sizing: border-box;
+        padding: 40px;
+        text-align: center;
+      }
+
+      .players-container{
+        display: inline-block;
+      }
+
+      .player-box{
+        float:left;
+        margin: 0px 10px;
+        position: relative;
+      }
+
+      .player-box .pseudo-box{
+        border-radius:20px;
+        background: rgba(255,255,255,0.05);
+        padding:20px;
+        font-size:24px;
+        color:#fff;
+        font-family: "Antonio";
+        font-weight: 900;
+        border: none;
+        text-align: center;
+        margin-top: 10px;
+        transition:all 0.2s;
+      }
+
+      .player-box .pseudo-set{
+        background: rgba(255,255,255,1);
+        color:#4e29b4;
+        box-shadow:0px 20px 40px rgba(0,0,0,0.25);
+      }
+
+      .player-box .pseudo-box::placeholder{
+        color:rgba(255,255,255,0.25);
+      }
+
+      .player-box img.load-gif{
+        position: absolute;
+        bottom:20px;
+        right:20px;
+        width:32px;
+        filter: invert(100%) contrast(200%);
+      }
+
+    </style>
+
+    <iron-ajax
+    id="setGame"
+    method="POST"
+    url="./src/webservices/setGame.php"
+    content-type="application/json"
+    handle-as="json">
+    </iron-ajax>
+
+    <iron-ajax
+    id="getPlayers"
+    method="POST"
+    url="./src/webservices/getPlayers.php"
+    content-type="application/json"
+    handle-as="json"
+    on-response="getPlayers">
+    </iron-ajax>
+
+    <div class="page">
+      <header>
+        <h1>Gosmos</h1>
+        <span class="sub-title">Developped by Thomas PAUL</span>
+      </header>
+      <section>
+        <div class="container">
+          <div class="zone zone-left">
+            <h2>Scannez le QRcode</h2>
+            <div class="box">
+              <div class="content">
+                <div id="qrcode" class="qrcode"></div>
+              </div>
+            </div>
+          </div>
+          <div class="zone zone-space">
+            <div class="or"><span class="text">ou</span></div>
+          </div>
+          <div class="zone zone-right">
+            <h2>Entrez le code</h2>
+            <div class="box">
+              <div class="content">
+                <span class="code">{{game}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="clear"></div>
+          <h2 class="loading-text">En attente des joueurs ({{nbrPlayers}}/3)</h2>
+      </div>
+      </section>
+      <footer>
+        <div class="players-container">
+          <div class="player-box">
+            <h2>Joueur 1</h2>
+            <input type="text" id="pseudo1" class="pseudo-box" placeholder="En attente">
+            <img src="./src/img/loader.gif" class="load-gif" id="load1">
+          </div>
+          <div class="player-box">
+            <h2>Joueur 2</h2>
+            <input type="text" id="pseudo2" class="pseudo-box" placeholder="En attente">
+            <img src="./src/img/loader.gif" class="load-gif" id="load2">
+          </div>
+          <div class="player-box">
+            <h2>Joueur 3</h2>
+            <input type="text" id="pseudo3" class="pseudo-box" placeholder="En attente">
+            <img src="./src/img/loader.gif" class="load-gif" id="load3">
+          </div>
+          <div class="clear"></div>
+        </div>
+      </footer>
+    </div>
+
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class HomeDesktop extends Polymer.Element {
+      static get is() { return 'home-desktop'; }
+      static get properties() {
+        return {
+          step:{
+            notify:true
+          },
+          game:{
+            notify:true
+          },
+          players:{
+            value:{},
+            notify:true
+          },
+          nbrPlayers:{
+            value:0
+          }
+        };
+      }
+
+      start(){
+        this.set('game', this.generateCode())
+        this.createQrCode()
+        this.createGame()
+        this.isPlayersReady()
+      }
+
+      generateCode(){
+        var text = "";
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        for (var i = 0; i < 1; i++)
+          text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+        var possible = "0123456789";
+        for (var i = 0; i < 3; i++)
+          text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+        var code = "ship#"+text
+        return code;
+      }
+
+      createQrCode(){
+        var self = this
+        var qrcode = new QRCode(self.$.qrcode, {
+          text: "thomaspaul.fr/index.html?"+self.game,
+          width: 290,
+          height: 290,
+          colorDark : "#fff",
+          colorLight : "rgba(0,0,0,0)",
+          correctLevel : QRCode.CorrectLevel.H
+        });
+      }
+
+      createGame(){
+        this.$.setGame.body = '{"code": "'+this.game+'"}';
+        this.$.setGame.generateRequest();
+      }
+
+      isPlayersReady(){
+        this.$.getPlayers.body = '{"game": "'+this.game+'"}';
+        this.$.getPlayers.generateRequest();
+      }
+
+      getPlayers(){
+        var players = this.$.getPlayers.lastResponse
+        if(players){
+          for (var i = 0; i < 3; i++) {
+            if(players[i]){
+              var num = i + 1
+              this.shadowRoot.querySelector("#pseudo"+num).value = players[i]["pseudo"];
+              this.shadowRoot.querySelector("#pseudo"+num).classList.add("pseudo-set")
+              this.shadowRoot.querySelector("#load"+num).style.visibility = "hidden"
+            }
+          }
+          this.set('nbrPlayers', players.length)
+        }
+        if(players.length == 3){
+          this.set('players', players)
+          var self = this
+          setTimeout(function () {
+            self.next();
+          }, 1000);
+        }
+        else{
+          var self = this
+          setTimeout(function () {
+            self.isPlayersReady();
+          }, 1000);
+        }
+      }
+
+      next(){
+        this.set('step', "game")
+      }
+
+    }
+
+    window.customElements.define(HomeDesktop.is, HomeDesktop);
+  </script>
+</dom-module>

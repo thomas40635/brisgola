@@ -10,17 +10,28 @@
 	font-weight:100;
 }
 
+@font-face{
+	src:url("../font/Antonio-Bold.ttf");
+	font-family:"Antonio";
+	font-weight:900;
+}
+
+@font-face{
+	src:url("../font/Antonio-Light.ttf");
+	font-family:"Antonio";
+	font-weight:100;
+}
+
 html,body,*{
 	padding: 0px;
 	margin: 0px;
-	font-size:0px;	
-	font-family:"Google";
+	font-size:0px;
 	outline:none;
-	-webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
+	-webkit-touch-callout: none;
+    -webkit-user-select: none;
+     -khtml-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
             user-select: none;
 }
 

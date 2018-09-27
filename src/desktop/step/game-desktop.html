@@ -1,0 +1,416 @@
+<dom-module id="game-desktop">
+  <template>
+    <style>
+    
+      :host{
+        width:100%;
+        height:100%;
+        position: relative;
+        overflow:hidden;
+        display: inline-block;
+      }
+
+      .page{
+        height: 100%;
+        position: relative;
+        margin: 20px;
+        z-index:0;
+        box-sizing: border-box;
+      }
+
+      .content{
+        text-align: center;
+      }
+
+      .players-container{
+        display: inline-block;
+      }
+
+      .player{
+        float:left;
+        padding:10px;
+        position: relative;
+        text-align: left;
+      }
+
+      .score{
+        position: absolute;
+        top: 37px;
+        right: 18px;
+        width: 40px;
+        height: 40px;
+        background: #fff;
+        border-radius: 100px;
+      }
+
+      .score .text{
+        position: absolute;
+        top:50%;
+        left:50%;
+        transform: translateX(-50%) translateY(-50%);
+        font-size:18px;
+        font-family: "Antonio";
+        font-weight: 900;
+      }
+
+      h2{
+        font-size: 24px;
+        font-family: "Antonio";
+        margin-bottom: 10px;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 100px;
+        background: rgba(255,255,255,0.05);
+      }
+
+      .draw{
+        float:left;
+        width:300px;
+        height:400px;
+        background: #fff;
+        box-shadow: 0px 20px 40px rgba(0,0,0,0.25),
+        0px -8px 0px 0px rgba(0,0,0,0.05) inset;
+        border-radius:20px;
+        padding:10px;
+        box-sizing: border-box;
+      }
+
+      .draw img{
+        width:100%;
+        max-height: 100%;
+        max-width: 100%;
+      }
+
+      .word-part{
+        padding:20px;
+        text-align:center;
+        border-radius: 100px;
+        background: rgba(255,255,255,0.05);
+        position: relative;
+        box-sizing: border-box;
+        overflow: hidden;
+        width:calc(100% - 40px);
+      }
+
+      .time-part{
+        padding:20px;
+        text-align:center;
+        border-radius: 100px;
+        position: relative;
+        box-sizing: border-box;
+        width:calc(100% - 40px);
+      }
+
+      .progress{
+        position: absolute;
+        height:100%;
+        width:0%;
+        top:0px;
+        left:0px;
+        background: rgba(255,255,255,0.1);
+        transition:all 0.2s;
+      }
+
+      .info{
+        font-size: 24px;
+        font-family: "Antonio";
+        text-align: center;
+        color:#fff;
+      }
+
+      .word{
+        font-size: 48px;
+        font-family: "Antonio";
+        color:#4e29b4;
+        font-weight: 900;
+        text-transform:uppercase;
+        text-align: center;
+        padding:10px 20px;
+        border-radius: 10px;
+        background: #fff;
+        display: inline-block;
+        margin-top:10px;
+        box-shadow: 0px 20px 40px rgba(0,0,0,0.25);
+      }
+
+      .timer{
+        font-size: 48px;
+        font-family: "Antonio";
+        color:#fff;
+        font-weight: 900;
+        text-align: center;
+      }
+
+      .space{
+        height:20px;
+      }
+
+      .pop-vote{
+        position: absolute;
+        top:0px;
+        left:0px;
+        width:100%;
+        height:100%;
+        z-index:2;
+        background: rgba(78, 41, 180, 0.95);
+        user-select: auto;
+        pointer-events: auto;
+        opacity:0;
+        transform:scale(0.95);
+        user-select: none;
+        pointer-events: none;
+        transition:all 0.2s;
+      }
+
+      .pop-vote-active{
+        opacity:1;
+        transform:scale(1);
+        user-select: auto;
+        pointer-events: auto;
+      }
+
+      .center{
+        position: absolute;
+        top:50%;
+        left:50%;
+        transform: translateX(-50%) translateY(-50%);
+        display: inline-block;
+      }
+
+      .load{
+        float:left;
+      }
+
+      .load img{
+        width:90px;
+        position: relative;
+        top:4px;
+        filter: invert(100%) contrast(200%);
+      }
+
+      .vote-text{
+        float: left;
+        font-size: 72px;
+        color:#fff;
+        font-family: "Antonio";
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+    </style>
+    
+    <iron-ajax
+    id="setWord"
+    method="POST"
+    url="./src/webservices/setWord.php"
+    content-type="application/json"
+    handle-as="json"
+    on-response="getWord">
+    </iron-ajax>
+
+    <iron-ajax
+    id="setTurn"
+    method="POST"
+    url="./src/webservices/setTurn.php"
+    content-type="application/json"
+    handle-as="json"
+    on-response="getTurn">
+    </iron-ajax>
+    
+    <iron-ajax
+    id="getDraws"
+    method="POST"
+    url="./src/webservices/getDraws.php"
+    content-type="application/json"
+    handle-as="json"
+    on-response="drawsRefresh">
+    </iron-ajax>
+    
+    <iron-ajax
+    id="getVoteStatut"
+    method="POST"
+    url="./src/webservices/getVoteStatut.php"
+    content-type="application/json"
+    handle-as="json"
+    on-response="getVote">
+    </iron-ajax>
+
+    <div class="pop-vote" id="popvote">
+      <div class="center">
+        <div class="load"><img src="./src/img/loader.gif" alt=""></div>
+        <div class="vote-text">Votez !</div>
+      </div>
+    </div>
+    
+    <div class="page">
+      <div class="content">
+        <div class="time-part">
+          <div class="info">Mot à dessiner</div>
+          <div class="word" id="word">...</div>
+        </div>
+        <div class="space"></div>
+        <div class="players-container">
+          <div class="player">
+            <div class="score"><div class="text">0</div></div>
+            <h2 id="pseudo1">Joueur 1</h2>
+            <div class="draw">
+              <img src="" id="draw1" alt="">
+            </div>
+          </div>
+          <div class="player">
+            <div class="score"><div class="text">0</div></div>
+            <h2 id="pseudo2">Joueur 2</h2>
+            <div class="draw">
+              <img src="" id="draw2" alt="">
+            </div>
+          </div>
+          <div class="player">
+            <div class="score"><div class="text">0</div></div>
+            <h2 id="pseudo3">Joueur 3</h2>
+            <div class="draw">
+              <img src="" id="draw3" alt="">
+            </div>
+          </div>
+        </div>
+        <div class="space"></div>
+        <div class="word-part">
+          <div class="info">Temps restant</div>
+          <div class="timer" id="timer">0 s</div>
+          <div class="progress" id="progress"></div>
+        </div>
+      </div>
+    </div>
+
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class GameDesktop extends Polymer.Element {
+      static get is() { return 'game-desktop'; }
+      static get properties() {
+        return {
+          step:{
+            notify:true
+          },
+          game:{
+            notify:true
+          },
+          nbrTurn:{
+            value:0
+          }
+        };
+      }
+
+      start(){
+        this.setPlayers()
+        this.newTurn()
+      }
+
+      newTurn(){
+        this.set('nbrTurn', this.nbrTurn + 1)
+        this.setTurn()
+        console.log(this.word)
+        this.timer()
+        this.setWord()
+        this.getDraws()
+      }
+
+      timer(){
+        var self = this
+        var timeleft = 10;
+        var max = 10;
+        var downloadTimer = setInterval(function(){
+          var time = max - (max - --timeleft);
+          self.$.timer.innerHTML = time+" s";
+          self.$.progress.style.width = (max - time) * 100 / max+"%";
+          if(timeleft < 0){
+            self.$.timer.innerHTML = 0+" s";
+            clearInterval(downloadTimer);
+            self.isVote()
+          }
+        },1000);
+      }
+
+      isVote(){
+        this.$.getVoteStatut.body = '{"game": "'+this.game+'"}'
+        this.$.getVoteStatut.generateRequest()
+        this.$.popvote.classList.add("pop-vote-active")
+      }
+
+      getVote(){
+        console.log(this.$.getVoteStatut.lastResponse)
+        var self = this
+        if(this.$.getVoteStatut.lastResponse && this.$.getVoteStatut.lastResponse == 3){
+          this.$.popvote.classList.remove("pop-vote-active")
+        }
+        else{
+          setTimeout(function () {
+            self.isVote()
+          }, 1000);
+        }
+      }
+
+      getDraws(stop){
+        this.$.getDraws.body = '{"game": "'+this.game+'"}'
+        var self = this
+        setTimeout(function () {
+          self.$.getDraws.generateRequest()
+        }, 1000);
+      }
+
+      drawsRefresh(){
+        var draws = this.$.getDraws.lastResponse
+        if(draws){
+          var self = this
+          var draws = self.$.getDraws.lastResponse
+          setTimeout(function () {
+            if(draws[0]["draw1"])
+              self.$.draw1.src = draws[0]["draw1"]
+
+            if(draws[0]["draw2"])
+              self.$.draw2.src = draws[0]["draw2"]
+
+            if(draws[0]["draw3"])
+              self.$.draw3.src = draws[0]["draw3"]
+
+            self.getDraws()
+          }, 1000);
+        }
+      }
+      
+      setTurn(){
+        this.$.setTurn.body = '{"game": "'+this.game+'","nbr": "'+this.nbrTurn+'"}'
+        this.$.setTurn.generateRequest()
+      }
+
+      getTurn(){
+        console.log(this.$.setTurn.lastResponse)
+        this.set('turn',this.$.setTurn.lastResponse)
+        this.$.word.innerHTML = this.turn["word"];
+      }
+
+      setWord(){
+        this.$.setWord.body = '{"game": "'+this.game+'"}'
+        this.$.setWord.generateRequest()
+      }
+
+      getWord(){
+        this.set('word',this.$.setWord.lastResponse)
+        console.log(this.word)
+        this.$.word.innerHTML = this.word
+      }
+
+      setPlayers(){
+        this.$.pseudo1.innerHTML = this.players[0]["pseudo"]
+        this.$.pseudo2.innerHTML = this.players[1]["pseudo"]
+        this.$.pseudo3.innerHTML = this.players[2]["pseudo"]
+      }
+
+    }
+
+    window.customElements.define(GameDesktop.is, GameDesktop);
+  </script>
+</dom-module>

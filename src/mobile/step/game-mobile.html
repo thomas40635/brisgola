@@ -1,0 +1,403 @@
+<dom-module id="game-mobile">
+  <template>
+    <style>
+      :host{
+        width:100%;
+        height:100%;
+        display: inline-block;
+      }
+      h1{
+        font-size: 32px;
+        font-family: "Antonio";
+        font-weight: 900;
+        color: #fff;
+        padding: 0px;
+        margin: 0px;
+        text-shadow: 0px 10px 20px rgba(0,0,0,0.2);
+        text-transform: uppercase;
+      }
+      header{
+        text-align: center;
+        padding:20px 20px;
+        overflow:auto;
+      }
+      header h1{
+        float:left;
+      }
+      header .score{
+        float:right;
+        width:70px;
+        height:70px;
+        border-radius:100px;
+        background: #fff;
+        position: relative;
+      }
+      header .score .text{
+        position: absolute;
+        top:50%;
+        left:50%;
+        transform:translateX(-50%) translateY(-50%);
+        font-size: 32px;
+        font-family: "Google";
+        font-weight: 900;
+      }
+      .content{
+        padding:20px;
+        position: relative;
+      }
+    canvas{
+      position: relative;
+      z-index: 2;
+    }
+    .canvas-fond{
+      top:0px;
+      left:0px;
+      z-index: 1;
+      position: absolute;
+      background: #fff;
+      border-radius:20px;
+      box-shadow:0px 10px 10px rgba(72,60,108,0.5),
+      0px -8px 0px 0px rgba(72,60,108,0.15) inset;
+      height:100%;
+      width:100%;
+    }
+
+    footer{
+      overflow:auto;
+      padding:20px;
+      text-align:center;
+    }
+
+    footer .actions{
+      display: inline-block;
+    }
+
+    footer .actions .button{
+      border-radius:100px;
+      width:75px;
+      height:75px;
+      background: rgba(255,255,255,1);
+      box-shadow:0px 10px 10px rgba(72,60,108,0.5),
+      0px -8px 0px 0px rgba(72,60,108,0.15) inset;
+      float:left;
+      position: relative;
+    }
+
+    footer .actions .button-main{
+      border-radius:100px;
+      box-shadow:0px 10px 10px rgba(72,60,108,0.5),
+      0px -8px 0px 0px rgba(72,60,108,0.15) inset;
+      width:75px;
+      height:75px;
+      background: #fff;
+      float:left;
+      position: relative;
+    }
+
+    footer .actions .button img{
+      position: absolute;
+      width:18px;
+      top:calc(50% - 4px);
+      left:50%;
+      transform:translateX(-50%) translateY(-50%);
+    }
+
+    footer .actions .button-space{
+      width:5px;
+      height: 10px;
+      float:left;
+    }
+
+    footer .actions .button-big-space{
+      width:25px;
+      height: 10px;
+      float:left;
+    }
+
+    .canvas{
+
+    }
+
+    .word b{
+      font-size: 26px;
+      text-transform: uppercase;
+    }
+    </style>
+
+    <iron-ajax
+    id="getTurn"
+    method="POST"
+    url="./src/webservices/getTurn.php"
+    content-type="application/json"
+    handle-as="json">
+    </iron-ajax>
+
+    <iron-ajax
+    id="setDraw"
+    method="POST"
+    url="./src/webservices/setDraw.php"
+    content-type="application/json"
+    handle-as="json">
+    </iron-ajax>
+
+    <iron-ajax
+    id="getTurn"
+    method="POST"
+    url="./src/webservices/getTurn.php"
+    content-type="application/json"
+    handle-as="json">
+    </iron-ajax>
+
+    <div class="draw-part">
+      <header>
+        <h1 id="pseudo"></h1>
+        <div class="score">
+          <div class="text">0</div>
+        </div>
+      </header>
+      <div class="content">
+        <div class="canvas">
+          <canvas id="sketchpad"></canvas>
+          <div class="canvas-fond"></div>
+        </div>
+      </div>
+      <footer>
+        <div class="actions">
+          <div class="button" on-click="canvasDelete">
+            <img src="./src/img/delete.png" alt="">
+          </div>
+          <div class="button-space"></div>
+          <div class="button" on-click="canvasClear">
+            <img src="./src/img/clear.png" alt="">
+          </div>
+          <div class="button-space"></div>
+          <div class="button" on-click="canvasDraw">
+            <img src="./src/img/draw.png" alt="">
+          </div>
+        </div>
+      </footer>
+    </div>
+
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class GameMobile extends Polymer.Element {
+      static get is() { return 'game-mobile'; }
+      static get properties() {
+        return {
+          game:{
+            notify:true
+          },
+          pseudo:{
+            notify:true
+          },
+          color:{
+            value:"#493d6b"
+          },
+          pensize:{
+            value:"3"
+          }
+        };
+      }
+
+      start(){
+        this.$.pseudo.innerHTML = this.pseudo
+        this.init()
+        this.newTurn()
+      }
+
+      newTurn(){
+        this.getTurn()
+        this.getCanvas()
+      }
+
+      getCanvas() {
+        var self = this
+        setTimeout(function () {
+          self.set('draw', self.canvas.toDataURL())
+          console.log(self.game,self.pseudo,self.draw)
+          self.$.setDraw.body = '{"game": "'+self.game+'","draw": "'+self.draw+'","pseudo": "'+self.pseudo+'"}'
+          self.$.setDraw.generateRequest()
+          self.getCanvas()
+        }, 500);
+      }
+
+      getTurn(){
+        this.$.getTurn.body = '{"game": "'+this.game+'"}';
+        var self = this
+        setTimeout(function () {
+          self.$.getTurn.generateRequest();
+          if(self.$.getTurn.lastResponse && self.$.getTurn.lastResponse["word"]){
+            self.set('turn', self.$.getTurn.lastResponse)
+            return;
+          }
+          self.getTurn()
+        }, 500);
+      }
+
+      // CANVAS
+
+      drawDot(size) {
+
+          this.ctx.beginPath();
+          this.ctx.fillStyle = this.color;
+          if(this.pensize == 30){
+            this.ctx.arc(this.mouseX, this.mouseY, this.pensize, 0, Math.PI*2, true);
+          }
+          else{
+            this.ctx.arc(this.mouseX, this.mouseY, size, 0, Math.PI*2, true);
+            console.log(2)
+          }
+          this.ctx.closePath();
+          this.ctx.fill();
+
+
+          if(this.lastPosX !== null){
+            this.ctx.beginPath();
+            this.ctx.strokeStyle= this.color;
+            this.ctx.lineWidth= this.pensize;
+            this.ctx.moveTo(this.lastPosX,this.lastPosY);
+            this.ctx.lineTo(this.mouseX,this.mouseY);
+            this.ctx.stroke();
+
+            this.ctx.closePath();
+            this.ctx.fill();
+
+          }
+
+          this.lastPosX = this.mouseX
+          this.lastPosY = this.mouseY
+
+      }
+
+      canvasDelete() {
+          this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      }
+
+      canvasClear() {
+          this.set('color', "#fff")
+          this.set('pensize', "30")
+      }
+
+      canvasDraw() {
+          this.set('color', "#493d6b")
+          this.set('pensize', "3")
+      }
+
+      sketchpad_mouseDown(e) {
+          this.getMousePos(e);
+          this.mouseDown=1;
+          this.drawDot(1);
+      }
+
+      sketchpad_mouseUp() {
+
+        this.mouseDown=0;
+        this.lastPosX = null
+        this.lastPosY = null
+
+      }
+
+      sketchpad_mouseMove(e) {
+          e.preventDefault();
+
+          this.getMousePos(e);
+
+          if (this.mouseDown==1) {
+              this.drawDot(1);
+          }
+      }
+
+      getMousePos(e) {
+
+      if (!e)
+        e = event;
+
+        this.rect = this.$.sketchpad.getBoundingClientRect();
+
+        this.mouseX = e.targetTouches[0].clientX - this.rect.left;
+        this.mouseY = e.targetTouches[0].clientY - this.rect.top;
+      }
+
+      init() {
+
+        this.$.sketchpad.width = window.innerWidth - 50
+        this.$.sketchpad.height = window.innerHeight - 275
+
+        this.canvas = this.$.sketchpad;
+
+        if (this.canvas.getContext)
+          this.ctx = this.canvas.getContext('2d');
+
+        if (this.ctx) {
+          this.canvas.addEventListener('touchstart', this.sketchpad_mouseDown.bind(this), false);
+          this.canvas.addEventListener('touchmove', this.sketchpad_mouseMove.bind(this), false);
+          window.addEventListener('touchend', this.sketchpad_mouseUp.bind(this), false);
+        }
+      }
+
+      trim() {
+        var c = this.canvas
+        var ctx = c.getContext('2d'),
+          copy = document.createElement('canvas').getContext('2d'),
+          pixels = ctx.getImageData(0, 0, c.width, c.height),
+          l = pixels.data.length,
+          i,
+          bound = {
+            top: null,
+            left: null,
+            right: null,
+            bottom: null
+          },
+          x, y;
+
+        for (i = 0; i < l; i += 4) {
+          if (pixels.data[i+3] !== 0) {
+            x = (i / 4) % c.width;
+            y = ~~((i / 4) / c.width);
+        
+            if (bound.top === null) {
+              bound.top = y;
+            }
+            
+            if (bound.left === null) {
+              bound.left = x; 
+            } else if (x < bound.left) {
+              bound.left = x;
+            }
+            
+            if (bound.right === null) {
+              bound.right = x; 
+            } else if (bound.right < x) {
+              bound.right = x;
+            }
+            
+            if (bound.bottom === null) {
+              bound.bottom = y;
+            } else if (bound.bottom < y) {
+              bound.bottom = y;
+            }
+          }
+        }
+          
+        var trimHeight = bound.bottom - bound.top,
+            trimWidth = bound.right - bound.left,
+            trimmed = ctx.getImageData(bound.left, bound.top, trimWidth, trimHeight);
+        
+        copy.canvas.width = trimWidth;
+        copy.canvas.height = trimHeight;
+        copy.putImageData(trimmed, 0, 0);
+        
+        // open new window with trimmed image:
+        return copy.canvas.toDataURL();
+      }
+
+    }
+
+    window.customElements.define(GameMobile.is, GameMobile);
+  </script>
+</dom-module>

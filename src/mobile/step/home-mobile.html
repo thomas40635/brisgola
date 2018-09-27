@@ -1,0 +1,185 @@
+<dom-module id="home-mobile">
+  <template>
+    <style>
+    
+      :host{
+        width:100%;
+        height:100%;
+        position: relative;
+        overflow:hidden;
+        display: inline-block;
+      }
+
+      .page{
+        width:100%;
+        height:100%;
+        position: relative;
+      }
+
+      .header{
+        text-align:center;
+        padding:20px 0px;
+      }
+
+      h1{
+        font-size: 48px;
+        font-family: "Antonio";
+        font-weight: 900;
+        color: #fff;
+        padding: 0px;
+        margin: 0px;
+        text-shadow: 0px 10px 20px rgba(0,0,0,0.2);
+        text-transform: uppercase;
+      }
+
+      h2{
+        font-size: 18px;
+        font-family: "Antonio";
+        font-weight: 100;
+        color: #fff;
+        padding: 0px;
+        margin: 0px;
+        text-shadow: 0px 10px 20px rgba(0,0,0,0.2);
+        text-transform: uppercase;
+      }
+
+      .content{
+        height:calc(100% - 200px);
+      }
+
+      .center{
+        position: absolute;
+        top:50%;
+        left:50%;
+        transform:translateX(-50%) translateY(-50%);
+      }
+
+      .play-button{
+        animation-name: bounce;
+        animation-duration: 2s;
+        animation-iteration-count: infinite;
+        background: #fff;
+        position: relative;
+        width:180px;
+        height:180px;
+        border-radius: 100px;
+        box-shadow: 0px 10px 20px rgba(0,0,0,0.2),
+        0px 0px 0px 0px rgba(255,255,255,0.1);
+      }
+
+      @keyframes bounce{
+        0%{
+          box-shadow: 0px 10px 20px rgba(0,0,0,0.2),
+          0px 0px 0px 0px rgba(255,255,255,0.1);
+        }
+        50%{
+          box-shadow: 0px 10px 20px rgba(0,0,0,0.2),
+          0px 0px 0px 60px rgba(255,255,255,0.05);
+        }
+        100%{
+          box-shadow: 0px 10px 20px rgba(0,0,0,0.2),
+          0px 0px 0px 0px rgba(255,255,255,0.1);
+        }
+      }
+
+      .play-button img{
+        position: absolute;
+        top:50%;
+        left:calc(50% + 4px);
+        transform:translateX(-50%) translateY(-50%);
+        width:32px;
+      }
+
+      .play-button .text{
+        font-size: 18px;
+        font-family: "Google";
+        color:#fff;
+        text-transform: uppercase;
+        font-weight: 900;
+        position: absolute;
+        bottom:-36px;
+        left:50%;
+        transform:translateX(-50%);
+        text-align: center;
+      }
+
+      .footer{
+        text-align:center;
+        padding:20px 0px;
+      }
+
+    </style>
+    
+    <div class="page">
+      <div class="header">
+        <h1>GOSMOS</h1>
+        <h2><b>Dessine</b> et <b>vote</b> !</h2>
+      </div>
+      <div class="content">
+        <div class="center">
+          <div class="play-button" on-click="next">
+            <img src="./src/img/play.png" alt="">
+            <div class="text">Play</div>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <h2>Développé par <b>Thomas PAUL</b> - 2018</h2>
+      </div>
+    </div>
+
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class HomeMobile extends Polymer.Element {
+      static get is() { return 'home-mobile'; }
+      static get properties() {
+        return {
+          step:{
+            notify:true
+          },
+          game:{
+            notify:true,
+            observer:'gameChanged'
+          }
+        };
+      }
+
+      start(){
+        console.log(this.game)
+        if(this.$_GET("code")){
+          this.set('game', this.$_GET("code"))
+          console.log(this.game)
+          this.next()
+        }
+        super.ready()
+      }
+
+      next(){
+        this.set('step', "search")
+      }
+
+      $_GET(param) {
+        var vars = {};
+        window.location.href.replace( location.hash, '' ).replace( 
+          /[?&]+([^=&]+)=?([^&]*)?/gi,
+          function( m, key, value ) {
+            vars[key] = value !== undefined ? value : '';
+          }
+        );
+
+        if ( param ) {
+          return vars[param] ? vars[param] : null;  
+        }
+        return vars;
+      }
+
+    }
+
+    window.customElements.define(HomeMobile.is, HomeMobile);
+  </script>
+</dom-module>

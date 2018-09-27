@@ -1,347 +1,173 @@
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 
+<link rel="import" href="./step/home-mobile.html">
+<link rel="import" href="./step/search-mobile.html">
+<link rel="import" href="./step/game-mobile.html">
+
 <dom-module id="mobile-view">
   <template>
     <style>
-      :host {
-	    display: inline-block;
-	    width:100%;
-	  	height:100%;
-	  	position: relative;
-	  }
-	  .page{
-		position: relative;
-		height:100%;
-		overflow:hidden;
-	  }
-	  .background{
-	  	width:100%;
-	  	position: absolute;
-	  	left:0px;
-	  	z-index:-1;
-	  	transition:all 0.5s;
-	  }
-	  .background-blur{
-	  	width:100%;
-	  	position: absolute;
-	  	left:0px;
-	  	z-index:0;
-	  	transition:all 0.5s;
-	  	animation-name: blur;
-	  	animation-iteration-count: infinite;
-	  	animation-duration: 2s;
-	  	animation-fill-mode: backwards;
-	  }
-	  @keyframes blur{
-		0%   { opacity: 0;}
-		50%   { opacity: 0.5;}
-		55%   { opacity: 0.1;}
-		60%   { opacity: 0.75;}
-  		100% { opacity: 0;}
-	  }
-	  .background-1{
-	  	top:0px;
-	  }
-	  .background-2{
-	  	top:-80px;
-	  	transform:scale(1.2);
-	  }
-	  .background-3{
-	  	top:-800px;
-	  }
-	  .part{
-	  	height:100%;
-	  	width:100%;
-	  	position: absolute;
-	  	top:0px;
-	  	left:0px;
-	  	z-index:1;
-	  	transition:all 0.5s;
-	  }
-	  .part-previous{
-	  	top:-100%;
-	  }
-	  .part-next{
-	  	top:100%;
-	  }
-	  .top{
-		position: absolute;
-		top:20px;
-		width:100%;
-		text-align:center;
-		z-index: 3;
-	  }
-	  .title{
-		font-size:72px;
-		font-weight: 900;
-		color:#fff;
-		text-align: center;
-		text-shadow:0px 10px 10px rgba(72,60,108,0.25);
-		text-transform: uppercase;
-	  }
-	  .sub-title{
-		font-size:24px;
-		font-weight: 900;
-		color:#fff;
-		text-align: center;
-		text-shadow:0px 10px 10px rgba(72,60,108,0.25);
-		text-transform: uppercase;
-		position: relative;
-		top:5px;
-	  }
-	  .bottom{
-		position: absolute;
-		bottom:20px;
-		width:100%;
-		z-index: 3;
-	  }
-	  .big-button{
-		border-radius: 100px;
-		padding-top:26px;
-		padding-bottom:34px;
-		font-size:16px;
-		color:#493d6b;
-		background: #fff;
-		box-shadow:0px 10px 10px rgba(72,60,108,0.5),
-		0px -8px 0px 0px rgba(72,60,108,0.15) inset;
-		text-transform: uppercase;
-		font-weight: 900;
-		width:calc(100% - 40px);
-		margin:0px 20px;
-		text-align:center;
-		position: relative;
-		top:0px;
-	  }
-	  .big-button-disabled{
-		transform:scale(0.8);
-		opacity: 0.4;
-		top:-50px;
-		transition:0.5s;
-	  }
-	  .textbox{
-		border-radius: 100px;
-		padding-top:26px;
-		padding-bottom:34px;
-		font-size:16px;
-		color:#493d6b;
-		background: #fff;
-		box-shadow:0px 10px 10px rgba(72,60,108,0.5),
-		0px -8px 0px 0px rgba(72,60,108,0.15) inset;
-		text-transform: uppercase;
-		font-weight: 900;
-		width:calc(100% - 40px);
-		margin:0px 20px;
-		text-align:center;
-		border:none;
-		font-family: "Google Sans";
-		margin-bottom:10px;
-	  }
-	  .word{
-		border-radius: 100px;
-		padding-top:26px;
-		padding-bottom:34px;
-		font-size:20px;
-		color:#493d6b;
-		background: #fff;
-		box-shadow:0px 10px 10px rgba(72,60,108,0.5),
-		0px -8px 0px 0px rgba(72,60,108,0.15) inset;
-		text-transform: uppercase;
-		font-weight: 900;
-		width:calc(100% - 40px);
-		margin:0px 20px;
-		text-align:center;
-		border:none;
-		font-family: "Google Sans";
-		margin-bottom:10px;
-	  }
-	  .pop{
-	  	position: absolute;
-	  	top:0px;
-	  	left:0px;
-	  	height:100%;
-	  	width:100%;
-	  	background: rgba(72,60,108,0.9);
-	  	color:#fff;
-	  	font-size:24px;
-	  	z-index: 4;
-	  	opacity:0;
-	  	user-select: none;
-	  	pointer-events: none;
-	  	transition:all 0.2s;
-	  }
-	  .pop-active{
-	  	opacity:1;
-	  	user-select: auto;
-	  	pointer-events: auto;
-	  }
-	  .center{
-	  	top:50%;
-	  	left:50%;
-		position: absolute;
-		transform:translateX(-50%) translateY(-50%);
-		text-align:center;
-	  }
-	  .info{
-	  	color:#fff;
-	  	font-size:16px;
-	  	text-transform: uppercase;
-	  	font-weight:900;
-	  	text-align: center;
-	  	text-shadow:0px 2px 4px rgba(72,60,108,0.75);
-	  }
-	  canvas{
-	  	position: relative;
-	  	z-index: 2;
-	  }
-	  .canvas-fond{
-	  	top:0px;
-	  	left:0px;
-	  	z-index: 1;
-	  	position: absolute;
-	  	background: #fff;
-	  	border-radius:20px;
-	  	box-shadow:0px 10px 10px rgba(72,60,108,0.5),
-		0px -8px 0px 0px rgba(72,60,108,0.15) inset;
-		height:100%;
-		width:100%;
-	  }
-	  .actions{
-	  	bottom:-20px;
-	  	left:-10px;
-	  	left:50%;
-	  	transform:translateX(-50%);
-	  	z-index:5;
-	  	position: absolute;
-	  	display: inline-block;
-	  	width: 100%;
-	  }
-	  .button-canvas{
-	  	width:70px;
-	  	height:70px;
-	  	border-radius:100px;
-	  	background: #fff;
-	  	box-shadow:0px 10px 10px rgba(72,60,108,0.5),
-		0px -8px 0px 0px rgba(72,60,108,0.15) inset;
-		margin-right: 10px;
-		float:right;
-		text-align: left;
-	  }
-	  .button-canvas img{
-	  	top:50%;
-	  	left:50%;
-	  	width:20px;
-	  	transform:translateX(-50%) translateY(-50%);
-	  	position: relative;
-	  }
+	    :host{
+			width:100%;
+			height:100%;
+			position: relative;
+			overflow:hidden;
+			background: #26292a;
+	    }
+
+	    .page{
+	    	width:100%;
+			height:100%;
+			background: #26292a;
+			position: relative;
+			overflow:hidden;
+	    }
+
+      	.content-part {
+      		top:0px;
+      		left:0px;
+			width:100%;
+			height:100%;
+			position: absolute;
+			z-index: 1;
+		}
+
+		.step{
+			top:0px;
+      		left:0px;
+			position: absolute;
+			transform:scale(1);
+			transition:all 1s;
+		}
+
+		.step-previous{
+			top:-110%;
+			transform:scale(0.8);
+			opacity:0.2;
+		}
+
+		.step-next{
+			top:110%;
+			transform:scale(0.8);
+			opacity:0.2;
+		}
+
+      	.background-part {
+      		top:0px;
+      		left:0px;
+			width:100%;
+			height:100%;
+			position: absolute;
+			z-index: 0;
+		}
+
+      	.background-part .background{
+      		left: 0px;
+			width: 100%;
+			position: absolute;
+			transition: all 1s;
+			animation-name: flash;
+			animation-duration: 3s;
+			animation-iteration-count: infinite;
+			z-index:1;
+		}
+
+		@keyframes flash{
+			0%{
+				opacity:1;
+			}
+			40%{
+				opacity:1;
+			}
+			50%{
+				opacity:0.6;
+			}
+			60%{
+				opacity:1;
+			}
+			70%{
+				opacity:0.2;
+			}
+			80%{
+				opacity:1;
+			}
+			100%{
+				opacity:1;
+			}
+		}
+
+		@keyframes flashbis{
+			0%{
+				opacity:0.8;
+			}
+			40%{
+				opacity:0.8;
+			}
+			50%{
+				opacity:0.8;
+			}
+			60%{
+				opacity:0.85;
+			}
+			70%{
+				opacity:0.8;
+			}
+			80%{
+				opacity:0.9;
+			}
+			100%{
+				opacity:0.8;
+			}
+		}
+
+      	.background-part .background-blur{
+      		left:0px;
+			width:100%;
+			position: absolute;
+			transition:all 1s;
+			z-index:0;
+		}
+
+      	.background-part .background-filter{
+      		z-index:2;
+      		top:0px;
+      		opacity:0.8;
+      		left: 0px;
+			width: 100%;
+			min-width:100%;
+			min-height:100%;
+			position: absolute;
+
+			animation-name: flashbis;
+			animation-duration: 3s;
+			animation-iteration-count: infinite;
+		}
+
+      	.background-part .background-first{
+      		top:0px;
+		}
+
+      	.background-part .background-second{
+      		top:-200px;
+		}
+
+      	.background-part .background-third{
+      		top:-1200px;
+		}
+
     </style>
-
-    <app-location route="{{route}}"></app-location>
-
-    <iron-ajax
-    id="createPlayer"
-    method="POST"
-    url="../../src/webservices/createPlayer.php"
-    content-type="application/json"
-    handle-as="json"
-    on-response="handleResponse">
-    </iron-ajax>
-
-    <iron-ajax
-    id="refreshPlayers"
-    method="POST"
-    url="../../src/webservices/refreshPlayers.php"
-    content-type="application/json"
-    handle-as="json"
-    on-response="playersConnect"
-    last-response="{{players}}">
-    </iron-ajax>
-
-    <app-route
-    route="{{route}}"
-    pattern="/:view"
-    data="{{routeData}}"
-    tail="{{subroute}}"></app-route>
 	
 	<div class="page">
-
-	<div class="part part-focus" id="home">
-		<div class="top">
-			<div class="sub-title">
-				Bienvenue dans
-			</div>
-			<div class="title">
-				LE JEU
-			</div>
+		<div class="content-part">
+		    <home-mobile id="home" class="step" step="{{step}}" game="{{game}}"></home-mobile>
+		    <search-mobile id="search" class="step-next" step="{{step}}" game="{{game}}" pseudo="{{pseudo}}"></search-mobile>
+		    <game-mobile id="game" class="step-next" step="{{step}}" game="{{game}}" pseudo="{{pseudo}}"></game-mobile>
 		</div>
-		<div class="bottom">
-			<div class="big-button" id="playButton" on-click="nextStep">
-				Toucher pour jouer
-			</div>
-		</div>
-    </div>
-	
-	<div class="part part-next" id="connect">
-		<div class="top">
-			<div class="sub-title">
-				Rejoindre une partie
-			</div>
-		</div>
-		<div class="pop" id="load">
-			<div class="center">
-				En attente des joueurs<br><br>
-				<div id="player1">...</div>
-				<div id="player2">...</div>
-				<div id="player3">...</div>
-			</div>
-		</div>
-		<div class="bottom">
-			<div class="info">Choisissez une planète</div>
-			<input type="text" class="textbox" id="code" placeholder="...">
-			<div class="info">Choisissez un pseudo</div>
-			<input type="text" class="textbox" id="pseudo" placeholder="PSEUDO">
-			<div class="info">-</div>
-			<div class="big-button" on-click="connect">
-				Se connecter
-			</div>
-		</div>
-    </div>
-	
-	<div class="part part-next" id="game">
-		<div class="top">
-			<div class="sub-title">
-				Planète <i>{{code}}</i><br>
-				<div class="word">
-					Mot à deviner
-				</div>
-			</div>
-		</div>
-		<div class="center">
-			<div class="canvas">
-				<canvas id="sketchpad"></canvas>
-				<div class="actions">
-					<div class="button-canvas" on-click="setDrawPen">
-						<img src="../../src/img/draw.png" alt="">
-					</div>
-					<div class="button-canvas" on-click="setDrawClear">
-						<img src="../../src/img/clear.png" alt="">
-					</div>
-					<div class="button-canvas" on-click="clearCanvas">
-						<img src="../../src/img/delete.png" alt="">
-					</div>
-				</div>
-				<div class="canvas-fond"></div>
-			</div>
-		</div>
-		<div class="bottom">
-			<div class="big-button" on-click="nextStep">
-				Valider
-			</div>
-		</div>
-    </div>
-
-	<img src="../../src/img/mobile-background-blur.png" id="backgroundBlur" class="background-blur" alt="">
-	<img src="../../src/img/mobile-background.png" id="background" class="background" alt="">
-
+	    <div class="background-part">
+	    	<img src="./src/img/mobile-background-filter.png" class="background-filter" alt="">
+	    	<img src="./src/img/mobile-background.png" id="background" class="background background-first" alt="">
+	    	<img src="./src/img/mobile-background-blur.png" id="backgroundblur" class="background-blur background-first" alt="">
+	    </div>
     </div>
 
   </template>
@@ -356,250 +182,55 @@
       static get properties() {
         return {
           step:{
+          	notify:true,
           	observer:'stepChanged'
           },
-          color:{
-          	value:"#493d6b"
+          game:{
+          	notify:true
           },
-          pensize:{
-          	value:"3"
+          pseudo:{
+            notify:true
           }
         };
       }
 
       start(){
-      	this.set('step', "home")
-      	if(this.$_GET('code')){
-      		this.$.code.value = this.$_GET('code');
-      		this.set('step', "connect")
-      	}
-      	var rand = Math.floor((Math.random() * 99) + 1)
-      	var playerID = "player"+rand;
-      	this.$.pseudo.value = playerID;
-      }
-
-      backStep(){
-      	if(this.step == "connect"){
-      		this.set('step', "home")
-      	}
-      	if(this.step == "game"){
-      		this.set('step', "connect")
-      	}
-      }
-
-      nextStep(){
-      	console.log(this.step)
-      	if(this.step == "home"){
-      		this.$.playButton.classList.add("big-button-disabled")
-      		this.set('step', "connect")
-      	}
-      	else if(this.step == "connect"){
-      		this.set('step', "game")
-      	}
+      	this.$.home.start()
       }
 
       stepChanged(){
-      	console.log(this.step)
-      	this.$.home.className = "part"
-      	this.$.connect.className = "part"
-      	this.$.game.className = "part"
-      	this.$.background.className = "background"
-      	this.$.backgroundBlur.className = "background-blur"
-
+      	this.reset();
       	if(this.step == "home"){
-      		this.$.home.classList.add("part-focus")
-      		this.$.connect.classList.add("part-next")
-      		this.$.game.classList.add("part-next")
-      		this.$.background.classList.add("background-1")
-      		this.$.backgroundBlur.classList.add("background-1")
+      		this.$.home.start()
+      		this.$.search.classList.add("step-next")
+      		this.$.game.classList.add("step-next")
+      		this.$.background.classList.add("background-first")
+      		this.$.backgroundblur.classList.add("background-first")
       	}
-      	else if(this.step == "connect"){
-      		this.$.home.classList.add("part-previous")
-      		this.$.connect.classList.add("part-focus")
-      		this.$.game.classList.add("part-next")
-      		this.$.background.classList.add("background-2")
-      		this.$.backgroundBlur.classList.add("background-2")
+      	else if(this.step == "search"){
+      		this.$.search.start()
+      		this.$.home.classList.add("step-previous")
+      		this.$.game.classList.add("step-next")
+      		this.$.background.classList.add("background-second")
+      		this.$.backgroundblur.classList.add("background-second")
       	}
       	else if(this.step == "game"){
-      		this.$.home.classList.add("part-previous")
-      		this.$.connect.classList.add("part-previous")
-      		this.$.game.classList.add("part-focus")
-      		this.$.background.classList.add("background-3")
-      		this.$.backgroundBlur.classList.add("background-3")
+      		this.$.game.start()
+      		this.$.home.classList.add("step-previous")
+      		this.$.search.classList.add("step-previous")
+      		this.$.background.classList.add("background-third")
+      		this.$.backgroundblur.classList.add("background-third")
       	}
       }
 
-      connect(){
-    	var playerID = this.$.pseudo.value
-    	this.set('code',this.$.code.value)
-    	this.$.createPlayer.body = '{"code": "'+this.code+'","playerID": "'+playerID+'"}';
-  		this.$.createPlayer.generateRequest();
-  		this.$.load.classList.add("pop-active")
-  		this.refreshPlayers()
+      reset(){
+      	this.$.home.className = "step"
+      	this.$.search.className = "step"
+      	this.$.game.className = "step"
+      	this.$.background.className = "background"
+      	this.$.backgroundblur.className = "background-blur"
       }
 
-      refreshPlayers() {
-      	var self = this
-		    setTimeout(function () {
-		        self.$.refreshPlayers.body = '{"code": "'+self.code+'"}';
-  				self.$.refreshPlayers.generateRequest();
-  				console.log("check players : "+self.code);
-  				if(self.player1 && self.player2 && self.player3){
-  					setTimeout(function () {
-  						self.$.load.classList.remove("pop-active")
-  						self.set('step', "game")
-  						self.init()
-  					}, 2000);
-  					return;
-  				}
-  				self.refreshPlayers();
-		    }, 1000);
-		}
-
-		playersConnect(){
-      	var players = this.$.refreshPlayers.lastResponse
-      	for (var i = 0; i < players.length; i++) {
-      		var num = i + 1;
-      		// this.player+num = 
-      		this.set('player'+num,players[i]["pseudo"])
-      		this.shadowRoot.querySelector("#player"+num).innerHTML = players[i]["pseudo"]
-      	}
-      	console.log(this.player1)
-      }
-
-     $_GET(param) {
-		var vars = {};
-		window.location.href.replace( location.hash, '' ).replace( 
-			/[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
-			function( m, key, value ) { // callback
-				vars[key] = value !== undefined ? value : '';
-			}
-		);
-
-		if ( param ) {
-			return vars[param] ? vars[param] : null;	
-		}
-		return vars;
-	}
-
-
-
-
-
-
-
-
-	//CANVAS
-
-	drawDot(size) {
-
-        this.ctx.beginPath();
-        this.ctx.fillStyle = this.color;
-        if(this.pensize == 30){
-        this.ctx.arc(this.mouseX, this.mouseY, this.pensize, 0, Math.PI*2, true);
-        }
-        else{
-        	this.ctx.arc(this.mouseX, this.mouseY, size, 0, Math.PI*2, true);
-        }
-        this.ctx.closePath();
-        this.ctx.fill();
-
-        this.ctx.beginPath();
-        this.ctx.fillStyle = "#00ffff";
-        if(this.pensize == 30){
-        this.ctx.arc((this.mouseX+5), (this.mouseY+5), this.pensize, 0, Math.PI*2, true);
-        }
-        else{
-        	this.ctx.arc((this.mouseX+5), (this.mouseY+5), size, 0, Math.PI*2, true);
-        }
-        this.ctx.closePath();
-        this.ctx.fill();
-
-
-        if(this.lastPosX !== null){
-          this.ctx.beginPath();
-          this.ctx.strokeStyle= this.color;
-          this.ctx.lineWidth= this.pensize;
-          this.ctx.moveTo(this.lastPosX,this.lastPosY);
-          this.ctx.lineTo(this.mouseX,this.mouseY);
-          this.ctx.stroke();
-
-          this.ctx.closePath();
-          this.ctx.fill();
-
-        }
-
-        this.lastPosX = this.mouseX
-        this.lastPosY = this.mouseY
-
-    }
-
-    clearCanvas() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    }
-
-    setDrawClear() {
-        this.set('color', "#fff")
-        this.set('pensize', "30")
-    }
-
-    setDrawPen() {
-        this.set('color', "#493d6b")
-        this.set('pensize', "3")
-    }
-
-    sketchpad_mouseDown(e) {
-        this.getMousePos(e);
-        this.mouseDown=1;
-        this.drawDot(1);
-    }
-
-    sketchpad_mouseUp() {
-
-      this.mouseDown=0;
-      this.lastPosX = null
-      this.lastPosY = null
-      var sign = this.canvas.toDataURL();
-
-    }
-
-    sketchpad_mouseMove(e) {
-        e.preventDefault();
-
-        this.getMousePos(e);
-
-        if (this.mouseDown==1) {
-            this.drawDot(1);
-        }
-    }
-
-    getMousePos(e) {
-
-    if (!e)
-      e = event;
-
-      this.rect = this.$.sketchpad.getBoundingClientRect();
-
-      this.mouseX = e.targetTouches[0].clientX - this.rect.left;
-      this.mouseY = e.targetTouches[0].clientY - this.rect.top;
-    }
-
-	init() {
-
-        this.$.sketchpad.width = window.innerWidth - 50
-        this.$.sketchpad.height = window.innerHeight - 290
-
-        this.canvas = this.$.sketchpad;
-
-        if (this.canvas.getContext)
-            this.ctx = this.canvas.getContext('2d');
-
-        if (this.ctx) {
-            this.canvas.addEventListener('touchstart', this.sketchpad_mouseDown.bind(this), false);
-            this.canvas.addEventListener('touchmove', this.sketchpad_mouseMove.bind(this), false);
-            window.addEventListener('touchend', this.sketchpad_mouseUp.bind(this), false);
-        }
-      }
     }
 
     window.customElements.define(MobileView.is, MobileView);

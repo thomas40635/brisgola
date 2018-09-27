@@ -1,157 +1,85 @@
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <script src="../../vendor/qrcode/qrcode.js"></script>
 
-<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="./step/home-desktop.html">
+<link rel="import" href="./step/game-desktop.html">
 
 <dom-module id="desktop-view">
   <template>
     <style>
+	    :host{
+			width:100%;
+			height:100%;
+			position: relative;
+			overflow:hidden;
+	    }
 
-	  :host {
-	    display: inline-block;
-	    width:100%;
-	  	height:100%;
-	  	position: relative;
-	  	background: url(../img/space.png) no-repeat center center fixed; 
-		-webkit-background-size: cover;
-		-moz-background-size: cover;
-		-o-background-size: cover;
-		background-size: cover;
-	  }
+	    .page{
+	    	width:100%;
+			height:100%;
+			position: relative;
+			overflow:hidden;
+	    }
 
-	  .page{
-		padding:20px;
-		padding-top:10px;
-		padding-bottom:20px;
-		background: #fff;
-		display: inline-block;
-		position: relative;
-		border-radius:10px;
-		box-shadow: 0px 20px 30px rgba(0,0,0,0.2),
-		0px -10px 0px 0px #f1f0f3 inset;
-		height:calc(100% - 80px);
-		width:calc(100% - 80px);
-	  }
+      	.content-part {
+      		top:0px;
+      		left:0px;
+			width:100%;
+			height:100%;
+			position: absolute;
+			z-index: 3;
+		}
 
-	  .center{
-	  	top:50%;
-	  	left:50%;
-	  	position: absolute;
-	  	display: inline-block;
-	  	transform:translateX(-50%) translateY(-50%);
-	  	text-align: center;
-	  }
+		.step{
+			top:0px;
+      		left:0px;
+			position: absolute;
+			transform:scale(1);
+			transition:all 1s;
+		}
 
-	  .qrcode-container{
-	  	position: relative;
-	  	width: 200px;
-		height: 200px;
-		display: inline-block;
-	  }
+		.step-previous{
+			top:-110%;
+			transform:scale(0.8);
+			opacity:0.2;
+		}
 
-	  .qrcode-container .qrcode{
-	  	display: inline-block;
-	  	position: absolute;
-	  	top:0px;
-	  	left:0px;
-	  	width: 200px;
-		height: 200px;
-		z-index:2;
-	  }
+		.step-next{
+			top:110%;
+			transform:scale(0.8);
+			opacity:0.2;
+		}
 
-	  .qrcode-container .qrimg{
-	  	display: inline-block;
-	  	position: absolute;
-	  	top:1px;
-	  	left:1px;
-	  	width: calc(100% - 2px);
-		height: calc(100% - 2px);
-		z-index:1;
-	  }
+		.background-part{
+			position: absolute;
+			top:0px;
+			left:0px;
+			width:100%;
+			height:100%;
+		}
 
-	  .separe{
-	  	height:20px;
-	  }
-
-	  .code{
-	  	color:#483c6c;
-	  	font-size:24px;
-		font-weight:900;
-		display: inline-block;
-	  }
-
-	  .players{
-	  	display: inline-block;
-	  }
-
-	  .player{
-	  	border-radius: 10px;
-	  	padding:20px;
-	  	width:160px;
-	  	color:#cbc5d6;
-	  	font-size:18px;
-	  	font-weight:900;
-	  	background: #f1f0f3;
-	  	margin:0px 10px;
-	  	float:left;
-	  	transition:all 0.2s;
-	  	text-transform: uppercase;
-	  }
-
-	  .player-active{
-	  	padding-top:15px;
-	  	padding-bottom:25px;
-	  	color:#483c6c;
-	  	font-weight:900;
-	  	background: #31ee93;
-	  	box-shadow:0px 10px 20px #7bf6ba,
-	  	0px -10px 0px 0px rgba(0,0,0,0.05) inset;
-	  }
-
-
-	  .bottom{
-	  	bottom:40px;
-	  	position: absolute;
-	  	text-align: center;
-	  	width:100%;
-	  }
+		.background-part img {
+			min-width:100%;
+			min-height:100%;
+			z-index:1;
+			position: absolute;
+			top:0%;
+			left:0px;
+			transition:all 0.2s;
+		}
 
     </style>
-
-    <iron-ajax
-    id="createParty"
-    method="POST"
-    url="../../src/webservices/createParty.php"
-    content-type="application/json"
-    handle-as="json">
-    </iron-ajax>
-
-    <iron-ajax
-    id="refreshPlayers"
-    method="POST"
-    url="../../src/webservices/refreshPlayers.php"
-    content-type="application/json"
-    handle-as="json"
-    on-response="playersConnect"
-    last-response="{{players}}">
-    </iron-ajax>
-
-    <div class="page center">
-    	<div class="center">
-	    	<div class="qrcode-container">
-				<div class="qrcode" id="qrcode"></div>
-				<img src="../../src/img/qrcodespace.png" class="qrimg" alt="">
-			</div>
-			<div class="separe"></div>
-			<div class="code" id="code"></div>
+	
+	<div class="page">
+		<div class="content-part">
+		    <home-desktop id="home" class="step" step="{{step}}" game="{{game}}" players="{{players}}"></home-desktop>
+		    <game-desktop id="game" class="step-next" step="{{step}}" game="{{game}}" players="{{players}}"></game-desktop>
 		</div>
-		<div class="bottom">
-			<div class="players">
-				<div class="player" id="player1"></div>
-				<div class="player" id="player2"></div>
-				<div class="player" id="player3"></div>
-			</div>
-		</div>
+		<div class="background-part">
+	    	<img src="./src/img/desktop-background.png" class="background" alt="">
+	    </div>
     </div>
+
   </template>
 
   <script>
@@ -163,75 +91,33 @@
       static get is() { return 'desktop-view'; }
       static get properties() {
         return {
-
+          step:{
+          	notify:true,
+          	observer:'stepChanged',
+          }
         };
       }
 
       start(){
-      	var rand = Math.floor((Math.random() * 99) + 1)
-      	var pick = Math.floor((Math.random() * 4))
-      	var planets = ["TERRE","ORION","MARS","VENUS","LUNE"];
-      	this.set('code', planets[pick]+rand)
-      	this.$.code.innerHTML = this.code
-      	var qrcode = new QRCode(this.$.qrcode, {
-		    text: "http://thomaspaul.fr/?code="+this.code,
-		    width: 200,
-		    height: 200,
-		    colorDark : "rgba(0,0,0,0)",
-		    colorLight : "#fff",
-		    correctLevel : QRCode.CorrectLevel.H
-		});
-		this.$.createParty.body = '{"code": "'+this.code+'"}';
-  		this.$.createParty.generateRequest();
-  		this.refreshPlayers();
-
+      	this.set('step', "home")
       }
 
-      playersConnect(){
-      	var players = this.$.refreshPlayers.lastResponse
-
-      	if(this.$.refreshPlayers.lastResponse[0]){
-      		this.set('player1',this.$.refreshPlayers.lastResponse[0])
-      		this.$.player1.innerHTML = this.player1
-      		this.$.player1.classList.add("player-active")
+      stepChanged(){
+      	this.reset();
+      	if(this.step == "home"){
+      		this.$.game.classList.add("step-next")
+      		this.$.home.start()
       	}
-      	else{
-      		this.set('player1',null)
-      		this.$.player1.innerHTML = "Aucun joueur"
-      		this.$.player1.classList.remove("player-active")
-      	}
-      	if(this.$.refreshPlayers.lastResponse[1]){
-      		this.set('player2',this.$.refreshPlayers.lastResponse[1])
-      		this.$.player2.innerHTML = this.player2
-      		this.$.player2.classList.add("player-active")
-      	}
-      	else{
-      		this.set('player2',null)
-      		this.$.player2.innerHTML = "Aucun joueur"
-      		this.$.player2.classList.remove("player-active")
-      	}
-      	if(this.$.refreshPlayers.lastResponse[2]){
-      		this.set('player3',this.$.refreshPlayers.lastResponse[2])
-      		this.$.player3.innerHTML = this.player3
-      		this.$.player3.classList.add("player-active")
-      	}
-      	else{
-      		this.set('player3',null)
-      		this.$.player3.innerHTML = "Aucun joueur"
-      		this.$.player3.classList.remove("player-active")
+      	else if(this.step == "game"){
+      		this.$.home.classList.add("step-previous")
+      		this.$.game.start()
       	}
       }
 
-      refreshPlayers() {
-      	var self = this
-		    setTimeout(function () {
-		        self.$.refreshPlayers.body = '{"code": "'+self.code+'"}';
-  				self.$.refreshPlayers.generateRequest();
-  				console.log("check players : "+self.code);
-  				self.refreshPlayers();
-		    }, 1000);
-		}
-
+      reset(){
+      	this.$.home.className = "step"
+      	this.$.game.className = "step"
+      }
 
     }
 
