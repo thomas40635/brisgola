@@ -20,15 +20,15 @@ try{
     $other1 = "draw".$other[0]['position'];
     $other2 = "draw".$other[1]['position'];
 
-    $req = $PDO->prepare("SELECT ".$other1.",".$other2." FROM turn WHERE game = :game ORDER BY nbr DESC");
+    $req = $PDO->prepare("SELECT ".$other1.",".$other2." FROM turn WHERE game = :game ORDER BY nbr DESC LIMIT 1");
 
     $req->execute(array(
         "game" => $game
     ));
 
-    $draws = $req->fetchColumn();
+    $draws = $req->fetch(PDO::FETCH_ASSOC);
     // $other[0]["draw"] = $draws[0]
-    print_r(json_encode($draws));
+    print_r(json_encode($req));
 }
 
 catch(PDOException $e){
