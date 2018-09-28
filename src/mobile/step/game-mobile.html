@@ -401,7 +401,7 @@
 
       etatTurn(){
         var self = this
-        console.log(self.$.turnEnd.lastResponse)
+        console.log(this.$.turnEnd.lastResponse)
         setTimeout(function () {
           if(self.$.turnEnd.lastResponse == 0 || self.$.turnEnd.lastResponse == "0"){
             self.$.playerResetVote.body = '{"game": "'+self.game+'","pseudo": "'+self.pseudo+'"}'

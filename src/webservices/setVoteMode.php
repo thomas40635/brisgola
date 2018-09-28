@@ -8,7 +8,7 @@ try{
 
     $game = $json["game"];
 
-    $req = $PDO->prepare("UPDATE turn SET etat = 1 WHERE game = :game ORDER BY nbr LIMIT 1");
+    $req = $PDO->prepare("UPDATE turn SET etat = 1 WHERE game = :game ORDER BY nbr DESC LIMIT 1");
 
 	$req->execute(array(
         "game" => $game
