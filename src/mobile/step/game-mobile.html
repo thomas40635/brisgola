@@ -403,7 +403,7 @@
         var self = this
         console.log(self.$.turnEnd.lastResponse)
         setTimeout(function () {
-          if(self.$.turnEnd.lastResponse && self.$.turnEnd.lastResponse == 0){
+          if(self.$.turnEnd.lastResponse == 0 || self.$.turnEnd.lastResponse == "0"){
             self.$.playerResetVote.body = '{"game": "'+self.game+'","pseudo": "'+self.pseudo+'"}'
             self.$.playerResetVote.generateRequest()
             self.refreshScore()
