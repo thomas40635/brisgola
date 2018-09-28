@@ -307,7 +307,7 @@
 
       connectGame(){
         if(this.$.game.value && this.$.pseudo.value){
-          thi.$.connect.classList.add("submit-disabled")
+          this.$.connect.classList.add("submit-disabled")
           this.$.connect.value = "Chargement"
           this.$.loader.classList.add("loader-active")
           this.$.setPlayer.body = '{"game": "'+this.$.game.value+'","pseudo": "'+this.$.pseudo.value+'"}'
