@@ -252,6 +252,15 @@
     on-response="etatTurn">
     </iron-ajax>
 
+    <iron-ajax
+    id="refreshScore"
+    method="POST"
+    url="./src/webservices/refreshScore.php"
+    content-type="application/json"
+    handle-as="json"
+    on-response="setScore">
+    </iron-ajax>
+
     <div id="popvote" class="pop-vote">
       <div class="player">
         <div class="draw">
@@ -391,9 +400,26 @@
       }
 
       etatTurn(){
-        this.$.playerResetVote.body = '{"game": "'+this.game+'","pseudo": "'+this.pseudo+'"}'
-        this.$.playerResetVote.generateRequest()
-        this.newTurn();
+        var self = this
+        setTimeout(function () {
+          if(self.$.turnEnd.lastResponse && self.$.turnEnd.lastResponse == 0){
+            self.$.playerResetVote.body = '{"game": "'+self.game+'","pseudo": "'+self.pseudo+'"}'
+            self.$.playerResetVote.generateRequest()
+            self.refreshScore()
+            self.newTurn()
+            return;
+          }
+          self.checkTurn();
+        }, 500);
+      }
+
+      refreshScore(){
+        this.$.refreshScore.body = '{"game": "'+this.game+'","pseudo": "'+this.pseudo+'"}'
+        this.$.refreshScore.generateRequest()
+      }
+
+      setScore(){
+        this.$.score.innerHTML = this.$.refreshScore.lastResponse
       }
 
       getCanvas() {

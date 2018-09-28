@@ -251,6 +251,15 @@
     handle-as="json"
     on-response="resetMode">
     </iron-ajax>
+    
+    <iron-ajax
+    id="refreshScores"
+    method="POST"
+    url="./src/webservices/refreshScores.php"
+    content-type="application/json"
+    handle-as="json"
+    on-response="setScores">
+    </iron-ajax>
 
     <div class="pop-vote" id="popvote">
       <div class="center">
@@ -268,21 +277,21 @@
         <div class="space"></div>
         <div class="players-container">
           <div class="player">
-            <div class="score"><div class="text">0</div></div>
+            <div class="score"><div class="text" id="score1">0</div></div>
             <h2 id="pseudo1">Joueur 1</h2>
             <div class="draw">
               <img src="" id="draw1" alt="">
             </div>
           </div>
           <div class="player">
-            <div class="score"><div class="text">0</div></div>
+            <div class="score"><div class="text" id="score2">0</div></div>
             <h2 id="pseudo2">Joueur 2</h2>
             <div class="draw">
               <img src="" id="draw2" alt="">
             </div>
           </div>
           <div class="player">
-            <div class="score"><div class="text">0</div></div>
+            <div class="score"><div class="text" id="score3">0</div></div>
             <h2 id="pseudo3">Joueur 3</h2>
             <div class="draw">
               <img src="" id="draw3" alt="">
@@ -374,12 +383,25 @@
           this.$.popvote.classList.remove("pop-vote-active")
           this.$.resetVoteMode.body = '{"game": "'+this.game+'"}'
           this.$.resetVoteMode.generateRequest()
+          this.refreshScores()
         }
         else{
           setTimeout(function () {
             self.isVote()
           }, 1000);
         }
+      }
+
+      refreshScores(){
+        this.$.refreshScores.body = '{"game": "'+this.game+'"}'
+        this.$.refreshScores.generateRequest()
+      }
+
+      setScores(){
+        var scores = this.$.refreshScores.lastResponse;
+        this.$.score1.innerHTML = scores[0]
+        this.$.score2.innerHTML = scores[1]
+        this.$.score3.innerHTML = scores[2]
       }
 
       resetMode(){
